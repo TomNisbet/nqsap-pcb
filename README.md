@@ -12,6 +12,8 @@ Each baseboard can hold three modules across.  Any module slot can also hold two
 
 A 16-pin header is provided between each half-height board to make module-to-module connections.  A full height board can use both sets of connectors for a total of 32 pins.  The interconnects have the inner pins connected and the outer pins connected.  A module needing 8 or fewer connections could populate just a 1x8 connector instead of a 2x8 to save space.
 
+[![Baseboard](baseboard-back.png "NQSAP breadboard computer")](baseboard-back.png)
+
 Note that the interconnects are not connected all the way across the baseboard.  If the left board and right board need to talk, the signals will need to route through the middle board.
 
 ## Bus connectors
