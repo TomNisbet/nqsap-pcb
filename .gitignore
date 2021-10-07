@@ -1,0 +1,5 @@
+*.bak
+*.kicad_pcb-bak
+*.sch-bak
+*.zip
+scratch/

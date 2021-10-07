@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name microcode)(type KiCad)(uri ${KIPRJMOD}/microcode.pretty)(options "")(descr ""))
+)

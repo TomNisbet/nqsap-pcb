@@ -1,0 +1,35 @@
+** Drc report for D:\Work\projects\8bit\nqsap\NQSAP PCB schematics\ab-register.kicad_pcb **
+** Created on  **
+
+** Found 0 DRC errors **
+
+** Found 9 unconnected pads **
+ErrType(2): Unconnected items
+    @(130.640 mm, 64.520 mm): Track 0.250 mm [CLK] on F.Cu, length: 2.715 mm
+    @(132.760 mm, 121.800 mm): Track 0.250 mm [CLK] on F.Cu, length: 2.998 mm
+ErrType(2): Unconnected items
+    @(148.420 mm, 56.900 mm): Track 0.250 mm [D0] on B.Cu, length: 4.950 mm
+    @(148.420 mm, 116.300 mm): Pad 3 of U3 on All copper layers
+ErrType(2): Unconnected items
+    @(145.880 mm, 56.900 mm): Pad 4 of U1 on All copper layers
+    @(145.880 mm, 116.300 mm): Track 0.250 mm [D1] on F.Cu, length: 5.162 mm
+ErrType(2): Unconnected items
+    @(138.260 mm, 56.900 mm): Pad 7 of U1 on All copper layers
+    @(138.260 mm, 116.300 mm): Track 0.250 mm [D2] on F.Cu, length: 4.525 mm
+ErrType(2): Unconnected items
+    @(122.034 mm, 59.375 mm): Track 0.250 mm [D3] on B.Cu, length: 10.219 mm
+    @(135.720 mm, 116.300 mm): Pad 8 of U3 on All copper layers
+ErrType(2): Unconnected items
+    @(134.440 mm, 65.800 mm): Track 0.250 mm [D4] on B.Cu, length: 1.810 mm
+    @(135.720 mm, 123.920 mm): Track 0.250 mm [D4] on F.Cu, length: 3.012 mm
+ErrType(2): Unconnected items
+    @(136.530 mm, 66.250 mm): Track 0.250 mm [D5] on B.Cu, length: 2.447 mm
+    @(138.260 mm, 123.920 mm): Track 0.250 mm [D5] on F.Cu, length: 3.649 mm
+ErrType(2): Unconnected items
+    @(143.700 mm, 66.700 mm): Track 0.250 mm [D6] on B.Cu, length: 3.083 mm
+    @(145.880 mm, 123.920 mm): Track 0.250 mm [D6] on F.Cu, length: 4.285 mm
+ErrType(2): Unconnected items
+    @(148.420 mm, 123.920 mm): Pad 18 of U3 on All copper layers
+    @(145.790 mm, 67.150 mm): Track 0.250 mm [D7] on B.Cu, length: 2.588 mm
+
+** End of Report **
