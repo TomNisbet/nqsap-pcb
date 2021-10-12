@@ -22,7 +22,7 @@ There are no board-specific interconnects vertically, so related boards should s
 
 [![Bus connector](bus-connect.png "NQSAP bus connector")](bus-connect.png)
 
-The bus connector boards are used to connect baseboards together to expand the computer vertically.  Three connectors are used between each pair of baseboards.  The bus connector wires all 40 lines top-to-bottom.  
+The bus connector boards are used to connect backplane together to expand the computer vertically.  Three connectors are used between each pair of backplane boards.  The bus connector wires all 40 lines top-to-bottom.  
 
 [![Data LEDs and termination](bus-connect-back.png "NQSAP bus connector (LEDs)")](bus-connect-back.png)
 
