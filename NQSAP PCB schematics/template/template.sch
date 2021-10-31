@@ -14,11 +14,11 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Connector_Generic:Conn_02x08_Top_Bottom J3
+L Connector_Generic:Conn_02x08_Odd_Even J3
 U 1 1 614A59C0
 P 7350 2700
 F 0 "J3" H 7268 3317 50  0000 C CNN
-F 1 "Conn_02x08" H 7268 3226 50  0000 C CNN
+F 1 "IC-TL" H 7268 3226 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 7350 2700 50  0001 C CNN
 F 3 "~" H 7350 2700 50  0001 C CNN
 	1    7350 2700
@@ -115,24 +115,16 @@ Wire Wire Line
 	3900 3600 3850 3600
 Wire Wire Line
 	3900 3500 3850 3500
-Text GLabel 3900 5000 2    50   Input ~ 0
-LDR-CLK
 Wire Wire Line
 	3900 2600 3850 2600
-Text GLabel 3900 5100 2    50   Input ~ 0
-LDR-ACT
 Wire Wire Line
 	3900 2500 3850 2500
-Text GLabel 3900 1600 2    50   Input ~ 0
-NC-1
 Wire Wire Line
 	3900 2400 3850 2400
-Text GLabel 3900 1500 2    50   Input ~ 0
-NC-2
 Wire Wire Line
 	3900 2300 3850 2300
 Text GLabel 3900 5200 2    50   Input ~ 0
-RST
+~RST
 Text GLabel 3900 4900 2    50   Input ~ 0
 CLK
 Wire Wire Line
@@ -256,12 +248,8 @@ Text GLabel 4700 4500 2    50   Input ~ 0
 LF
 Wire Wire Line
 	4700 4700 4650 4700
-Text GLabel 4700 4400 2    50   Input ~ 0
-SE
 Wire Wire Line
 	4700 4600 4650 4600
-Text GLabel 4700 4300 2    50   Input ~ 0
-SI
 Wire Wire Line
 	4700 4500 4650 4500
 Text GLabel 4700 4200 2    50   Input ~ 0
@@ -280,8 +268,6 @@ Text GLabel 4700 3900 2    50   Input ~ 0
 C1
 Wire Wire Line
 	4700 4100 4650 4100
-Text GLabel 4700 3800 2    50   Input ~ 0
-XX0
 Wire Wire Line
 	4700 4000 4650 4000
 Text GLabel 4700 3700 2    50   Input ~ 0
@@ -304,24 +290,16 @@ Text GLabel 4700 3600 2    50   Input ~ 0
 FC
 Wire Wire Line
 	4700 3500 4650 3500
-Text GLabel 4700 5000 2    50   Input ~ 0
-LDR-CLK
 Wire Wire Line
 	4700 2600 4650 2600
-Text GLabel 4700 5100 2    50   Input ~ 0
-LDR-ACT
 Wire Wire Line
 	4700 2500 4650 2500
-Text GLabel 4700 1600 2    50   Input ~ 0
-NC-1
 Wire Wire Line
 	4700 2400 4650 2400
-Text GLabel 4700 1500 2    50   Input ~ 0
-NC-2
 Wire Wire Line
 	4700 2300 4650 2300
 Text GLabel 4700 5200 2    50   Input ~ 0
-RST
+~RST
 Wire Wire Line
 	4700 5200 4650 5200
 Text GLabel 4700 4900 2    50   Input ~ 0
@@ -335,11 +313,11 @@ Wire Wire Line
 Wire Wire Line
 	4700 1200 4700 1400
 $Comp
-L Connector_Generic:Conn_02x08_Top_Bottom J5
+L Connector_Generic:Conn_02x08_Odd_Even J5
 U 1 1 6167BE3C
 P 8250 2700
 F 0 "J5" H 8168 3317 50  0000 C CNN
-F 1 "Conn_02x08" H 8168 3226 50  0000 C CNN
+F 1 "IC-TR" H 8168 3226 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 8250 2700 50  0001 C CNN
 F 3 "~" H 8250 2700 50  0001 C CNN
 	1    8250 2700
@@ -356,7 +334,7 @@ FN
 Text GLabel 3900 3700 2    50   Input ~ 0
 FB
 Text GLabel 3900 3800 2    50   Input ~ 0
-XX0
+SE
 Text GLabel 3900 3900 2    50   Input ~ 0
 C1
 Text GLabel 3900 4000 2    50   Input ~ 0
@@ -366,9 +344,9 @@ CS
 Text GLabel 3900 4200 2    50   Input ~ 0
 CC
 Text GLabel 3900 4300 2    50   Input ~ 0
-SI
+M1
 Text GLabel 3900 4400 2    50   Input ~ 0
-SE
+M0
 Text GLabel 3900 4500 2    50   Input ~ 0
 LF
 Text GLabel 3900 4600 2    50   Input ~ 0
@@ -422,22 +400,22 @@ Wire Wire Line
 Wire Wire Line
 	3850 5200 3900 5200
 $Comp
-L Connector_Generic:Conn_02x08_Top_Bottom J4
+L Connector_Generic:Conn_02x08_Odd_Even J4
 U 1 1 61847D1B
 P 7350 3900
 F 0 "J4" H 7268 4517 50  0000 C CNN
-F 1 "Conn_02x08" H 7268 4426 50  0000 C CNN
+F 1 "IC-BL" H 7268 4426 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 7350 3900 50  0001 C CNN
 F 3 "~" H 7350 3900 50  0001 C CNN
 	1    7350 3900
 	-1   0    0    -1  
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x08_Top_Bottom J6
+L Connector_Generic:Conn_02x08_Odd_Even J6
 U 1 1 61847F95
 P 8250 3900
 F 0 "J6" H 8168 4517 50  0000 C CNN
-F 1 "Conn_02x08" H 8168 4426 50  0000 C CNN
+F 1 "IC-BR" H 8168 4426 50  0000 C CNN
 F 2 "Connector_PinHeader_2.54mm:PinHeader_2x08_P2.54mm_Vertical" H 8250 3900 50  0001 C CNN
 F 3 "~" H 8250 3900 50  0001 C CNN
 	1    8250 3900
@@ -449,7 +427,7 @@ U 1 1 640ECCCC
 P 6650 5200
 F 0 "C1" V 6500 5400 50  0000 C CNN
 F 1 "0.1uF" V 6600 5400 50  0000 C CNN
-F 2 "" H 6688 5050 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 6688 5050 50  0001 C CNN
 F 3 "~" H 6650 5200 50  0001 C CNN
 	1    6650 5200
 	0    1    1    0   
@@ -518,7 +496,7 @@ U 1 1 64103212
 P 6650 5450
 F 0 "C2" V 6500 5650 50  0000 C CNN
 F 1 "0.1uF" V 6600 5650 50  0000 C CNN
-F 2 "" H 6688 5300 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 6688 5300 50  0001 C CNN
 F 3 "~" H 6650 5450 50  0001 C CNN
 	1    6650 5450
 	0    1    1    0   
@@ -539,7 +517,7 @@ U 1 1 6410A335
 P 6650 5700
 F 0 "C3" V 6500 5900 50  0000 C CNN
 F 1 "0.1uF" V 6600 5900 50  0000 C CNN
-F 2 "" H 6688 5550 50  0001 C CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 6688 5550 50  0001 C CNN
 F 3 "~" H 6650 5700 50  0001 C CNN
 	1    6650 5700
 	0    1    1    0   
@@ -554,4 +532,20 @@ Wire Wire Line
 Connection ~ 6300 5700
 Wire Wire Line
 	6300 5700 6300 5800
+NoConn ~ 4700 5000
+NoConn ~ 3900 5000
+NoConn ~ 3900 1500
+NoConn ~ 3900 1600
+NoConn ~ 4700 1500
+NoConn ~ 4700 1600
+Text GLabel 4700 4300 2    50   Input ~ 0
+M1
+Text GLabel 4700 4400 2    50   Input ~ 0
+M0
+Text GLabel 4700 3800 2    50   Input ~ 0
+SE
+Text GLabel 4700 5100 2    50   Input ~ 0
+~JMP
+Text GLabel 3900 5100 2    50   Input ~ 0
+~JMP
 $EndSCHEMATC

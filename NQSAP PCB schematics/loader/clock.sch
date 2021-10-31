@@ -135,10 +135,10 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS08" H 7900 5050 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L 74xx:74LS27 U8
+L 74xx:74LS27 U4
 U 1 1 616763BD
 P 8600 1800
-F 0 "U8" H 8600 1800 50  0000 C CNN
+F 0 "U4" H 8600 1800 50  0000 C CNN
 F 1 "74HCT27" H 8600 2034 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm" H 8600 1800 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 8600 1800 50  0001 C CNN
@@ -146,10 +146,10 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 8600 1800 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 74xx:74LS27 U8
+L 74xx:74LS27 U4
 U 2 1 616775EF
 P 8600 2500
-F 0 "U8" H 8600 2500 50  0000 C CNN
+F 0 "U4" H 8600 2500 50  0000 C CNN
 F 1 "74HCT27" H 8600 2250 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm" H 8600 2500 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 8600 2500 50  0001 C CNN
@@ -157,10 +157,10 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 8600 2500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 74xx:74LS27 U8
+L 74xx:74LS27 U4
 U 3 1 6167911B
 P 4450 5100
-F 0 "U8" H 4450 5300 50  0000 C CNN
+F 0 "U4" H 4450 5300 50  0000 C CNN
 F 1 "74HCT27" H 4450 4900 50  0000 C CNN
 F 2 "Package_DIP:DIP-14_W7.62mm" H 4450 5100 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 4450 5100 50  0001 C CNN
@@ -168,10 +168,10 @@ F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 4450 5100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 74xx:74LS27 U8
+L 74xx:74LS27 U4
 U 4 1 6167A894
 P 7900 4550
-F 0 "U8" V 8000 4450 50  0000 L CNN
+F 0 "U4" V 8000 4450 50  0000 L CNN
 F 1 "74HCT27" V 7750 4400 50  0000 L CNN
 F 2 "Package_DIP:DIP-14_W7.62mm" H 7900 4550 50  0001 C CNN
 F 3 "http://www.ti.com/lit/gpn/sn74LS27" H 7900 4550 50  0001 C CNN
@@ -206,10 +206,10 @@ U 1 1 6167F80D
 P 2850 2650
 F 0 "RV1" V 2737 2650 50  0000 C CNN
 F 1 "1M" V 2646 2650 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Vishay_T73YP_Vertical" H 2850 2650 50  0001 C CNN
+F 2 "Potentiometer_THT:Potentiometer_Bourns_3386F_Vertical" H 2850 2650 50  0001 C CNN
 F 3 "~" H 2850 2650 50  0001 C CNN
 	1    2850 2650
-	0    -1   -1   0   
+	-1   0    0    1   
 $EndComp
 $Comp
 L Device:C_Small C12
@@ -238,7 +238,7 @@ L Device:CP1_Small C10
 U 1 1 61682D66
 P 2400 2800
 F 0 "C10" H 2491 2846 50  0000 L CNN
-F 1 "1uF" H 2491 2755 50  0000 L CNN
+F 1 "2.2uF" H 2491 2755 50  0000 L CNN
 F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder" H 2400 2800 50  0001 C CNN
 F 3 "~" H 2400 2800 50  0001 C CNN
 	1    2400 2800
@@ -583,9 +583,9 @@ run-~stop
 Text GLabel 2250 5200 0    50   Input ~ 0
 run-~stop
 Text GLabel 5600 4700 2    50   Output ~ 0
-~CLK
-Text GLabel 5600 5100 2    50   Output ~ 0
 CLK
+Text GLabel 5600 5100 2    50   Output ~ 0
+~CLK
 Wire Wire Line
 	5600 4700 5450 4700
 Wire Wire Line
@@ -693,7 +693,7 @@ Text GLabel 2250 5400 0    50   Input ~ 0
 ~LD-ACT
 Wire Wire Line
 	2400 5400 2250 5400
-NoConn ~ 3000 2650
+NoConn ~ 2850 2800
 $Comp
 L 74xx:74HCT04 U5
 U 3 1 619F24D0
@@ -716,4 +716,103 @@ Wire Wire Line
 Connection ~ 7400 4550
 Wire Wire Line
 	7400 4550 7400 5050
+$Comp
+L Device:LED_Small D?
+U 1 1 6170AC27
+P 9700 1450
+AR Path="/6170AC27" Ref="D?"  Part="1" 
+AR Path="/6164BBEC/6170AC27" Ref="D4"  Part="1" 
+F 0 "D4" H 9700 1685 50  0000 C CNN
+F 1 "STOP" H 9700 1594 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 9700 1450 50  0001 C CNN
+F 3 "~" V 9700 1450 50  0001 C CNN
+	1    9700 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 6170AC2D
+P 9300 1450
+AR Path="/6170AC2D" Ref="R?"  Part="1" 
+AR Path="/6164BBEC/6170AC2D" Ref="R10"  Part="1" 
+F 0 "R10" V 9095 1450 50  0000 C CNN
+F 1 "R-RED" V 9186 1450 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 9300 1450 50  0001 C CNN
+F 3 "~" H 9300 1450 50  0001 C CNN
+	1    9300 1450
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	9600 1450 9400 1450
+Wire Wire Line
+	9200 1450 8950 1450
+Wire Wire Line
+	9800 1450 9950 1450
+Wire Wire Line
+	9950 1300 9950 1450
+$Comp
+L power:VCC #PWR?
+U 1 1 6170AC37
+P 9950 1300
+AR Path="/6170AC37" Ref="#PWR?"  Part="1" 
+AR Path="/6164BBEC/6170AC37" Ref="#PWR04"  Part="1" 
+F 0 "#PWR04" H 9950 1150 50  0001 C CNN
+F 1 "VCC" H 9965 1473 50  0000 C CNN
+F 2 "" H 9950 1300 50  0001 C CNN
+F 3 "" H 9950 1300 50  0001 C CNN
+	1    9950 1300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:LED_Small D?
+U 1 1 6170DDF5
+P 5550 4200
+AR Path="/6170DDF5" Ref="D?"  Part="1" 
+AR Path="/6164BBEC/6170DDF5" Ref="D3"  Part="1" 
+F 0 "D3" H 5550 4435 50  0000 C CNN
+F 1 "CLOCK" H 5550 4344 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 5550 4200 50  0001 C CNN
+F 3 "~" V 5550 4200 50  0001 C CNN
+	1    5550 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_Small_US R?
+U 1 1 6170E577
+P 5150 4200
+AR Path="/6170E577" Ref="R?"  Part="1" 
+AR Path="/6164BBEC/6170E577" Ref="R9"  Part="1" 
+F 0 "R9" V 4945 4200 50  0000 C CNN
+F 1 "R-BLUE" V 5036 4200 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 5150 4200 50  0001 C CNN
+F 3 "~" H 5150 4200 50  0001 C CNN
+	1    5150 4200
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	5450 4200 5250 4200
+Wire Wire Line
+	5050 4200 4800 4200
+Wire Wire Line
+	5650 4200 5800 4200
+Wire Wire Line
+	5800 4050 5800 4200
+$Comp
+L power:VCC #PWR?
+U 1 1 6170E585
+P 5800 4050
+AR Path="/6170E585" Ref="#PWR?"  Part="1" 
+AR Path="/6164BBEC/6170E585" Ref="#PWR03"  Part="1" 
+F 0 "#PWR03" H 5800 3900 50  0001 C CNN
+F 1 "VCC" H 5815 4223 50  0000 C CNN
+F 2 "" H 5800 4050 50  0001 C CNN
+F 3 "" H 5800 4050 50  0001 C CNN
+	1    5800 4050
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4800 4200 4800 4700
+Connection ~ 4800 4700
+Wire Wire Line
+	8950 1450 8950 1800
 $EndSCHEMATC

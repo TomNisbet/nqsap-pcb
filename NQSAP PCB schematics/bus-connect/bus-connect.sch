@@ -4,9 +4,9 @@ EELAYER END
 $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
-Title "NQSAP Bus Connector"
-Date "2021-10-03"
-Rev "1.0"
+Title "NQSAP-PCB Bus Connector"
+Date "2021-10-24"
+Rev "1.1"
 Comp "github.com/TomNisbet/nqsap-pcb"
 Comment1 ""
 Comment2 ""
@@ -669,4 +669,52 @@ Wire Wire Line
 Connection ~ 7350 4200
 Wire Wire Line
 	7350 4200 7350 4275
+$Comp
+L power:PWR_FLAG #FLG0101
+U 1 1 621002EB
+P 7050 1250
+F 0 "#FLG0101" H 7050 1325 50  0001 C CNN
+F 1 "PWR_FLAG" H 7050 1423 50  0000 C CNN
+F 2 "" H 7050 1250 50  0001 C CNN
+F 3 "~" H 7050 1250 50  0001 C CNN
+	1    7050 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG0102
+U 1 1 6210088A
+P 6700 1300
+F 0 "#FLG0102" H 6700 1375 50  0001 C CNN
+F 1 "PWR_FLAG" H 6700 1473 50  0000 C CNN
+F 2 "" H 6700 1300 50  0001 C CNN
+F 3 "~" H 6700 1300 50  0001 C CNN
+	1    6700 1300
+	1    0    0    1   
+$EndComp
+$Comp
+L power:+5V #PWR0101
+U 1 1 62100F53
+P 6700 1250
+F 0 "#PWR0101" H 6700 1100 50  0001 C CNN
+F 1 "+5V" H 6715 1423 50  0000 C CNN
+F 2 "" H 6700 1250 50  0001 C CNN
+F 3 "" H 6700 1250 50  0001 C CNN
+	1    6700 1250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0102
+U 1 1 6210188D
+P 7050 1300
+F 0 "#PWR0102" H 7050 1050 50  0001 C CNN
+F 1 "GND" H 7055 1127 50  0000 C CNN
+F 2 "" H 7050 1300 50  0001 C CNN
+F 3 "" H 7050 1300 50  0001 C CNN
+	1    7050 1300
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 1250 7050 1300
+Wire Wire Line
+	6700 1250 6700 1300
 $EndSCHEMATC

@@ -878,7 +878,7 @@ L Device:LED_Small D9
 U 1 1 624DA8EF
 P 10300 1050
 F 0 "D9" H 10300 843 50  0000 C CNN
-F 1 "A0" H 10300 934 50  0000 C CNN
+F 1 "B0" H 10300 934 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 1050 50  0001 C CNN
 F 3 "~" V 10300 1050 50  0001 C CNN
 	1    10300 1050
@@ -908,7 +908,7 @@ L Device:LED_Small D10
 U 1 1 624DAE6C
 P 10300 1400
 F 0 "D10" H 10300 1193 50  0000 C CNN
-F 1 "A1" H 10300 1284 50  0000 C CNN
+F 1 "B1" H 10300 1284 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 1400 50  0001 C CNN
 F 3 "~" V 10300 1400 50  0001 C CNN
 	1    10300 1400
@@ -938,7 +938,7 @@ L Device:LED_Small D11
 U 1 1 624DAE85
 P 10300 1750
 F 0 "D11" H 10300 1543 50  0000 C CNN
-F 1 "A2" H 10300 1634 50  0000 C CNN
+F 1 "B2" H 10300 1634 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 1750 50  0001 C CNN
 F 3 "~" V 10300 1750 50  0001 C CNN
 	1    10300 1750
@@ -968,7 +968,7 @@ L Device:LED_Small D12
 U 1 1 624DAE9E
 P 10300 2100
 F 0 "D12" H 10300 1893 50  0000 C CNN
-F 1 "A3" H 10300 1984 50  0000 C CNN
+F 1 "B3" H 10300 1984 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 2100 50  0001 C CNN
 F 3 "~" V 10300 2100 50  0001 C CNN
 	1    10300 2100
@@ -998,7 +998,7 @@ L Device:LED_Small D13
 U 1 1 624DAEB7
 P 10300 2450
 F 0 "D13" H 10300 2243 50  0000 C CNN
-F 1 "A4" H 10300 2334 50  0000 C CNN
+F 1 "B4" H 10300 2334 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 2450 50  0001 C CNN
 F 3 "~" V 10300 2450 50  0001 C CNN
 	1    10300 2450
@@ -1028,7 +1028,7 @@ L Device:LED_Small D14
 U 1 1 624DAED0
 P 10300 2800
 F 0 "D14" H 10300 2593 50  0000 C CNN
-F 1 "A5" H 10300 2684 50  0000 C CNN
+F 1 "B5" H 10300 2684 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 2800 50  0001 C CNN
 F 3 "~" V 10300 2800 50  0001 C CNN
 	1    10300 2800
@@ -1058,7 +1058,7 @@ L Device:LED_Small D15
 U 1 1 624DAEE9
 P 10300 3150
 F 0 "D15" H 10300 2943 50  0000 C CNN
-F 1 "A6" H 10300 3034 50  0000 C CNN
+F 1 "B6" H 10300 3034 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 3150 50  0001 C CNN
 F 3 "~" V 10300 3150 50  0001 C CNN
 	1    10300 3150
@@ -1088,7 +1088,7 @@ L Device:LED_Small D16
 U 1 1 624DAF02
 P 10300 3500
 F 0 "D16" H 10300 3293 50  0000 C CNN
-F 1 "A7" H 10300 3384 50  0000 C CNN
+F 1 "B7" H 10300 3384 50  0000 C CNN
 F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 10300 3500 50  0001 C CNN
 F 3 "~" V 10300 3500 50  0001 C CNN
 	1    10300 3500
@@ -1675,7 +1675,7 @@ Text GLabel 2000 6200 2    50   Output ~ 0
 Wire Wire Line
 	2000 6200 1900 6200
 Text GLabel 2000 6500 2    50   Output ~ 0
-~WP
+~WXC
 Wire Wire Line
 	2000 6500 1900 6500
 Text GLabel 2000 6600 2    50   Output ~ 0
@@ -1687,7 +1687,7 @@ Text GLabel 2000 6700 2    50   Output ~ 0
 Wire Wire Line
 	2000 6700 1900 6700
 Text GLabel 2000 6800 2    50   Output ~ 0
-~WI
+~WXF
 Wire Wire Line
 	2000 6800 1900 6800
 Text GLabel 4200 6100 2    50   Output ~ 0
@@ -1699,7 +1699,7 @@ Text GLabel 4200 6200 2    50   Output ~ 0
 Wire Wire Line
 	4200 6200 4100 6200
 Text GLabel 4200 6500 2    50   Output ~ 0
-~RP
+~RXC
 Wire Wire Line
 	4200 6500 4100 6500
 Text GLabel 4200 6600 2    50   Output ~ 0
@@ -1711,15 +1711,15 @@ Text GLabel 4200 6700 2    50   Output ~ 0
 Wire Wire Line
 	4200 6700 4100 6700
 Text GLabel 4200 6800 2    50   Output ~ 0
-~RF
+~RXF
 Wire Wire Line
 	4200 6800 4100 6800
 Text GLabel 4200 6300 2    50   Output ~ 0
-~RL
+~RXA
 Wire Wire Line
 	4200 6300 4100 6300
 Text GLabel 4200 6400 2    50   Output ~ 0
-~RH
+~RXB
 Wire Wire Line
 	4200 6400 4100 6400
 Text GLabel 3850 2250 0    50   Input ~ 0
@@ -1727,7 +1727,7 @@ Text GLabel 3850 2250 0    50   Input ~ 0
 Text GLabel 3800 4400 0    50   Input ~ 0
 ~WB
 Text GLabel 8650 4700 0    50   Input ~ 0
-~WP
+~WXC
 Wire Wire Line
 	8650 4800 8750 4800
 Text GLabel 8650 4600 0    50   Input ~ 0
@@ -1739,7 +1739,7 @@ Text GLabel 8650 4500 0    50   Input ~ 0
 Wire Wire Line
 	8650 4700 8750 4700
 Text GLabel 8650 4400 0    50   Input ~ 0
-~WI
+~WXF
 Wire Wire Line
 	8650 6000 8750 6000
 Text GLabel 6650 2250 2    50   Input ~ 0
@@ -1747,7 +1747,7 @@ Text GLabel 6650 2250 2    50   Input ~ 0
 Text GLabel 5550 4400 0    50   Input ~ 0
 ~RB
 Text GLabel 8650 5800 0    50   Input ~ 0
-~RP
+~RXC
 Wire Wire Line
 	8650 4900 8750 4900
 Text GLabel 8650 5900 0    50   Input ~ 0
@@ -1759,15 +1759,15 @@ Text GLabel 8650 6000 0    50   Input ~ 0
 Wire Wire Line
 	8650 5700 8750 5700
 Text GLabel 8650 6100 0    50   Input ~ 0
-~RF
+~RXF
 Wire Wire Line
 	8650 6100 8750 6100
 Text GLabel 8650 5600 0    50   Input ~ 0
-~RL
+~RXA
 Wire Wire Line
 	8650 5800 8750 5800
 Text GLabel 8650 5700 0    50   Input ~ 0
-~RH
+~RXB
 Wire Wire Line
 	8650 5900 8750 5900
 Wire Wire Line
@@ -1789,13 +1789,13 @@ Wire Wire Line
 Text GLabel 2000 6400 2    50   Output ~ 0
 ~WXB
 Text GLabel 2000 6300 2    50   Output ~ 0
-~WO
+~WXA
 Wire Wire Line
 	2000 6300 1900 6300
 Wire Wire Line
 	1900 6400 2000 6400
 Text GLabel 8650 4900 0    50   Input ~ 0
-~WO
+~WXA
 Text GLabel 8650 4800 0    50   Input ~ 0
 ~WXB
 Wire Wire Line

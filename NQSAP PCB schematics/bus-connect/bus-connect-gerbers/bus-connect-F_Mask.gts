@@ -1,12 +1,12 @@
 G04 #@! TF.GenerationSoftware,KiCad,Pcbnew,(5.1.9)-1*
-G04 #@! TF.CreationDate,2021-10-03T21:12:03-04:00*
+G04 #@! TF.CreationDate,2021-10-24T00:32:31-04:00*
 G04 #@! TF.ProjectId,bus-connect,6275732d-636f-46e6-9e65-63742e6b6963,rev?*
 G04 #@! TF.SameCoordinates,Original*
 G04 #@! TF.FileFunction,Soldermask,Top*
 G04 #@! TF.FilePolarity,Negative*
 %FSLAX46Y46*%
 G04 Gerber Fmt 4.6, Leading zero omitted, Abs format (unit mm)*
-G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-10-03 21:12:03*
+G04 Created by KiCad (PCBNEW (5.1.9)-1) date 2021-10-24 00:32:31*
 %MOMM*%
 %LPD*%
 G01*

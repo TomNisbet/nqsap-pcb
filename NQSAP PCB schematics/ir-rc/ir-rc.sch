@@ -4,7 +4,7 @@ EELAYER END
 $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
-Title "Instruction Register and Ring Counter"
+Title "NQSAP-PCB Instruction Register and Ring Counter"
 Date "2021-10-07"
 Rev "1.0"
 Comp "github.com/TomNisbet/nqsap-pcb"
