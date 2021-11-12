@@ -13,11 +13,7 @@ The Not Quite Simple As Possible Computer
 </figure>
 
 NQSAP-PCB is the second iteration of the
-[NQSAP breadboard TTL computer](https://tomnisbet.github.io/nqsap/). It follows the
-[Ben Eater 8-bit computer (SAP-1)](https://eater.net/8bit) design with some enhancements
-and extensions.  This site does not cover the entire design because that is already
-extremely well documented in the Ben Eater videos.  The documentation here only covers the
-areas where this computer differs from the basic SAP-1.
+[NQSAP breadboard TTL computer](https://tomnisbet.github.io/nqsap/). 
 
 Highlights of the design are:
 

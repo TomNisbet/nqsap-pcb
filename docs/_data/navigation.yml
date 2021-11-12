@@ -4,8 +4,10 @@ docs:
     children:
       - title: "What is NQSAP-PCB?"
         url: /
-      - title: "Build History"
-        url: /docs/build-history/
+      - title: "Build 1"
+        url: /docs/build-01/
+      - title: "Build 2"
+        url: /docs/build-02/
   - title: "Components"
     children:
       - title: "Backplane"
