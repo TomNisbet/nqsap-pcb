@@ -19,7 +19,7 @@ There are no board-specific interconnects vertically, so related boards should s
 
 ## Bus connectors
 
-[![Bus connector](../../assets/images/bus-connector-board.png "bus connector"){:width="500px"}](../../assets/images/bus-connector-board.png)[![Bus LEDs][(../../assets/images/bus-leds-board.png "bus LEDs"){:width="500px"}](../../assets/images/bus-leds-board.png)
+[![Bus connector](../../assets/images/bus-connector-board.png "bus connector"){:width="500px"}](../../assets/images/bus-connector-board.png)[![Bus LEDs](../../assets/images/bus-leds-board.png "bus LEDs"){:width="500px"}](../../assets/images/bus-leds-board.png)
 
 The bus connector boards are used to connect backplane together to expand the computer vertically.  Three connectors are used between each pair of backplane boards.  The bus connector wires all 40 lines top-to-bottom.  
 
