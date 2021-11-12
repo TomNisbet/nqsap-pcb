@@ -1,6 +1,6 @@
 ---
 title: "RAM and MAR"
-permalink: /docs/ir-rc/
+permalink: /docs/ram-mar/
 excerpt: "RAM and Memory Address Register (MAR) for the NQSAP-PCB computer"
 ---
 

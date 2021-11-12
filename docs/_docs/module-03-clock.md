@@ -1,5 +1,5 @@
 ---
-title: "Loader / Debugger"
+title: "System Clock"
 permalink: /docs/clock/
 excerpt: "System clock for the NQSAP-PCB computer"
 ---
@@ -14,11 +14,6 @@ reduce the number of signals that need to be on the control bus.  The
 
 [![System clock](../../assets/images/loader-schematic.png "System clock"){:width="720px"}](../../assets/images/loader-schematic.png)
 
-The Loader uses three 74HCT595 8-bit shift registers to drive the twenty-four microcode
-ROM control outputs. The output enable of these registers is tied to the Loader's ACTIVE
-signal and the output enable of the microcode ROMs is the inverted ACTIVE signal, ensuring
-that only one source will be outputting a signal at any time. The Loader uses four Arduino
-outputs to drive the inputs of the shift registers.  
 
 ## Clock implementation
 
