@@ -1,0 +1,28 @@
+# main links
+docs:
+  - title: "Overview"
+    children:
+      - title: "What is NQSAP-PCB?"
+        url: /
+      - title: "Build History"
+        url: /docs/build-history/
+  - title: "Components"
+    children:
+      - title: "Backplane"
+        url: /docs/backplane/
+      - title: "Loader/Debugger"
+        url: /docs/loader/
+      - title: "Clock"
+        url: /docs/clock/
+      - title: "A and B Registers"
+        url: /docs/ab-registers/
+      - title: "Microcode"
+        url: /docs/microcode/
+      - title: "IR and RC"
+        url: /docs/ir-rc/
+      - title: "RAM and MAR"
+        url: /docs/ram-mar/
+  - title: "Links"
+    children:
+      - title: "Code Repository"
+        url: "https://github.com/TomNisbet/nqsap-pcb"
