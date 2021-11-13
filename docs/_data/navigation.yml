@@ -1,6 +1,6 @@
 # main links
 docs:
-  - title: "Overview"
+  - title: "Introduction"
     children:
       - title: "What is NQSAP-PCB?"
         url: /
@@ -8,10 +8,12 @@ docs:
         url: /docs/build-01/
       - title: "Build 2"
         url: /docs/build-02/
-  - title: "Components"
+  - title: "Design"
     children:
       - title: "Backplane"
         url: /docs/backplane/
+      - title: "System Overview"
+        url: /docs/system/
       - title: "Loader/Debugger"
         url: /docs/loader/
       - title: "Clock"
