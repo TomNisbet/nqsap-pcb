@@ -28,7 +28,7 @@ increment the program counter.
 
 ### RAM and MAR
 
-[![RAM and MAR](../../assets/images/ram-mar.jpg "RAM and Memory Address Register"){:width="400px"}](../../assets/images/ram-mar.jpg)
+[![RAM and MAR](../../assets/images/ram-mar-board.png "RAM and Memory Address Register"){:width="400px"}](../../assets/images/ram-mar-board.png)
 
 The MAR is read-only, using a single 74HCT377 register.  The RAM uses a 32Kx8 static RAM
 which is extreme overkill, since only 256 of the 32768 bytes are used.  But it is easy to

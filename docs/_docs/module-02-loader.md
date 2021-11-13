@@ -9,7 +9,8 @@ excerpt: "Arduino-based Loader/Debugger for the NQSAP-PCB computer"
 Version 2.0 of the Loader module adds the system clock and master reset circuits to the
 board.  There was space on the board and it makes sense to co-locate these functions to
 reduce the number of signals that need to be on the control bus.  The
-[clock module page]() has the
+[clock module page](../clock/) has the schematics and circuit description for the clock
+functionality.
 
 The program memory loader uses an Arduino Nano in place of manual-entry DIP switches on
 the SAP-1.  The Loader has eight of the Arduino I/O lines connected directly to the NQSAP

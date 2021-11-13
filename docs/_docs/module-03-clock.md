@@ -6,14 +6,9 @@ excerpt: "System clock for the NQSAP-PCB computer"
 
 [![System clock](../../assets/images/loader-board.png "System clock"){:width="500px"}](../../assets/images/loader-board.png)
 
-Version 2.0 of the Loader module adds the system clock and master reset circuits to the
-board.  There was space on the board and it makes sense to co-locate these functions to
-reduce the number of signals that need to be on the control bus.  The
-[clock module page]() has the
+The clock and loader are on the same board to reduce the number of signals that need to be on the control bus.
 
-
-[![System clock](../../assets/images/loader-schematic.png "System clock"){:width="720px"}](../../assets/images/loader-schematic.png)
-
+[![System clock](../../assets/images/clock-schematic.png "System clock"){:width="720px"}](../../assets/images/clock-schematic.png)
 
 ## Clock implementation
 
