@@ -9,9 +9,6 @@ excerpt: "Backplane for the NQSAP-PCB computer"
 
 The backplane and interconnect design is based on an [8-bit PCB implementation by djh82uk](https://www.reddit.com/r/beneater/comments/pn4j6j/finally_complete_with_all_bugs_fixed/)
 
-## Backplane
-[![Backplane](baseboard.png "NQSAP breadboard computer")](baseboard.png)
-
 Each backplane board can hold three modules across.  Any module slot can hold one full-height or two half-height modules.  The full size module boards measure 90mm from the top row of pins to the bottom row.  The total board height is 96mm.
 
 A 16-pin header is provided between each half-height board to make module-to-module connections.  A full height board can use both sets of connectors for a total of 32 pins.  The interconnects have the inner pins connected and the outer pins connected.  A module needing 8 or fewer connections could populate just a 1x8 connector instead of a 2x8 to save space.
