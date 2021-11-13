@@ -21,11 +21,6 @@ decoder that gives output that looks like a ring counter.  This output is only u
 the LED display that indicates the step - the input to the ROMs will be the binary output
 of the counter. Still, the ring counter terminology is used to match the Ben Eater builds.
 
-The first picture shows the register select logic and the microcode ROMs.  Only two
-ROMs were used in the first build.  ROM2 is dedicated to the register select logic and
-ROM0 has miscellaneous housekeeping control signals like reset the ring counter and
-increment the program counter.
-
 ### RAM and MAR
 
 [![RAM and MAR](../../assets/images/ram-mar-board.png "RAM and Memory Address Register"){:width="400px"}](../../assets/images/ram-mar-board.png)

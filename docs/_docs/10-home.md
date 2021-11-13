@@ -3,7 +3,7 @@ title: "NQSAP-PCB 8-bit TTL Computer"
 permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
-[![NQSAP-PCB](../../assets/images/nqsap-pcb.png "initial NQSAP-PCB build"){:width="400px"}](../../assets/images/nqsap-pcb.png)
+[![NQSAP-PCB](../assets/images/nqsap-pcb.png "initial NQSAP-PCB build"){:width="400px"}](../assets/images/nqsap-pcb.png)
 
 The Not Quite Simple As Possible Computer - PCB version
 
@@ -12,7 +12,7 @@ NQSAP-PCB is the second iteration of the
 
 Highlights of the design are:
 
-* [Arduino-based loader/debugger](../loader/) to load programs and run interactive diagnostics
+* [Arduino-based loader/debugger](loader/) to load programs and run interactive diagnostics
 * 8-bit addressing extends the size of memory and number of opcodes
 * 74LS181 ALU provides arithmetic and logic operations including add, subtract, AND, OR,
  and XOR
