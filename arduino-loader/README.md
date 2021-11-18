@@ -2,7 +2,7 @@
 
 This folder contains the Arduino sketch for the NQSAP Loader and Interactive Debugger.
 The hardware design and features of the Loader/Debugger are listed in the
-[Loader documentation](https://tomnisbet.github.io/nqsap/docs/loader/) in this repo.
+[Loader documentation](https://tomnisbet.github.io/nqsap-pcb/docs/loader/) in this repo.
 
 This part of the project borrows heavily from the
 [TommyPROM EEPROM Programmer](https://github.com/TomNisbet/TommyPROM) software.

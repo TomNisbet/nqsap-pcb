@@ -33,8 +33,9 @@ to install the LED backwards, causing it to display the inverted signal.
 
 The second problem is that the Ring Counter requires an inverted N signal from the bus.
 The Loader was providing some inverted signals over the module interconnects, but this one
-was not included.  The next version of the board will add a hex inverter to produce the
-needed signals locally.
+was not included.  As a temporary fix, the load input to the ring counter was wired to an
+unused bus line where it can be manually set or wired to an external inverter.  The next
+version of the board will add a hex inverter to produce the needed signals locally.
 
 ### RAM and MAR
 
