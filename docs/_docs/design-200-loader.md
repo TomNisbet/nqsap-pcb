@@ -13,14 +13,14 @@ reduce the number of signals that need to be on the control bus.  The
 functionality.
 
 The program memory loader uses an Arduino Nano in place of manual-entry DIP switches on
-the SAP-1.  The Loader has eight of the Arduino I/O lines connected directly to the NQSAP
-host bus for read and write access.  It can select registers and also drive the CLK and
-RST lines.
+the SAP-1.  The Loader/Debugger has eight of the Arduino I/O lines connected directly to
+the NQSAP host bus for read and write access.  It can drive all of the microcode control
+lines plus the CLK and RST lines.
 
 Beyond the ability to simply load programs into memory, the Loader can read and write all
-of the NQSAP registers. This gives the Loader the capability to perform a comprehensive
-system verification.  This system test is helpful for verifying the operation of new
-modules.
+of the NQSAP registers and drive any other control signals. This gives the Loader the
+capability to perform a comprehensive system verification.  This system test is helpful
+for verifying the operation of new modules.
 
 The Loader writes a default program to the NQSAP memory at power up, allowing unattended
 operation.  If a USB connection is established, the Loader provides a ROM monitor-like
@@ -43,14 +43,6 @@ available via the USB interface:
   * Test all read/write registers by reading back the patterns written
   * Test memory with a set of patterns including walking bits
   * (future) Test the ALU by writing operands and operations and verifying the result
-
-## Self-test
-
-<figure class="video_container">
-  <video controls="true" width="50%" allowfullscreen="true" poster="../../assets/videos/self-test.png">
-    <source src="../../assets/videos/self-test.mp4" type="video/mp4">
-  </video>
-</figure>
 
 ## Loader Design
 
