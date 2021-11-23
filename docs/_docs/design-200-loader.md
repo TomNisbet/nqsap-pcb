@@ -4,7 +4,7 @@ permalink: /docs/loader/
 excerpt: "Arduino-based Loader/Debugger for the NQSAP-PCB computer"
 ---
 
-[![Arduino Loader](../../assets/images/loader-board.png "loader"){:width="500px"}](../../assets/images/loader-board.png)
+[![Arduino Loader](../../assets/images/loader-board-500.jpg "loader")](../../assets/images/loader-board.jpg)
 
 Version 2.0 of the Loader module adds the system clock and master reset circuits to the
 board.  There was space on the board and it makes sense to co-locate these functions to

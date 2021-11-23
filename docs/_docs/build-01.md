@@ -4,7 +4,7 @@ permalink: /docs/build-01/
 excerpt: "NQSAP-PCB computer build 1"
 ---
 
-[![Initial build](../../assets/images/boards1.png "initial NQSAP-PCB build"){:width="400px"}](../../assets/images/boards1.png)
+[![Initial build](../../assets/images/boards1-500.jpg "initial NQSAP-PCB build")](../../assets/images/boards1.jpg)
 
 The goal of the initial order of boards was to verify the overall physical and electrical
 design.  The backplane and interconnect boards were designed, along with a few other

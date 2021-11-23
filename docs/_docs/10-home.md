@@ -3,7 +3,7 @@ title: "NQSAP-PCB 8-bit TTL Computer"
 permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
-[![NQSAP-PCB](assets/images/nqsap-pcb.png "initial NQSAP-PCB build"){:width="400px"}](assets/images/nqsap-pcb.png)
+[![NQSAP-PCB](assets/images/nqsap-pcb-500.jpg "initial NQSAP-PCB build")](assets/images/nqsap-pcb.jpg)
 
 The Not Quite Simple As Possible Computer - PCB version
 

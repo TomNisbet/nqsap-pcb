@@ -4,7 +4,7 @@ permalink: /docs/clock/
 excerpt: "System clock for the NQSAP-PCB computer"
 ---
 
-[![System clock](../../assets/images/loader-board.png "System clock"){:width="500px"}](../../assets/images/loader-board.png)
+[![System clock](../../assets/images/loader-board-500.jpg "System clock")](../../assets/images/loader-board.jpg)
 
 The system clock and master reset circuits are co-located with the Loader/Debugger module.
 board.  There was space on the board and it makes sense to co-locate these functions to

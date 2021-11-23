@@ -12,7 +12,7 @@ bus signal list
 
 Decoders moved to module groups
 
-Decoding in groups of 8, not the full 16.  COnnected modules must be in same group.
+Decoding in groups of 8, not the full 16.  Connected modules must be in same group.
 
 ## Layout and Interconnects
 

@@ -4,7 +4,7 @@ permalink: /docs/ir-rc/
 excerpt: "Instruction Register and Ring Counter for the NQSAP-PCB computer"
 ---
 
-[![Instruction Register and Ring Counter](../../assets/images/ir-rc-board.png "Instruction Register and Ring Counter"){:width="500px"}](../../assets/images/ir-rc-board.png)
+[![Instruction Register and Ring Counter](../../assets/images/ir-rc-board-500.jpg "Instruction Register and Ring Counter")](../../assets/images/ir-rc-board.jpg)
 
 The Instruction Register (IR) and Ring Counter (RC) provide a 12-bit address for the microcode ROMs.
 

@@ -4,7 +4,7 @@ permalink: /docs/ab-registers/
 excerpt: "A and B registers for the NQSAP-PCB computer"
 ---
 
-[![A-B Registers](../../assets/images/ab-registers-board.png "A-B Registers"){:width="500px"}](../../assets/images/ab-registers-board.png)
+[![A-B Registers](../../assets/images/ab-registers-board-500.jpg "A-B Registers")](../../assets/images/ab-registers-board.jpg)
 
 The A and B registers are 8-bit registers that provide the inputs to the ALU.
 

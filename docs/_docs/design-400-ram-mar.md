@@ -4,7 +4,7 @@ permalink: /docs/ram-mar/
 excerpt: "RAM and Memory Address Register (MAR) for the NQSAP-PCB computer"
 ---
 
-[![RAM and MAR](../../assets/images/ram-mar-board.png "RAM and MAR"){:width="500px"}](../../assets/images/ram-mar-board.png)
+[![RAM and MAR](../../assets/images/ram-mar-board-500.jpg "RAM and MAR")](../../assets/images/ram-mar-board.jpg)
 
 The RAM provides 256 bytes of storage for programs and storage.  The Memory Address
 Register (MAR) provides the 8-bit address. Two additional address lines from the microcode

@@ -4,7 +4,7 @@ permalink: /docs/build-02/
 excerpt: "NQSAP-PCB computer build 2"
 ---
 
-[![Second set of boards](../../assets/images/boards2.png "Second set of boards"){:width="400px"}](../../assets/images/boards2.png)
+[![Second set of boards](../../assets/images/boards2-500.jpg "Second set of boards")](../../assets/images/boards2.jpg)
 
 The second batch of boards contained a new Loader/Debugger as well as the first boards for
 the microcode ROMs, Instruction Register/Ring Counter, and RAM/MAR.  These boards were

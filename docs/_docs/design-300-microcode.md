@@ -4,7 +4,7 @@ permalink: /docs/microcode/
 excerpt: "Microcode ROMs for the NQSAP-PCB computer"
 ---
 
-[![Microcode ROMs](../../assets/images/microcode-board.png "Microcode ROMs"){:width="500px"}](../../assets/images/microcode-board.png)
+[![Microcode ROMs](../../assets/images/microcode-board-500.jpg "Microcode ROMs")](../../assets/images/microcode-board.jpg)
 
 The microcode ROMs drive the 24 control signals for the NQSAP-PCB computer.
 
