@@ -28,7 +28,7 @@ docs:
         url: /docs/ram-mar/
   - title: "Links"
     children:
-      - title: "Code Repository"
+      - title: "Code and Schematics"
         url: "https://github.com/TomNisbet/nqsap-pcb"
   - title: "Instruction Set"
     children:
