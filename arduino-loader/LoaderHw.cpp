@@ -55,6 +55,8 @@ const char * aluBinaryNames[] = {
     "SUB", "ADD", "XOR", "AND", "OR"
 };
 
+// TODO - update to use the faster direct hw control for 74595 shift registers
+//
 // Register select controls
 // Lower 4 bits are the register number.  RCLK and WCLK are connected to the CLK lines of
 // two 74LS173s that provide the register select values to the decoders.  To select a
@@ -64,26 +66,6 @@ enum {
     REGSEL_MASK = 0x0f,
     REGSEL_RCLK = 0x10,
     REGSEL_WCLK = 0x20
-};
-
-// Write register is PC0-2 (pin A0-A2)
-// Read register is PC3-5 (pin A3-A5)
-// PC6 and PC7 (pin A6, A7) are analog input only and are not used
-enum {
-    REG_NONE= 0x00,    // No register selected
-    REG_MEM = 0x01,
-    REG_MAR = 0x02,
-    REG_D =   0x03,
-    REG_PC =  0x04,
-    REG_SP  = 0x05,
-    REG_ALU = 0x06,
-    REG_A =   0x08,
-    REG_B =   0x09,
-    REG_X =   0x0a,
-    REG_Y =   0x0b,
-    REG_OUT = 0x0c,
-    REG_H =   0x0d,
-    REG_IR =  0x0f
 };
 
 enum {
@@ -108,16 +90,37 @@ enum {
     CTL_ALL = 0xffff
 };
 
+// Write register is PC0-2 (pin A0-A2)
+// Read register is PC3-5 (pin A3-A5)
+// PC6 and PC7 (pin A6, A7) are analog input only and are not used
+enum {
+    REG_NONE= 0x00,    // No register selected
+    REG_MEM = 0x01, // r/w
+    REG_MAR = 0x02, // write-only
+    REG_D =   0x03, // r/w
+    REG_SP  = 0x05, // r/w
+    REG_PC =  0x07, // r/w
+    REG_A =   0x08, // r/w
+    REG_B =   0x09, // r/w
+    REG_X =   0x0a, // r/w
+    REG_Y =   0x0b, // r/w
+    REG_OUT = 0x0d, // write-only
+    REG_H =   0x0d, // read-only
+    REG_ALU = 0x0e, // read-only
+    REG_IR =  0x0f, // write-only
+    REG_FLG = 0x0f  // read-only
+};
+
 
 static uint8_t valSelects = 0;
 
 static const char * registerNames[] = {
-    "none", "MEM", "MAR", "03",  "PC", "SP", "ALU", "07",
-    "A",    "B",   "X",   "Y",   "OUT", "H",  "0e", "IR"
+    "none", "MEM", "MAR", "D",  "04",  "SP",  "ALU", "PC",
+    "A",    "B",   "X",   "Y",  "0c",  "OUT", "ALU", "IR"
 };
 static const unsigned woRegisters[] = { REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
-static const unsigned rwRegisters[] = { REG_PC, REG_A, REG_B }; //REG_PC, REG_H, REG_B, REG_SP, REG_A };
-//static const unsigned rwRegisters[] = { REG_PC, REG_D, REG_X, REG_Y, REG_H, REG_B, REG_SP, REG_A };
+static const unsigned rwRegisters[] = { REG_PC, REG_A, REG_B }; //REG_PC, REG_B, REG_SP, REG_A };
+//static const unsigned rwRegisters[] = { REG_PC, REG_D, REG_X, REG_Y, REG_B, REG_SP, REG_A };
 static unsigned numWoRegisters() { return sizeof(woRegisters) / sizeof(*woRegisters); }
 static unsigned numRwRegisters() { return sizeof(rwRegisters) / sizeof(*rwRegisters); }
 
