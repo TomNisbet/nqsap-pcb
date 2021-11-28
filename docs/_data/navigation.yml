@@ -30,3 +30,11 @@ docs:
     children:
       - title: "Code Repository"
         url: "https://github.com/TomNisbet/nqsap-pcb"
+  - title: "Instruction Set"
+    children:
+      - title: "Instruction Summary"
+        url: /docs/in-summary/
+      - title: "Instruction Details"
+        url: /docs/in-details/
+      - title: "Opcode Table"
+        url: /docs/in-by-opcode/
