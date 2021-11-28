@@ -35,6 +35,7 @@ class GeneralInstructionRecord:
         self.isNqsap = row['NQSAP Support'].strip().lower() != 'n'
         self.isComplete = row['Complete'].strip().lower() != 'n'
         self.notes = row['Notes'].strip()
+        self.text = row['Text']
         self.specifics = {}
         self.modes = []
 
@@ -316,6 +317,7 @@ def makeInstructionDetails(filename):
                 continue
             f.write('## ' + gi.name + '\n\n')
             f.write(gi.description + '\n\n')
+            f.write(gi.text + '\n\n')
             f.write('**Flags:** ' + gi.flagsString + '\n\n')
             f.write('|Mode|Opcode|Bytes|Cycles|\n')
             f.write(':--- |:---: |:---:|:---: |\n')
@@ -381,19 +383,13 @@ with open(generalFile, 'rb') as inFile:
 
 #
 wip = 0
-with open(specificFile, 'rb') as inFile, open('new.csv', 'w') as outFile:
+with open(specificFile, 'rb') as inFile:
     fixBom(inFile)
     reader = csv.DictReader(inFile)
-    writer = csv.DictWriter(outFile, fieldnames = reader.fieldnames)
     rows = 1
     for row in reader:
         rows += 1
         si = SpecificInstructionRecord(row, rows)
-#        old = int(si.opcode, 16)
-#        new = ((old & 0x0f) << 4) | ((old & 0x10) >> 1) | ((old & 0xe0) >> 5)
-#        row['Opcode'] = '0x'+hex2(new)
-#        print si.opcode, old, new, '0x'+hex2(new), si
-#        writer.writerow(row)
         if opcodes.get(si.opcode):
             print "Duplicate opcode", si
         opcodes[si.opcode] = si

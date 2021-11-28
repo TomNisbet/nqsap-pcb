@@ -19,6 +19,8 @@ excerpt: "Instruction set for the NQSAP Computer"
 
 Add with Carry
 
+Add the accumulator and the carry flag to memory.  The result is placed in the accumulator.
+
 **Flags:** CZVN
 
 |Mode|Opcode|Bytes|Cycles|
@@ -33,6 +35,8 @@ Add with Carry
 ## AND
 
 Logical AND
+
+Logical AND the accumulator and memory.  The result is placed in the accumulator.
 
 **Flags:** -Z-N
 
@@ -49,6 +53,8 @@ Logical AND
 
 Arithmetic Shift Left
 
+Arithmetic shift memory or accumulator one bit left.  The MSB is shifted into carry and zero is shifted into the LSB.
+
 **Flags:** CZ-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -61,6 +67,8 @@ Arithmetic Shift Left
 
 Branch if Carry Clear
 
+Branch if the carry flag is clear.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -70,6 +78,8 @@ Branch if Carry Clear
 ## BCS
 
 Branch if Carry Set
+
+Branch if the carry flag is set.
 
 **Flags:** ----
 
@@ -81,6 +91,8 @@ Branch if Carry Set
 
 Branch if Equal
 
+Branch if the result is equal to zero (zero flag is set).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -90,6 +102,8 @@ Branch if Equal
 ## BIT
 
 Bit Test
+
+Logical AND the accumulator and memory.  The result is not stored, but the zero flag is set if the result is zero.
 
 **Flags:** -Z--
 
@@ -101,6 +115,8 @@ Bit Test
 
 Branch if Minus
 
+Branch if the result is less than zero (negative flag is set).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -110,6 +126,8 @@ Branch if Minus
 ## BNE
 
 Branch if Not Equal
+
+Branch if the result is not equal to zero (zero flag is clear).
 
 **Flags:** ----
 
@@ -121,6 +139,8 @@ Branch if Not Equal
 
 Branch if Positive
 
+Branch if the result is not less than zero (negative flag is clear).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -130,6 +150,8 @@ Branch if Positive
 ## BVC
 
 Branch if Overflow Clear
+
+Branch if the overflow flag is clear.
 
 **Flags:** ----
 
@@ -141,6 +163,8 @@ Branch if Overflow Clear
 
 Branch if Overflow Set
 
+Branch if the overflow flag is set.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -150,6 +174,8 @@ Branch if Overflow Set
 ## CLC
 
 Clear Carry
+
+Clear the carry flag.
 
 **Flags:** C---
 
@@ -161,6 +187,8 @@ Clear Carry
 
 Clear Overflow
 
+Clear the overflow flag.
+
 **Flags:** --V-
 
 |Mode|Opcode|Bytes|Cycles|
@@ -170,6 +198,8 @@ Clear Overflow
 ## CMP
 
 Compare A
+
+Subtract memory from the accumulator and update the flags.  The result of the subtraction is not stored.
 
 **Flags:** CZ-N
 
@@ -186,6 +216,8 @@ Compare A
 
 Compare X
 
+Subtract memory from X and update the flags.  The result of the subtraction is not stored.
+
 **Flags:** CZ-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -196,6 +228,8 @@ Compare X
 ## CPY
 
 Compare Y
+
+Subtract memory from X and update the flags.  The result of the subtraction is not stored.
 
 **Flags:** CZ-N
 
@@ -208,6 +242,8 @@ Compare Y
 
 Decrement A
 
+Subtract one from the accumulator and store the result in the accumulator.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -217,6 +253,8 @@ Decrement A
 ## DEC
 
 Decrement Memory
+
+Subtract one from memory and store the result in  memory.
 
 **Flags:** -Z-N
 
@@ -229,6 +267,8 @@ Decrement Memory
 
 Decrement X
 
+Subtract one from X and store the result in X.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -239,6 +279,8 @@ Decrement X
 
 Decrement Y
 
+Subtract one from Y and store the result in Y.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -248,6 +290,8 @@ Decrement Y
 ## EOR
 
 Exclusive OR
+
+Logical exclusive-OR the accumulator and memory.  The result is placed in the accumulator.
 
 **Flags:** -Z-N
 
@@ -264,6 +308,8 @@ Exclusive OR
 
 Increment A
 
+Add one to the accumulator and store the result in the accumulator.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -273,6 +319,8 @@ Increment A
 ## INC
 
 Increment Memory
+
+Add one to memory and store the result in  memory.
 
 **Flags:** -Z-N
 
@@ -285,6 +333,8 @@ Increment Memory
 
 Increment X
 
+Add one to  X and store the result in X.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -294,6 +344,8 @@ Increment X
 ## INY
 
 Increment Y
+
+Add one to Y and store the result in Y.
 
 **Flags:** -Z-N
 
@@ -305,6 +357,8 @@ Increment Y
 
 Jump if Carry Clear
 
+Branch if the carry flag is clear.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -314,6 +368,8 @@ Jump if Carry Clear
 ## JCS
 
 Jump if Carry Set
+
+Branch if the carry flag is set.
 
 **Flags:** ----
 
@@ -325,6 +381,8 @@ Jump if Carry Set
 
 Jump if Equal
 
+Branch if the result is equal to zero (zero flag is set).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -335,6 +393,8 @@ Jump if Equal
 
 Jump if Minus
 
+Branch if the result is less than zero (negative flag is set).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -344,6 +404,8 @@ Jump if Minus
 ## JMP
 
 Jump
+
+Unconditional jump to absolute or relative address.
 
 **Flags:** ----
 
@@ -356,6 +418,8 @@ Jump
 
 Jump if Not Equal
 
+Branch if the result is not equal to zero (zero flag is clear).
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -365,6 +429,8 @@ Jump if Not Equal
 ## JPL
 
 Jump if Positive
+
+Branch if the result is not less than zero (negative flag is clear).
 
 **Flags:** ----
 
@@ -376,6 +442,8 @@ Jump if Positive
 
 Jump to Subroutine
 
+Push the address of the next instruction to the stack and jump to a new location.  SP is decremented.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -385,6 +453,8 @@ Jump to Subroutine
 ## JVC
 
 Jump if Overflow Clear
+
+Branch if the overflow flag is clear.
 
 **Flags:** ----
 
@@ -396,6 +466,8 @@ Jump if Overflow Clear
 
 Jump if Overflow Set
 
+Branch if the overflow flag is set.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -405,6 +477,8 @@ Jump if Overflow Set
 ## LDA
 
 Load A
+
+Load A from memory.
 
 **Flags:** -Z-N
 
@@ -421,6 +495,8 @@ Load A
 
 Load X
 
+Load X from memory.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -432,6 +508,8 @@ Load X
 ## LDY
 
 Load Y
+
+Load Y from memory.
 
 **Flags:** -Z-N
 
@@ -445,6 +523,8 @@ Load Y
 
 Logical Shift Right
 
+Logical shift memory or accumulator one bit right.  The LSB is shifted into carry and zero is shifted into the MSB.  The negative bit is cleared.
+
 **Flags:** CZ-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -457,6 +537,8 @@ Logical Shift Right
 
 No Operation
 
+No operation is performed.  Registers (except the PC) and flags are unchanged.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -467,6 +549,8 @@ No Operation
 
 Bitwise NOT A
 
+All bits of the accumulator are inverted and stored back to the accumulator.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -476,6 +560,8 @@ Bitwise NOT A
 ## ORA
 
 Logical Inclusive OR
+
+Logical inclusive-OR the accumulator and memory.  The result is placed in the accumulator.
 
 **Flags:** -Z-N
 
@@ -492,6 +578,8 @@ Logical Inclusive OR
 
 Output A
 
+Transfer the accumulator to the output register to display its value.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -501,6 +589,8 @@ Output A
 ## PHA
 
 Push A
+
+Push accumulator on to the stack.  SP is decremented.
 
 **Flags:** ----
 
@@ -512,6 +602,8 @@ Push A
 
 Push Processor Status
 
+Push processor status (flags) on to the stack.  SP is decremented.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -521,6 +613,8 @@ Push Processor Status
 ## PLA
 
 Pull A
+
+Pull accumulator from the stack.  SP is incremented.
 
 **Flags:** -Z-N
 
@@ -532,6 +626,8 @@ Pull A
 
 Pull Processor Status
 
+Pull processor status (flags) from the stack.  SP is incremented.
+
 **Flags:** CZVN
 
 |Mode|Opcode|Bytes|Cycles|
@@ -541,6 +637,8 @@ Pull Processor Status
 ## ROL
 
 Rotate Left
+
+Rotate memory or accumulator on bit left.  The carry flag is shifted into the LSB and the MSB is shifted into the carry flag.
 
 **Flags:** CZ-N
 
@@ -554,6 +652,8 @@ Rotate Left
 
 Rotate Right
 
+Rotate memory or accumulator on bit right.  The carry flag is shifted into the MSB and the LSB is shifted into the carry flag.
+
 **Flags:** CZ-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -566,6 +666,8 @@ Rotate Right
 
 Return from Subroutine
 
+Pull a return address from the stack and jump to it.  SP is incremented.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -575,6 +677,8 @@ Return from Subroutine
 ## SBC
 
 Subtract with Carry
+
+Subtract memory from the accumulator with borrow.  If the carry flag is clear (borrow) then the operation is A=A-M-1.  If the carry flag is set (no borrow) then the operation is A=A-M.  The result is stored in the accumulator.
 
 **Flags:** CZVN
 
@@ -591,6 +695,8 @@ Subtract with Carry
 
 Set Carry
 
+Set the carry flag.
+
 **Flags:** C---
 
 |Mode|Opcode|Bytes|Cycles|
@@ -600,6 +706,8 @@ Set Carry
 ## STA
 
 Store A
+
+Store accumulator to memory.  No flags are changed.
 
 **Flags:** ----
 
@@ -615,6 +723,8 @@ Store A
 
 Store X
 
+Store X to memory.  No flags are changed.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -625,6 +735,8 @@ Store X
 ## STY
 
 Store Y
+
+Store Y to memory.  No flags are changed.
 
 **Flags:** ----
 
@@ -637,6 +749,8 @@ Store Y
 
 Transfer A to X
 
+Transfer accumulator to X and update the N and Z flags with from the transferred value.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -646,6 +760,8 @@ Transfer A to X
 ## TAY
 
 Transfer A to Y
+
+Transfer accumulator to Y and update the N and Z flags with from the transferred value.
 
 **Flags:** -Z-N
 
@@ -657,6 +773,8 @@ Transfer A to Y
 
 Transfer SP to X
 
+Transfer SP to X and update the N and Z flags with from the transferred value.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -666,6 +784,8 @@ Transfer SP to X
 ## TXA
 
 Transfer X to A
+
+Transfer X to accummulator and update the N and Z flags with from the transferred value.
 
 **Flags:** -Z-N
 
@@ -677,6 +797,8 @@ Transfer X to A
 
 Transfer X to SP
 
+Transfer X to accummulator and update the N and Z flags with from the transferred value.
+
 **Flags:** ----
 
 |Mode|Opcode|Bytes|Cycles|
@@ -687,6 +809,8 @@ Transfer X to SP
 
 Transfer Y to A
 
+Transfer Y to accummulator and update the N and Z flags with from the transferred value.
+
 **Flags:** -Z-N
 
 |Mode|Opcode|Bytes|Cycles|
@@ -694,4 +818,4 @@ Transfer Y to A
 |IP - Implicit|0x4c|1|3|
 
 
-*this file was generated by nqsap-instructions.py at 27-Nov-2021 10:53:19*
+*this file was generated by nqsap-instructions.py at 27-Nov-2021 19:58:42*
