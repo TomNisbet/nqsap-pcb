@@ -26,10 +26,6 @@ docs:
         url: /docs/ir-rc/
       - title: "RAM and MAR"
         url: /docs/ram-mar/
-  - title: "Links"
-    children:
-      - title: "Code and Schematics"
-        url: "https://github.com/TomNisbet/nqsap-pcb"
   - title: "Instruction Set"
     children:
       - title: "Instruction Summary"
@@ -38,3 +34,7 @@ docs:
         url: /docs/in-details/
       - title: "Opcode Table"
         url: /docs/in-by-opcode/
+  - title: "Links"
+    children:
+      - title: "Code and Schematics"
+        url: "https://github.com/TomNisbet/nqsap-pcb"
