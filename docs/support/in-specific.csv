@@ -1,0 +1,121 @@
+Instance,Opcode,Description,ALU,Bytes,Cycles,Bold
+IP_NOP,0x00,no operation,n,1,3,
+AA_INA,0x01,increment A,y,1,3,
+AB_INC,0x02,increment memory,y,2,7,
+AX_INC,0x03,increment memory,y,2,8,
+IP_INX,0x05,increment X,y,1,6,
+IP_INY,0x06,increment Y,y,1,6,
+AA_NOT,0x08,NOT A,y,1,3,
+IP_OUT,0x10,output A,n,1,3,
+IM_LDA,0x11,load immediate to A,n,2,4,
+AB_LDA,0x12,load A from memory,n,2,5,
+AX_LDA,0x13,load A from memory,n,2,6,
+AY_LDA,0x14,load A from memory,n,2,6,
+IX_LDA,0x15,load A from memory,n,2,7,
+IY_LDA,0x16,load A from memory,n,2,7,
+IM_LDX,0x19,load immediate to X,n,2,4,y
+AB_LDX,0x1a,load X from memory,n,2,5,y
+IP_TAX,0x1b,transfer A to X,n,1,3,y
+AY_LDX,0x1c,load X from memory,n,2,6,y
+IP_TSX,0x1d,transfer SP to X,n,1,3,y
+AB_STA,0x22,store A to memory,n,2,5,
+AX_STA,0x23,store A to memory,n,2,6,
+AY_STA,0x24,store A to memory,n,2,6,
+IX_STA,0x25,store A to memory,n,2,7,
+IY_STA,0x26,store A to memory,n,2,7,
+AB_STX,0x2a,store X to memory,n,2,5,y
+IP_TXA,0x2b,transfer X to A,n,1,3,y
+AY_STX,0x2c,store X to memory,n,2,6,y
+IP_TXS,0x2d,transfer X to SP,n,1,3,y
+IP_CLC,0x30,clear carry flag,y,1,3,y
+IP_SEC,0x31,set carry flag,y,1,3,y
+IP_CLV,0x32,clear overflow flag,y,1,3,y
+IM_LDY,0x39,load immediate to Y,n,2,4,y
+AB_LDY,0x3a,load Y from memory,n,2,5,y
+AX_LDY,0x3b,load Y from memory,n,2,6,y
+IP_TAY,0x3c,transfer A to Y,n,1,3,y
+AB_STY,0x4a,store Y to memory,n,2,5,y
+AX_STY,0x4b,store Y to memory,n,2,6,y
+IP_TYA,0x4c,transfer Y to A,n,1,3,y
+IM_CPX,0x60,compare X immediate,y,2,7,y
+IM_SBC,0x61,subtract with carry,y,2,5,
+AB_SBC,0x62,subtract with carry memory,y,2,6,
+AX_SBC,0x63,subtract with carry memory,y,2,7,
+AY_SBC,0x64,subtract with carry memory,y,2,7,
+IX_SBC,0x65,subtract with carry memory,y,2,8,
+IY_SBC,0x66,subtract with carry memory,y,2,8,
+AB_CPX,0x67,compare X,y,2,8,y
+IP_PHA,0x68,push A,n,1,4,
+IM_EOR,0x69,exlcusive OR A,y,2,5,
+AB_EOR,0x6a,exlcusive OR A,y,2,6,
+AX_EOR,0x6b,exlcusive OR A,y,2,7,
+AY_EOR,0x6c,exlcusive OR A,y,2,7,
+IX_EOR,0x6d,exlcusive OR A,y,2,8,
+IY_EOR,0x6e,exlcusive OR A,y,2,8,
+IM_CPY,0x70,compare Y immediate,y,2,7,y
+IM_CMP,0x71,compare A immediate,y,2,5,y
+AB_CMP,0x72,compare A,y,2,6,y
+AX_CMP,0x73,compare A,y,2,7,y
+AY_CMP,0x74,compare A,y,2,7,y
+IX_CMP,0x75,compare A,y,2,8,y
+IY_CMP,0x76,compare A,y,2,8,y
+AB_CPY,0x77,compare Y,y,2,8,y
+IP_PHP,0x90,push PS,n,1,4,y
+IM_ADC,0x91,add with carry A,y,2,5,
+AB_ADC,0x92,add with carry memory,y,2,6,
+AX_ADC,0x93,add with carry memory,y,2,7,
+AY_ADC,0x94,add with carry memory,y,2,7,
+IX_ADC,0x95,add with carry memory,y,2,8,
+IY_ADC,0x96,add with carry memory,y,2,8,
+IP_RTS,0xa0,return from subroutine,n,1,5,
+AB_JSR,0xa2,jump to subroutine,n,2,7,
+IN_JMP,0xb0,jump,n,2,5,
+AB_JMP,0xb2,jump,n,2,4,
+AB_BIT,0xb8,bit test A with memory,y,2,5,
+IM_AND,0xb9,AND A,y,2,5,
+AB_AND,0xba,AND A,y,2,6,
+AX_AND,0xbb,AND A,y,2,7,
+AY_AND,0xbc,AND A,y,2,7,
+IX_AND,0xbd,AND A,y,2,8,
+IY_AND,0xbe,AND A,y,2,8,
+AA_ASL,0xc0,arithmetic shift left A,y,1,4,
+AB_ASL,0xc2,arithmetic shift left memory,y,1,8,
+AX_ASL,0xc3,arithmetic shift left memory,y,1,9,
+AA_ROL,0xc4,rotate left thru carry,y,1,4,
+AB_ROL,0xc6,rotate left thru carry memory,y,2,8,
+AX_ROL,0xc7,rotate left thru carry memory,y,2,9,
+RE_BCS,0xc8,branch if carry set,n,2,8,y
+RE_BCC,0xc9,branch if carry clear,n,2,8,y
+RE_BEQ,0xca,branch if equal (zero set),n,2,8,y
+RE_BNE,0xcb,branch if not equal (zero clear),n,2,8,y
+RE_BVS,0xcc,branch if overflow set,n,2,8,y
+RE_BVC,0xcd,branch if overflow clear,n,2,8,y
+RE_BMI,0xce,branch if plus (negative set),n,2,8,y
+RE_BPL,0xcf,branch if plus (negative clear),n,2,8,y
+AA_LSR,0xd0,logical shift right A,n,1,4,
+AB_LSR,0xd2,logical shift right memory,n,2,6,
+AX_LSR,0xd3,logical shift right memory,n,2,7,
+AA_ROR,0xd4,rotate right thru carry,n,1,4,
+AB_ROR,0xd6,rotate right thru carry memory,n,2,6,
+AX_ROR,0xd7,rotate right thru carry memory,n,2,7,
+AB_JCS,0xd8,jump if carry set,n,2,4,y
+AB_JCC,0xd9,jump if carry clear,n,2,4,y
+AB_JEQ,0xda,jump if equal (zero set),n,2,4,y
+AB_JNE,0xdb,jump if not equal (zero clear),n,2,4,y
+AB_JVS,0xdc,jump if overflow set,n,2,4,y
+AB_JVC,0xdd,jump if overflow clear,n,2,4,y
+AB_JMI,0xde,jump if plus (negative set),n,2,4,y
+AB_JPL,0xdf,jump if plus (negative clear),n,2,4,y
+IP_PLA,0xe8,pull A,n,1,5,
+IM_ORA,0xe9,OR A,y,2,5,
+AB_ORA,0xea,OR A,y,2,6,
+AX_ORA,0xeb,OR A,y,2,7,
+AY_ORA,0xec,OR A,y,2,7,
+IX_ORA,0xed,OR A,y,2,8,
+IY_ORA,0xee,OR A,y,2,8,
+IP_PLP,0xf0,pull PS,n,1,5,y
+AA_DEA,0xf1,decrement A,y,1,3,
+AB_DEC,0xf2,decrement memory,y,2,7,
+AX_DEC,0xf3,decrement memory,y,1,8,
+IP_DEX,0xf5,decrement X,y,1,6,
+IP_DEY,0xf6,decrement Y,y,1,6,

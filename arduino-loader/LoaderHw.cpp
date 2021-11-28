@@ -23,15 +23,15 @@ enum {
 enum {
     // ALU mode and select bits to place in the instruction register
     ALU_INC = 0x00, // A plus 1
-    ALU_SUB = 0x06, // A minus B
-    ALU_ADD = 0x09, // A plus B
-    ALU_SHL = 0x0c, // A + A
-    ALU_DEC = 0x0f, // A minus 1
-    ALU_NOT = 0x10, // not A
-    ALU_XOR = 0x16, // A xor B
-    ALU_B =   0x1a, // B
-    ALU_AND = 0x1b, // A and B
-    ALU_OR  = 0x1e  // A or B
+    ALU_SUB = 0x60, // A minus B
+    ALU_ADD = 0x90, // A plus B
+    ALU_SHL = 0xc0, // A + A
+    ALU_DEC = 0xf0, // A minus 1
+    ALU_NOT = 0x08, // not A
+    ALU_XOR = 0x68, // A xor B
+    ALU_B =   0xa8, // B
+    ALU_AND = 0xb8, // A and B
+    ALU_OR  = 0xe8  // A or B
 };
 
 const uint8_t aluUnaryOperations[] = {
@@ -74,9 +74,9 @@ enum {
     REG_MEM = 0x01,
     REG_MAR = 0x02,
     REG_D =   0x03,
-    REG_ALU = 0x04,
+    REG_PC =  0x04,
     REG_SP  = 0x05,
-    REG_PC =  0x06,
+    REG_ALU = 0x06,
     REG_A =   0x08,
     REG_B =   0x09,
     REG_X =   0x0a,
@@ -104,6 +104,7 @@ enum {
     CTL_N  = 0x0002, // next instruction (clear ring counter)
     CTL_PI = 0x0001, // program counter increment
 
+    CTL_NONE = 0x0000,
     CTL_ALL = 0xffff
 };
 
@@ -111,11 +112,11 @@ enum {
 static uint8_t valSelects = 0;
 
 static const char * registerNames[] = {
-    "none", "MEM", "MAR", "03",  "ALU", "SP", "PC", "07",
+    "none", "MEM", "MAR", "03",  "PC", "SP", "ALU", "07",
     "A",    "B",   "X",   "Y",   "OUT", "H",  "0e", "IR"
 };
 static const unsigned woRegisters[] = { REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
-static const unsigned rwRegisters[] = { REG_A, REG_B }; //REG_PC, REG_H, REG_B, REG_SP, REG_A };
+static const unsigned rwRegisters[] = { REG_PC, REG_A, REG_B }; //REG_PC, REG_H, REG_B, REG_SP, REG_A };
 //static const unsigned rwRegisters[] = { REG_PC, REG_D, REG_X, REG_Y, REG_H, REG_B, REG_SP, REG_A };
 static unsigned numWoRegisters() { return sizeof(woRegisters) / sizeof(*woRegisters); }
 static unsigned numRwRegisters() { return sizeof(rwRegisters) / sizeof(*rwRegisters); }
@@ -129,9 +130,7 @@ static void waitForUser(const char * s = 0) {
 }
 #endif
 
-static void setControlRegister(uint16_t clearBits, uint16_t setBits);
-static void setControlBits(uint16_t bits);
-static void clearControlBits(uint16_t bits);
+static void controlBitsOffOn(uint16_t clearBits, uint16_t setBits);
 static void selectRegister();
 
 LoaderHw::LoaderHw(uint32_t size)
@@ -185,7 +184,7 @@ void LoaderHw::enable() {
         digitalWrite(PGM, LOW);
         valSelects = 0;
         selectRegister();
-        clearControlBits(CTL_ALL);
+        controlBitsOffOn(CTL_ALL, CTL_NONE);
         mEnabled = true;
         delay(1);
     }
@@ -276,7 +275,7 @@ byte LoaderHw::readByte(uint32_t address) {
 
 void LoaderHw::writeControls(uint16_t data) {
     enable();
-    setControlRegister(CTL_ALL, data);
+    controlBitsOffOn(CTL_ALL, data);
 }
 
 
@@ -299,12 +298,12 @@ bool LoaderHw::testHardware() {
     delay(100);
 
     for (uint16_t bit = 0x8000; bit; bit >>= 1) {
-        setControlRegister(CTL_ALL, bit);
+        controlBitsOffOn(CTL_ALL, bit);
         delay(100);
     }
-    setControlRegister(CTL_ALL, 0);
+    controlBitsOffOn(CTL_ALL, 0);
     delay(100);
-    setControlRegister(CTL_ALL, CTL_N);
+    controlBitsOffOn(CTL_ALL, CTL_N);
 
 /*
     while (1) {
@@ -465,12 +464,12 @@ uint8_t LoaderHw::aluCompute(uint8_t op, uint8_t a, uint8_t b) {
     writeRegister(REG_B, b);
     if ((ALU_ADD == op) || (ALU_SHL == op) || (ALU_DEC == op)) {
         // TODO - may need to set C0 and C1 as well
-        setControlBits(CTL_CS);
+        controlBitsOffOn(CTL_NONE, CTL_CS);
     } else {
-        setControlBits(CTL_CC);
+        controlBitsOffOn(CTL_NONE, CTL_CC);
     }
     uint8_t result = readRegister(REG_ALU);
-    clearControlBits(CTL_CS | CTL_CC);
+    controlBitsOffOn(CTL_CS|CTL_CC, CTL_NONE);
     return result;
 }
 
@@ -538,8 +537,16 @@ bool LoaderHw::testAdderOperation(uint8_t a, uint8_t b) {
 }
 
 
-// If the same bit is present in the clearBits and in the setBits, it will be set.
-static void setControlRegister(uint16_t clearBits, uint16_t setBits) {
+// Set bits in the control register.  Any bits in the clearBits mask will be turned off
+// and any bits in the setBits mask will be turned on.  If the same bit is present in the
+// clearBits and in the setBits, it will be set.  Any bits that don't appear in either
+// mask will remain unchanged.
+// Examples:
+//   controlBitsOffOn(CTL_ALL, CTL_NONE)      - All bits off
+//   controlBitsOffOn(CTL_NONE, ALL)          - All bits on
+//   controlBitsOffOn(CTL_NONE, CTL_PI|CTL_N) - PI and N bits on, others unchanged
+//   controlBitsOffOn(CTL_ALL, CTL_PI|CTL_N)  - PI and N bits on, others off
+static void controlBitsOffOn(uint16_t clearBits, uint16_t setBits) {
     static uint16_t controls = 0;
 
     controls &= ~clearBits;
@@ -549,13 +556,6 @@ static void setControlRegister(uint16_t clearBits, uint16_t setBits) {
     shiftOut(SER, LD0, MSBFIRST, controls & 0xff);
     digitalWrite(RCLK, HIGH);
     digitalWrite(RCLK, LOW);
-}
-
-static void setControlBits(uint16_t bits) {
-    setControlRegister(0, bits);
-}
-static void clearControlBits(uint16_t bits) {
-    setControlRegister(bits, 0);
 }
 
 static void selectRegister() {

@@ -21,158 +21,128 @@ XModem xmodem(hw, cmdStatus);
 // Instruction opcodes.  Those marked with an asterisk use the ALU and thus must have
 // specific opcodes that match the bits that are hardwired from the IR to the ALU control.
 enum {
-    // 00 - 0f   A, Implicit, Relative, and Indirect - ALU Arithmetic
-    IP_NOP = 0x00,  // no operation
-    IP_OUT = 0x01,  // output A
-    IP_CLC = 0x03,  // * clear carry flag
-    IM_CPX = 0x06,  // * compare X immediate
-    IM_CPY = 0x07,  // * compare Y immediate
-    IP_PHP = 0x09,  // push PS
-    IP_RTS = 0x0a,  // return from subroutine
-    IN_JMP = 0x0b,  // jump
-    AA_ASL = 0x0c,  // * arithmetic shift left A
-    IP_PLP = 0x0f,  // pull PS
-
-    // 10 - 1f   A, Implicit, Relative, and Indirect - ALU Logic
-    AA_NOT = 0x10,  // * NOT A
-    IP_PHA = 0x16,  // push A
-    AA_LSR = 0x18,  // * logical shift left
-    AA_ROL = 0x19,  // rotate left thru carry
-    AA_ROR = 0x1a,  // rotate right thru carry
-    AB_BIT = 0x1b,  // * bit test A with memory
-    RE_BCC = 0x1c,  // branch on carry clear
-    AB_JCC = 0x1d,  // jump if carry clear
-    IP_PLA = 0x1e,  // pull A
-
-    // 20 - 2f   Immediate - ALU Arithmetic
-    AA_INA = 0x20,  // * increment A
-    IM_LDA = 0x21,  // load immediate to A
-    IP_SEC = 0x23,  // * set carry flag
-    IM_SBC = 0x26,  // * subtract with carry
-    IM_CMP = 0x27,  // * compare A immediate
-    IM_ADC = 0x29,  // * add with carry A
-    AA_DEA = 0x2f,  // * decrement A
-
-    // 30 - 3f   Immediate - ALU Logic
-    IM_LDX = 0x31,  // load immediate to X
-    IM_LDY = 0x33,  // load immediate to Y
-    IM_EOR = 0x36,  // * XOR A
-    IM_AND = 0x3b,  // * AND A
-    RE_BCS = 0x3c,  // branch on carry set
-    AB_JCS = 0x3d,  // jump if carry set
-    IM_ORA = 0x3e,  // * OR A
-
-    // 40 - 4f   Absolute - ALU Arithmetic
-    AB_INC = 0x40,  // * increment memory
-    AB_LDA = 0x41,  // load A from memory
-    AB_STA = 0x42,  // store A to memory
-    IP_CLV = 0x43,  // * clear overflow flag
-    AB_SBC = 0x46,  // * subtract with carry memory
-    AB_CMP = 0x47,  // * compare A
-    AB_ADC = 0x49,  // * add with carry memory
-    AB_JSR = 0x4a,  // jump to subroutine
-    AB_JMP = 0x4b,  // jump
-    AB_ASL = 0x4c,  // * arithmetic shift left memory
-    AB_DEC = 0x4f,  // * decrement memory
-
-    // 50 - 5f   Absolute - ALU Logic
-    AB_LDX = 0x51,  // load X
-    AB_STX = 0x52,  // store X
-    AB_LDY = 0x53,  // load Y
-    AB_STY = 0x54,  // store Y
-    AB_EOR = 0x56,  // * exlcusive OR A
-    AB_LSR = 0x58,  // logical shift right memory
-    AB_ROL = 0x59,  // rotate left thru carry memory
-    AB_ROR = 0x5a,  // rotate right thru carry memory
-    AB_AND = 0x5b,  // * AND A
-    RE_BNE = 0x5c,  // branch if not equal (zero clear)
-    AB_JNE = 0x5d,  // jump if not equal (zero clear)
-    AB_ORA = 0x5e,  // * OR A
-
-    // 60 - 6f   Absolute+X - ALU Arithmetic
-    AX_INC = 0x60,  // * increment memory
-    AX_LDA = 0x61,  // load A from memory
-    AX_STA = 0x62,  // store A to memory
-    AX_SBC = 0x66,  // * subtract with carry memory
-    AX_CMP = 0x67,  // * compare A
-    AX_ADC = 0x69,  // * add with carry memory
-    AX_ASL = 0x6c,  // * arithmetic shift left memory
-    AX_DEC = 0x6f,  // * decrement memory
-
-    // 70 - 7f   Absolute+X - ALU Logic
-    IP_TAX = 0x71,  // transfer A to X
-    IP_TXA = 0x72,  // transfer X to A
-    AX_LDY = 0x73,  // load Y
-    AX_STY = 0x74,  // store Y
-    AX_EOR = 0x76,  // * exlcusive OR A
-    AX_LSR = 0x78,  // logical shift right memory
-    AX_ROL = 0x79,  // rotate left thru carry memory
-    AX_ROR = 0x7a,  // rotate right thru carry memory
-    AX_AND = 0x7b,  // * AND A
-    RE_BEQ = 0x7c,  // branch if equal (zero set)
-    AB_JEQ = 0x7d,  // jump if equal (zero set)
-    AX_ORA = 0x7e,  // * OR A
-
-    // 80 - 8f   Absolute+Y - ALU Arithmetic
-    AY_LDA = 0x81,  // load A from memory
-    AY_STA = 0x82,  // store A to memory
-    AY_SBC = 0x86,  // * subtract with carry memory
-    AY_CMP = 0x87,  // * compare A
-    AY_ADC = 0x89,  // * add with carry memory
-
-    // 90 - 9f   Absolute+Y - ALU Logic
-    AY_LDX = 0x91,  // load X
-    AY_STX = 0x92,  // store X
-    IP_TAY = 0x93,  // transfer A to Y
-    IP_TYA = 0x94,  // transfer Y to A
-    AY_EOR = 0x96,  // * exlcusive OR A
-    AY_AND = 0x9b,  // * AND A
-    RE_BVC = 0x9c,  // branch if overflow clear
-    AB_JVC = 0x9d,  // jump if overflow clear
-    AY_ORA = 0x9e,  // * OR A
-
-    // a0 - af   Indexed Indirect (X) - ALU Arithmetic
-    IP_INX = 0xa0,  // * increment X
-    IX_LDA = 0xa1,  // load A from memory
-    IX_STA = 0xa2,  // store A to memory
-    IX_SBC = 0xa6,  // * subtract with carry memory
-    IX_CMP = 0xa7,  // * compare A
-    IX_ADC = 0xa9,  // * add with carry memory
-    IP_DEX = 0xaf,  // * decrement X
-
-    // b0 - bf   Indexed Indirect (X) - ALU Logic
-    IP_TSX = 0xb1,  // transfer SP to X
-    IP_TXS = 0xb2,  // transfer X to SP
-    IX_EOR = 0xb6,  // * exlcusive OR A
-    IX_AND = 0xbb,  // * AND A
-    RE_BVS = 0xbc,  // branch if overflow set
-    AB_JVS = 0xbd,  // jump if overflow set
-    IX_ORA = 0xbe,  // * OR A
-
-    // c0 - cf   Indirect Indexed (Y) - ALU Arithmetic
-    IP_INY = 0xc0,  // * increment Y
-    IY_LDA = 0xc1,  // load A from memory
-    IY_STA = 0xc2,  // store A to memory
-    IY_SBC = 0xc6,  // * subtract with carry memory
-    IY_CMP = 0xc7,  // * compare A
-    IY_ADC = 0xc9,  // * add with carry memory
-    IP_DEY = 0xcf,  // * decrement Y
-
-    // d0 - df   Indirect+Y - ALU Logic
-    IY_EOR = 0xd6,  // * exlcusive OR A
-    IY_AND = 0xdb,  // * AND A
-    RE_BPL = 0xdc,  // branch if plus (minus clear)
-    AB_JPL = 0xdd,  // jump if plus (minus clear)
-    IY_ORA = 0xde,  // * OR A
-
-    // e0 - ef   Misc
-    AB_CPX = 0xe6,  // * compare X
-    AB_CPY = 0xe7,  // * compare Y
-
-    // f0 - ff   Misc
-    RE_BMI = 0xfc,  // branch if minus (minus set)
-    AB_JMI = 0xfd,  // jump if minus (minus set)
+    IP_NOP = 0x00,  //   no operation
+    AA_INA = 0x01,  // * increment A
+    AB_INC = 0x02,  // * increment memory
+    AX_INC = 0x03,  // * increment memory
+    IP_INX = 0x05,  // * increment X
+    IP_INY = 0x06,  // * increment Y
+    AA_NOT = 0x08,  // * NOT A
+    IP_OUT = 0x10,  //   output A
+    IM_LDA = 0x11,  //   load immediate to A
+    AB_LDA = 0x12,  //   load A from memory
+    AX_LDA = 0x13,  //   load A from memory
+    AY_LDA = 0x14,  //   load A from memory
+    IX_LDA = 0x15,  //   load A from memory
+    IY_LDA = 0x16,  //   load A from memory
+    IM_LDX = 0x19,  //   load immediate to X
+    AB_LDX = 0x1a,  //   load X from memory
+    IP_TAX = 0x1b,  //   transfer A to X
+    AY_LDX = 0x1c,  //   load X from memory
+    IP_TSX = 0x1d,  //   transfer SP to X
+    AB_STA = 0x22,  //   store A to memory
+    AX_STA = 0x23,  //   store A to memory
+    AY_STA = 0x24,  //   store A to memory
+    IX_STA = 0x25,  //   store A to memory
+    IY_STA = 0x26,  //   store A to memory
+    AB_STX = 0x2a,  //   store X to memory
+    IP_TXA = 0x2b,  //   transfer X to A
+    AY_STX = 0x2c,  //   store X to memory
+    IP_TXS = 0x2d,  //   transfer X to SP
+    IP_CLC = 0x30,  // * clear carry flag
+    IP_SEC = 0x31,  // * set carry flag
+    IP_CLV = 0x32,  // * clear overflow flag
+    IM_LDY = 0x39,  //   load immediate to Y
+    AB_LDY = 0x3a,  //   load Y from memory
+    AX_LDY = 0x3b,  //   load Y from memory
+    IP_TAY = 0x3c,  //   transfer A to Y
+    AB_STY = 0x4a,  //   store Y to memory
+    AX_STY = 0x4b,  //   store Y to memory
+    IP_TYA = 0x4c,  //   transfer Y to A
+    IM_CPX = 0x60,  // * compare X immediate
+    IM_SBC = 0x61,  // * subtract with carry
+    AB_SBC = 0x62,  // * subtract with carry memory
+    AX_SBC = 0x63,  // * subtract with carry memory
+    AY_SBC = 0x64,  // * subtract with carry memory
+    IX_SBC = 0x65,  // * subtract with carry memory
+    IY_SBC = 0x66,  // * subtract with carry memory
+    AB_CPX = 0x67,  // * compare X
+    IP_PHA = 0x68,  //   push A
+    IM_EOR = 0x69,  // * exlcusive OR A
+    AB_EOR = 0x6a,  // * exlcusive OR A
+    AX_EOR = 0x6b,  // * exlcusive OR A
+    AY_EOR = 0x6c,  // * exlcusive OR A
+    IX_EOR = 0x6d,  // * exlcusive OR A
+    IY_EOR = 0x6e,  // * exlcusive OR A
+    IM_CPY = 0x70,  // * compare Y immediate
+    IM_CMP = 0x71,  // * compare A immediate
+    AB_CMP = 0x72,  // * compare A
+    AX_CMP = 0x73,  // * compare A
+    AY_CMP = 0x74,  // * compare A
+    IX_CMP = 0x75,  // * compare A
+    IY_CMP = 0x76,  // * compare A
+    AB_CPY = 0x77,  // * compare Y
+    IP_PHP = 0x90,  //   push PS
+    IM_ADC = 0x91,  // * add with carry A
+    AB_ADC = 0x92,  // * add with carry memory
+    AX_ADC = 0x93,  // * add with carry memory
+    AY_ADC = 0x94,  // * add with carry memory
+    IX_ADC = 0x95,  // * add with carry memory
+    IY_ADC = 0x96,  // * add with carry memory
+    IP_RTS = 0xa0,  //   return from subroutine
+    AB_JSR = 0xa2,  //   jump to subroutine
+    IN_JMP = 0xb0,  //   jump
+    AB_JMP = 0xb2,  //   jump
+    AB_BIT = 0xb8,  // * bit test A with memory
+    IM_AND = 0xb9,  // * AND A
+    AB_AND = 0xba,  // * AND A
+    AX_AND = 0xbb,  // * AND A
+    AY_AND = 0xbc,  // * AND A
+    IX_AND = 0xbd,  // * AND A
+    IY_AND = 0xbe,  // * AND A
+    AA_ASL = 0xc0,  // * arithmetic shift left A
+    AB_ASL = 0xc2,  // * arithmetic shift left memory
+    AX_ASL = 0xc3,  // * arithmetic shift left memory
+    AA_ROL = 0xc4,  // * rotate left thru carry
+    AB_ROL = 0xc6,  // * rotate left thru carry memory
+    AX_ROL = 0xc7,  // * rotate left thru carry memory
+    RE_BCS = 0xc8,  //   branch if carry set
+    RE_BCC = 0xc9,  //   branch if carry clear
+    RE_BEQ = 0xca,  //   branch if equal (zero set)
+    RE_BNE = 0xcb,  //   branch if not equal (zero clear)
+    RE_BVS = 0xcc,  //   branch if overflow set
+    RE_BVC = 0xcd,  //   branch if overflow clear
+    RE_BMI = 0xce,  //   branch if plus (negative set)
+    RE_BPL = 0xcf,  //   branch if plus (negative clear)
+    AA_LSR = 0xd0,  //   logical shift right A
+    AB_LSR = 0xd2,  //   logical shift right memory
+    AX_LSR = 0xd3,  //   logical shift right memory
+    AA_ROR = 0xd4,  //   rotate right thru carry
+    AB_ROR = 0xd6,  //   rotate right thru carry memory
+    AX_ROR = 0xd7,  //   rotate right thru carry memory
+    AB_JCS = 0xd8,  //   jump if carry set
+    AB_JCC = 0xd9,  //   jump if carry clear
+    AB_JEQ = 0xda,  //   jump if equal (zero set)
+    AB_JNE = 0xdb,  //   jump if not equal (zero clear)
+    AB_JVS = 0xdc,  //   jump if overflow set
+    AB_JVC = 0xdd,  //   jump if overflow clear
+    AB_JMI = 0xde,  //   jump if plus (negative set)
+    AB_JPL = 0xdf,  //   jump if plus (negative clear)
+    IP_PLA = 0xe8,  //   pull A
+    IM_ORA = 0xe9,  // * OR A
+    AB_ORA = 0xea,  // * OR A
+    AX_ORA = 0xeb,  // * OR A
+    AY_ORA = 0xec,  // * OR A
+    IX_ORA = 0xed,  // * OR A
+    IY_ORA = 0xee,  // * OR A
+    IP_PLP = 0xf0,  //   pull PS
+    AA_DEA = 0xf1,  // * decrement A
+    AB_DEC = 0xf2,  // * decrement memory
+    AX_DEC = 0xf3,  // * decrement memory
+    IP_DEX = 0xf5,  // * decrement X
+    IP_DEY = 0xf6   // * decrement Y
 };
+
 
 static const uint8_t pgmChase[] = {
     // blinky light effect using the Y Register  LEDs as a chaser light.  This illustrates
@@ -207,6 +177,28 @@ static const uint8_t pgmShift[] = {
     AA_LSR,
     AA_LSR,
     AB_JMP, 0x02
+};
+
+static const uint8_t pgmSimple[] = {
+    // Program to test build 2 HW with no ALU
+    IM_LDA, 1,
+    IM_LDA, 2,
+    IM_LDA, 4,
+    IM_LDA, 8,
+    IM_LDA, 16,
+    IM_LDA, 32,
+    IM_LDA, 64,
+    IM_LDA, 128,
+    IP_NOP,
+    IM_LDA, 64,
+    IM_LDA, 32,
+    IM_LDA, 16,
+    IM_LDA, 8,
+    IM_LDA, 4,
+    IM_LDA, 2,
+    IM_LDA, 1,
+    IP_NOP,
+    AB_JMP, 2     // JMP back to LOOP
 };
 
 static const uint8_t pgmCount3[] = {
@@ -281,6 +273,7 @@ struct program_t {
     size_t          len;
 };
 static const program_t programs[] = {
+    pgmSimple,      sizeof(pgmSimple),
     pgmChase,       sizeof(pgmChase),
     pgmShift,       sizeof(pgmShift),
     pgmCount3,      sizeof(pgmCount3),
