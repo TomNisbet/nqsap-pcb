@@ -1,5 +1,21 @@
 #include "Configure.h"
 
+
+
+/*
+TODO
+- resolve register locations in spreadsheet, loader, and microcode
+- add carry bit to shifter test
+- add jump test (need more PC HW to check JMP signal?)
+- remove breadboard inverter for RC N
+*/
+
+
+
+enum {
+    DELAY_LEDS = 80
+};
+
 // Pin assignments are specific to Arduino Nano.  Some direct port manipulation is done
 // that may not be compatible with other Arduino models.
 
@@ -7,17 +23,22 @@
 // Data bus is pins 2..9
 enum {
     PGM  = 10,   // OUTPUT - puts the host in PROGRAM mode
-    CLK  = A5,   // OUTPUT - drives the host CLK line
-    RST  = A4,   // OUTPUT - drives the host RST line
     LD2  = A0,   // OUTPUT - CLK the R2 register (register selects)
     SER  = A1,   // OUTPUT - Serial data to the R0/R1/R2 registers
-    RCLK = A2,   // OUTPUT - output the shift register value to the pins
-    LD0  = A3    // OUTPUT - CLK the R0 and R1 registers as 16 bits
+    RCLK = A2,   // OUTPUT - output the values of all shift registers to the pins
+    LD0  = A3,   // OUTPUT - CLK the R0 and R1 registers as 16 bits
+    RST  = A4,   // OUTPUT - drives the host RST line
+    CLK  = A5    // OUTPUT - drives the host CLK line
 };
 
+// TODO - update to use the faster direct hw control for 74595 shift registers
 enum {
-    CTL_HL = 0x01,
-    CTL_HR = 0x02
+    PC_LD2  = 0x01,
+    PC_SER  = 0x02,
+    PC_RCLK = 0x04,
+    PC_LD0  = 0x08,
+    PC_RST  = 0x10,
+    PC_CLK  = 0x20
 };
 
 enum {
@@ -29,10 +50,13 @@ enum {
     ALU_DEC = 0xf0, // A minus 1
     ALU_NOT = 0x08, // not A
     ALU_XOR = 0x68, // A xor B
-    ALU_B =   0xa8, // B
+    ALU_B   = 0xa8, // B
     ALU_AND = 0xb8, // A and B
-    ALU_OR  = 0xe8  // A or B
+    ALU_OR  = 0xe8, // A or B
+
+    ALU_MODE = 0x08 // Arithmetic if clear, logical if set
 };
+bool isAluArithmetic(uint8_t op) { return (op & ALU_MODE) == 0; }
 
 const uint8_t aluUnaryOperations[] = {
     ALU_INC,
@@ -55,19 +79,6 @@ const char * aluBinaryNames[] = {
     "SUB", "ADD", "XOR", "AND", "OR"
 };
 
-// TODO - update to use the faster direct hw control for 74595 shift registers
-//
-// Register select controls
-// Lower 4 bits are the register number.  RCLK and WCLK are connected to the CLK lines of
-// two 74LS173s that provide the register select values to the decoders.  To select a
-// register, set the number in the lower four bits and then toggle the RCLK or WCLK line
-// high then low to latch the value.
-enum {
-    REGSEL_MASK = 0x0f,
-    REGSEL_RCLK = 0x10,
-    REGSEL_WCLK = 0x20
-};
-
 enum {
     CTL_FN = 0x8000, // load Negative flag
     CTL_FV = 0x4000, // load oVerflow flag
@@ -86,8 +97,25 @@ enum {
     CTL_N  = 0x0002, // next instruction (clear ring counter)
     CTL_PI = 0x0001, // program counter increment
 
+    CTL_ALL_FLAGS = CTL_FN | CTL_FV | CTL_FZ | CTL_FC,
+
+    CTL_C_ALU = 0,              // carry source ALU
+    CTL_C_ALU_INV = CTL_C0,     // carry source ALU inverted
+    CTL_C_SHIFT = CTL_C1,       // carry source Shift Register
+    CTL_C_MASK = CTL_C0|CTL_C1, // all carry source bits
+
     CTL_NONE = 0x0000,
     CTL_ALL = 0xffff
+};
+
+// Flag bits as they are read and written to the bus.  Also used as arguments to writeFlags.
+enum {
+  FB_N    = 0x80,
+  FB_V    = 0x40,
+  FB_Z    = 0x02,
+  FB_C    = 0x01,
+  FB_NONE = 0x00,
+  FB_ALL  = 0xc3
 };
 
 // Write register is PC0-2 (pin A0-A2)
@@ -97,15 +125,15 @@ enum {
     REG_NONE= 0x00,    // No register selected
     REG_MEM = 0x01, // r/w
     REG_MAR = 0x02, // write-only
-    REG_D =   0x03, // r/w
-    REG_SP  = 0x05, // r/w
+    REG_SP  = 0x06, // r/w
     REG_PC =  0x07, // r/w
     REG_A =   0x08, // r/w
     REG_B =   0x09, // r/w
-    REG_X =   0x0a, // r/w
-    REG_Y =   0x0b, // r/w
-    REG_OUT = 0x0d, // write-only
-    REG_H =   0x0d, // read-only
+    REG_H =   0x0a, // read-only
+    REG_OUT = 0x0a, // write-only
+    REG_X =   0x0b, // r/w
+    REG_Y =   0x0c, // r/w
+    REG_D =   0x0d, // r/w
     REG_ALU = 0x0e, // read-only
     REG_IR =  0x0f, // write-only
     REG_FLG = 0x0f  // read-only
@@ -115,8 +143,8 @@ enum {
 static uint8_t valSelects = 0;
 
 static const char * registerNames[] = {
-    "none", "MEM", "MAR", "D",  "04",  "SP",  "ALU", "PC",
-    "A",    "B",   "X",   "Y",  "0c",  "OUT", "ALU", "IR"
+    "none", "MEM", "MAR", "03", "04",  "05",  "SP",  "PC",
+    "A",    "B",   "H",   "X",  "Y",   "D",   "OUT", "IR"
 };
 static const unsigned woRegisters[] = { REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
 static const unsigned rwRegisters[] = { REG_PC, REG_A, REG_B }; //REG_PC, REG_B, REG_SP, REG_A };
@@ -220,6 +248,14 @@ void LoaderHw::reset() {
     delay(1);
 }
 
+void LoaderHw::clearAll() {
+    writeFlags(0);
+    for (int ix = 1; (ix < 16); ix++) {
+        writeRegister(ix, 0);
+    }
+    writeControls(0);
+}
+
 // Return a name for a given register number
 const char * LoaderHw::registerName(int registerNumber)
 {
@@ -281,40 +317,29 @@ void LoaderHw::writeControls(uint16_t data) {
     controlBitsOffOn(CTL_ALL, data);
 }
 
-
 bool LoaderHw::testHardware() {
     unsigned ix;
 
     enable();
-    writeControls(0);
-    for (ix = 0; (ix < 16); ix++) {
-        writeRegister(ix, 0);
-    }
+    clearAll();
 
     for (uint8_t bit = 0x80; bit; bit >>= 1) {
         valSelects = bit;
         selectRegister();
-        delay(100);
+        delay(DELAY_LEDS);
     }
     valSelects = 0;
     selectRegister();
-    delay(100);
+    delay(DELAY_LEDS);
 
     for (uint16_t bit = 0x8000; bit; bit >>= 1) {
         controlBitsOffOn(CTL_ALL, bit);
-        delay(100);
+        delay(DELAY_LEDS);
     }
-    controlBitsOffOn(CTL_ALL, 0);
-    delay(100);
+    controlBitsOffOn(CTL_ALL, CTL_NONE);
+    delay(DELAY_LEDS);
     controlBitsOffOn(CTL_ALL, CTL_N);
 
-/*
-    while (1) {
-        if (testAlu() == false) return false;
-        if (Serial.available()) return true;
-        delay(100);
-    }
-*/
     for (ix = 0; (ix < numWoRegisters()); ix++) {
         if (!testRegister(woRegisters[ix], false)) {
             return false;
@@ -329,9 +354,16 @@ bool LoaderHw::testHardware() {
         }
     }
 
-    bool ret = testMemory();
+    bool ret = testFlags();
+    if (ret) ret = testShifter();
+    if (ret) ret = testMemory();
     if (ret) ret = testAlu();
-    if (ret) ret = testAdder();
+    //if (ret) ret = testAdder();
+
+    if (ret) {
+        // Leave the registers as-is if a test failed, otherwise clear all registers.
+        clearAll();
+    }
     return ret;
 }
 
@@ -339,6 +371,7 @@ bool LoaderHw::testHardware() {
 ////////////////////////////////////////////////
 // BEGIN PRIVATE METHODS
 //
+////////////////////////////////////////////////
 
 // Burn a byte to the memory and verify that it was written.
 bool LoaderHw::burnByte(byte value, uint32_t address) {
@@ -375,7 +408,7 @@ bool LoaderHw::testRegister(unsigned reg, bool isRw) {
         delayMicroseconds(2);
         selectWriteRegister(0);
         uint8_t readVal = readRegister(reg);
-        delay(100);
+        delay(DELAY_LEDS);
         if (isRw && (readVal != patterns[ix])) {
             char s[60];
             sprintf(s, "failed, read=%02x, expected=%02x", readVal, patterns[ix]);
@@ -387,6 +420,67 @@ bool LoaderHw::testRegister(unsigned reg, bool isRw) {
     Serial.println(F("pass"));
     selectReadRegister(REG_NONE);
     selectWriteRegister(REG_NONE);
+    return true;
+}
+
+bool LoaderHw::testFlags() {
+    Serial.print(F("Testing flags: "));
+    for (uint8_t ix = 0; (ix < 16); ix++) {
+        uint8_t flags = ((ix & 0x0c) << 4) | (ix & 0x03);
+        writeFlags(flags);
+        uint8_t readVal = readRegister(REG_FLG);
+        delay(DELAY_LEDS);
+        if (readVal != flags) {
+            char s[60];
+            sprintf(s, "failed, read=%02x, expected=%02x", readVal, flags);
+            Serial.println(s);
+            return false;
+        }
+    }
+    writeFlags(FB_NONE);
+    Serial.println(F("pass"));
+    return true;
+}
+
+
+bool LoaderHw::shiftTest(uint8_t val, uint8_t carry) {
+    uint8_t expected;
+
+    writeRegister(REG_B, val);
+    delayMicroseconds(2);
+    selectWriteRegister(0);
+    if (carry) {
+        expected = 0x80 | (val >> 1);
+        controlBitsOffOn(CTL_CC, CTL_CS|CTL_FC|CTL_C_SHIFT);
+    } else {
+        expected = val >> 1;
+        controlBitsOffOn(CTL_CS, CTL_CC|CTL_FC|CTL_C_SHIFT);
+    }
+    uint8_t readVal = readRegister(REG_H);
+    clkPulse();
+    uint8_t readFlags = readRegister(REG_FLG);
+    delay(DELAY_LEDS);
+    // The C flag is the LSB of the flags word and it should be equal to the LSB of val.
+    if ((readVal != expected) || ((val^readFlags) & FB_C)) {
+        char s[60];
+        sprintf(s, "failed, B=%02x, shift=%02x, expected=%02x, cin=%d cout=%d",
+                val, readVal, expected, carry, readFlags & FB_C);
+        Serial.println(s);
+        return false;
+    }
+
+    return true;
+}
+
+bool LoaderHw::testShifter() {
+    Serial.print(F("Testing shifter: "));
+    for (unsigned ix = 0; (ix < sizeof(patterns)); ix++) {
+        if (!shiftTest(patterns[ix], 0) || !shiftTest(patterns[ix], 1)) {
+            return false;
+        }
+    }
+    controlBitsOffOn(CTL_CS|CTL_CC, CTL_NONE);
+    Serial.println(F("pass"));
     return true;
 }
 
@@ -411,9 +505,10 @@ bool LoaderHw::testMemory() {
         }
     }
 
+    burnByte(0, 0);  // set MAR back to zero
     selectReadRegister(REG_NONE);
     selectWriteRegister(REG_NONE);
-    Serial.println("pass");
+    Serial.println(F("pass"));
     return true;
 }
 
@@ -421,75 +516,132 @@ bool LoaderHw::testMemory() {
 bool LoaderHw::testAlu() {
     unsigned numPatterns = sizeof(patterns);
     unsigned numOperations = sizeof(aluUnaryOperations);
+    uint8_t op;
 
     Serial.print(F("Testing ALU unary operations: "));
     for (unsigned opIndex = 0; (opIndex < numOperations); opIndex++) {
         for (unsigned aIndex = 0; (aIndex < numPatterns); aIndex++) {
-            if (!testAluOperation(aluUnaryOperations[opIndex], aluUnaryNames[opIndex], patterns[aIndex], patterns[aIndex])) {
+            op = aluUnaryOperations[opIndex];
+            if (!testAluOperation(op, aluUnaryNames[opIndex], patterns[aIndex], patterns[aIndex], 0)) {
+                return false;
+            }
+            if (isAluArithmetic(op) && !testAluOperation(op, aluUnaryNames[opIndex], patterns[aIndex], patterns[aIndex], 1)) {
                 return false;
             }
         }
     }
-    Serial.println("pass");
+    Serial.println(F("pass"));
 
     numOperations = sizeof(aluBinaryOperations);
     Serial.print(F("Testing ALU binary operations: "));
     for (unsigned opIndex = 0; (opIndex < numOperations); opIndex++) {
         for (unsigned aIndex = 0; (aIndex < numPatterns); aIndex++) {
             for (unsigned bIndex = 0; (bIndex < numPatterns); bIndex++) {
-                if (!testAluOperation(aluBinaryOperations[opIndex], aluBinaryNames[opIndex], patterns[aIndex], patterns[bIndex])) {
+			    op = aluBinaryOperations[opIndex];
+                if (!testAluOperation(op, aluBinaryNames[opIndex], patterns[aIndex], patterns[bIndex], 0)) {
+                    return false;
+                }
+                if (isAluArithmetic(op) && !testAluOperation(op, aluBinaryNames[opIndex], patterns[aIndex], patterns[bIndex], 1)) {
                     return false;
                 }
             }
         }
     }
-    Serial.println("pass");
+    Serial.println(F("pass"));
     return true;
 }
 
-bool LoaderHw::testAluOperation(uint8_t op, const char * opName, uint8_t a, uint8_t b) {
+bool LoaderHw::testAluOperation(uint8_t op, const char * opName, uint8_t a, uint8_t b, uint8_t carry) {
     char s[60];
-    uint8_t readVal = aluCompute(op, a, b);
-    uint8_t expectedVal = localCompute(op, a, b);
-//    sprintf(s, "test %s with a=%02x b=%02x, result=%02x, expected=%02x", opName, a, b, readVal, expectedVal);
-//    Serial.println(s);
+    uint16_t readVal = aluCompute(op, a, b, carry);
+    uint16_t expectedVal = localCompute(op, a, b, carry);
     if (readVal != expectedVal) {
-        sprintf(s, "failed on %s with a=%02x b=%02x, result=%02x, expected=%02x", opName, a, b, readVal, expectedVal);
+        sprintf(s, "failed on %s with a=%02x b=%02x, c=%d, result=%02x, expected=%02x", opName, a, b, carry, readVal, expectedVal);
         Serial.println(s);
         return false;
     }
     return true;
 }
 
-uint8_t LoaderHw::aluCompute(uint8_t op, uint8_t a, uint8_t b) {
+uint16_t LoaderHw::aluCompute(uint8_t op, uint8_t a, uint8_t b, uint8_t carry) {
+    controlBitsOffOn(CTL_CS|CTL_CC|CTL_C_MASK|CTL_ALL_FLAGS, CTL_NONE);
     writeRegister(REG_IR, op);
     writeRegister(REG_A, a);
     writeRegister(REG_B, b);
-    if ((ALU_ADD == op) || (ALU_SHL == op) || (ALU_DEC == op)) {
-        // TODO - may need to set C0 and C1 as well
-        controlBitsOffOn(CTL_NONE, CTL_CS);
-    } else {
-        controlBitsOffOn(CTL_NONE, CTL_CC);
+    writeFlags(0);
+    uint16_t carrySelect = CTL_C_ALU_INV;
+    if ((op == ALU_DEC) || (op == ALU_SUB)) {
+        carrySelect = CTL_C_ALU;
     }
-    uint8_t result = readRegister(REG_ALU);
-    controlBitsOffOn(CTL_CS|CTL_CC, CTL_NONE);
+    uint16_t setFlags = CTL_FZ;
+    if (isAluArithmetic(op)) {
+        // Set N and C for arithmetic operations
+        setFlags |= CTL_FN|CTL_FC;
+    }
+    if ((op == ALU_ADD) || (op == ALU_SUB)) {
+        // Set V only for addition and subtraction
+        setFlags |= CTL_FV;
+    }
+    if (carry) {
+        // Set C0 to select Carry Flag source as inverted ALU carry out
+        controlBitsOffOn(CTL_ALL_FLAGS|CTL_CC, CTL_CS|carrySelect|setFlags);
+    } else {
+        controlBitsOffOn(CTL_ALL_FLAGS|CTL_CS, CTL_CC|carrySelect|setFlags);
+    }
+    uint16_t result = readRegister(REG_ALU);
+    clkPulse();  // Load flag registers
+    result |= readRegister(REG_FLG) << uint16_t(8);
     return result;
 }
 
-uint8_t LoaderHw::localCompute(uint8_t op, uint8_t a, uint8_t b) {
+uint16_t LoaderHw::localCompute(uint8_t op, uint8_t a, uint8_t b, uint8_t carry) {
+    uint16_t ret = 0;
+    uint16_t flags = 0;
+
     switch (op) {
-    case ALU_INC: return a + 1;
-    case ALU_SUB: return a - b;
-    case ALU_ADD: return a + b;
-    case ALU_SHL: return a + a;
-    case ALU_DEC: return a - 1;
-    case ALU_NOT: return ~a;
-    case ALU_XOR: return a ^ b;
-    case ALU_B:   return b;
-    case ALU_AND: return a & b;
-    case ALU_OR:  return a | b;
+    case ALU_INC: ret = a + carry;            break;
+    case ALU_SUB: ret = a - b - 1 + carry;    break;
+    case ALU_ADD: ret = a + b + carry;        break;
+    case ALU_SHL: ret = a + a + carry;        break;
+    case ALU_DEC: ret = a - 1 + carry;        break;
+    case ALU_NOT: ret = ~a;                   break;
+    case ALU_XOR: ret = a ^ b;                break;
+    case ALU_B:   ret = b;                    break;
+    case ALU_AND: ret = a & b;                break;
+    case ALU_OR:  ret = a | b;                break;
     }
-    return 0;
+
+    if (isAluArithmetic(op)) {
+        // Trim the signed result to 8 bits and leave 9th intact as the carry flag bit.
+        ret &= 0x1ff;
+        if (ret & 0x80) {
+            // Calculate the Negative flag for arithmetic operations.
+            flags |= FB_N;
+        }
+    } else {
+        // Just keep the bottom 8 bits for logical operations.
+        ret &= 0xff;
+    }
+
+    // Calculate the Zero flag for all operations.
+    if ((ret & 0xff) == 0) {
+        flags |= FB_Z;
+    }
+
+    // Set oVerflag only for addition and subtraction
+    if ((op == ALU_ADD) && ((a^ret) & (b^ret) & 0x80)) {
+        // For addition, set V if A and B both have a different sign than the result. This
+        // implies that A and B have the same sign.
+        flags |= FB_V;
+    } else if ((op == ALU_SUB) && ((a^b) & (a^ret) & 0x80)) {
+        // For subtraction, set V if A and B both have a different sign from each other
+        // and A has a different sign than the result.
+        flags |= FB_V;
+    }
+
+    // Put the flags in the upper 8 bits.  Note that the Carry bit is the LSB of the flags,
+    // so it was already in the correct position as the 9th bit of an arithmetic result.
+    return ret | (flags << 8);
 }
 
 bool LoaderHw::testAdder() {
@@ -503,7 +655,7 @@ bool LoaderHw::testAdder() {
             }
         }
     }
-    Serial.println("pass");
+    Serial.println(F("pass"));
     return true;
 }
 
@@ -539,6 +691,16 @@ bool LoaderHw::testAdderOperation(uint8_t a, uint8_t b) {
     return true;
 }
 
+void LoaderHw::writeFlags(uint8_t flags) {
+    selectWriteRegister(REG_NONE);
+    setDataBusMode(OUTPUT);
+    writeDataBus(flags);
+    controlBitsOffOn(CTL_NONE, CTL_FB|CTL_ALL_FLAGS);
+    clkPulse();
+    selectWriteRegister(REG_NONE);
+    setDataBusMode(INPUT);
+    controlBitsOffOn(CTL_FB|CTL_ALL_FLAGS, CTL_NONE);
+}
 
 // Set bits in the control register.  Any bits in the clearBits mask will be turned off
 // and any bits in the setBits mask will be turned on.  If the same bit is present in the
@@ -554,17 +716,41 @@ static void controlBitsOffOn(uint16_t clearBits, uint16_t setBits) {
 
     controls &= ~clearBits;
     controls |= setBits;
-    Serial.println(controls, HEX);
+    for (uint16_t bit = 0x8000; (bit); bit >>= 1) {
+        if (controls & bit)
+            PORTC |= PC_SER;
+        else
+            PORTC &= ~PC_SER;
+
+        PORTC |= PC_LD0;
+        PORTC &= ~PC_LD0;
+    }
+    PORTC |= PC_RCLK;
+    PORTC &= ~PC_RCLK;
+/*
     shiftOut(SER, LD0, MSBFIRST, (controls >> 8) & 0xff);
     shiftOut(SER, LD0, MSBFIRST, controls & 0xff);
     digitalWrite(RCLK, HIGH);
     digitalWrite(RCLK, LOW);
+*/
 }
 
 static void selectRegister() {
-    shiftOut(SER, LD2, MSBFIRST, valSelects);
-    digitalWrite(RCLK, HIGH);
-    digitalWrite(RCLK, LOW);
+    for (uint8_t bit = 0x80; (bit); bit >>= 1) {
+        if (valSelects & bit)
+            PORTC |= PC_SER;
+        else
+            PORTC &= ~PC_SER;
+
+        PORTC |= PC_LD2;
+        PORTC &= ~PC_LD2;
+    }
+    PORTC |= PC_RCLK;
+    PORTC &= ~PC_RCLK;
+
+//    shiftOut(SER, LD2, MSBFIRST, valSelects);
+//    digitalWrite(RCLK, HIGH);
+//    digitalWrite(RCLK, LOW);
 }
 
 void LoaderHw::selectWriteRegister(uint8_t reg) {

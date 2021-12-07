@@ -6,7 +6,7 @@
 #include "XModem.h"
 
 
-static const char * MY_VERSION = "4.0";
+static const char * MY_VERSION = "5.0";
 
 
 // Global status
@@ -828,7 +828,7 @@ void processCommand() {
         if (argc < 1) { a1 = 1; }
         for (unsigned ix = 0; (ix < a1); ix++) {
             hw.clkPulse();
-            delay(100);
+            delay(10);
         }
         break;
 
@@ -855,7 +855,7 @@ void processCommand() {
         break;
 
     default:
-        Serial.print(F("NQSAP Loader "));
+        Serial.print(F("NQSAP-PCB Loader "));
         Serial.println(MY_VERSION);
         Serial.println(F("RAM commands:"));
         Serial.println(F("  Dss ee    - Dump bytes from RAM to terminal"));

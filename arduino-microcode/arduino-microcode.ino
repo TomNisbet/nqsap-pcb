@@ -153,34 +153,34 @@ void fail() {
 
 #define WR   W0             // 1 Write RAM
 #define WM   W1             // 2 Write MAR (Memory Address)
-#define WD   W1|W0          // 3 Write D (Adder)
-#define WP   W2             // 4 Write PC (Jump)
-#define WS   W2|W0          // 5 Write SP
-#define WX6  W2|W1          // 6
-#define WX7  W2|W1|W0       // 7
+#define WX3  W1|W0          // 3
+#define WX4  W2             // 4
+#define WX5  W2|W0          // 5
+#define WS   W2|W1          // 6 Write SP
+#define WP   W2|W1|W0       // 7 Write PC (Jump)
 #define WA   W3             // 8 Write A
 #define WB   W3|W0          // 9 Write B
-#define WX   W3|W1          // A Write X
-#define WY   W3|W1|W0       // B Write Y
-#define WO   W3|W2          // C Write Output
-#define WXD  W3|W2|W0       // D
+#define WO   W3|W1          // A Write Output
+#define WX   W3|W1|W0       // B Write X
+#define WY   W3|W2          // C Write Y
+#define WD   W3|W2|W0       // D Write D (Adder)
 #define WXE  W3|W2|W1       // E
 #define WI   W3|W2|W1|W0    // F Write IR
 
 #define RR   R0             // 1 Read RAM
-#define RM   R1             // 2 Read MAR
-#define RD   R1|R0          // 3 Read D
-#define RP   R2             // 4 Read PC
-#define RS   R2|R0          // 5 Read SP
-#define RL   R2|R1          // 6 Read L (ALU result)
-#define RX7  R2|R1|R0       // 7
+#define RX2  R1             // 2
+#define RX3  R1|R0          // 3
+#define RX4  R2             // 4
+#define RX5  R2|R0          // 5
+#define RS   R2|R1          // 6 Read SP
+#define RP   R2|R1|R0       // 7 Read PC
 #define RA   R3             // 8 Read A
 #define RB   R3|R0          // 9 Read B
-#define RX   R3|R1          // A Read X
-#define RY   R3|R1|R0       // B Read Y
-#define RXC  R3|R2          // C
-#define RH   R3|R2|R0       // D Read H (sHift register (ALU A)
-#define RXE  R3|R2|R1       // E
+#define RH   R3|R1          // A Read H (sHift register (ALU B)
+#define RX   R3|R1|R0       // B Read X
+#define RY   R3|R2          // C Read Y
+#define RD   R3|R2|R0       // D Read D
+#define RL   R3|R2|R1       // E Read L (ALU result)
 #define RF   R3|R2|R1|R0    // Read Flags
 
 #define FF    FC|FZ|FV|FN   // Set all flags

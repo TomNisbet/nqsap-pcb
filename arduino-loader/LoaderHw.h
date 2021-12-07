@@ -23,6 +23,7 @@ class LoaderHw
     void clkPulse();
     void longPulse();
     void reset();
+    void clearAll();
     const char * registerName(int registerNumber);
     uint8_t readRegister(uint8_t reg);
     void writeRegister(uint8_t reg, uint8_t data);
@@ -38,13 +39,17 @@ class LoaderHw
 
     bool burnByte(byte value, uint32_t address);
     bool testRegister(unsigned reg, bool isRw);
+    bool shiftTest(uint8_t val, uint8_t carry);
+    bool testShifter();
+    bool testFlags();
     bool testMemory();
     bool testAlu();
-    bool testAluOperation(uint8_t op, const char * opName, uint8_t a, uint8_t b);
-    uint8_t aluCompute(uint8_t op, uint8_t a, uint8_t b);
-    uint8_t localCompute(uint8_t op, uint8_t a, uint8_t b);
+    bool testAluOperation(uint8_t op, const char * opName, uint8_t a, uint8_t b, uint8_t carry);
+    uint16_t aluCompute(uint8_t op, uint8_t a, uint8_t b, uint8_t carry);
+    uint16_t localCompute(uint8_t op, uint8_t a, uint8_t b, uint8_t carry);
     bool testAdder();
     bool testAdderOperation(uint8_t a, uint8_t b);
+    void writeFlags(uint8_t flags);
 
     void selectWriteRegister(uint8_t reg);
     void selectReadRegister(uint8_t reg);
