@@ -112,7 +112,7 @@ enum {
     RE_BNE = 0xcb,  //   branch if not equal (zero clear)
     RE_BVS = 0xcc,  //   branch if overflow set
     RE_BVC = 0xcd,  //   branch if overflow clear
-    RE_BMI = 0xce,  //   branch if plus (negative set)
+    RE_BMI = 0xce,  //   branch if minus (negative set)
     RE_BPL = 0xcf,  //   branch if plus (negative clear)
     AA_LSR = 0xd0,  //   logical shift right A
     AB_LSR = 0xd2,  //   logical shift right memory
@@ -126,7 +126,7 @@ enum {
     AB_JNE = 0xdb,  //   jump if not equal (zero clear)
     AB_JVS = 0xdc,  //   jump if overflow set
     AB_JVC = 0xdd,  //   jump if overflow clear
-    AB_JMI = 0xde,  //   jump if plus (negative set)
+    AB_JMI = 0xde,  //   jump if minus (negative set)
     AB_JPL = 0xdf,  //   jump if plus (negative clear)
     IP_PLA = 0xe8,  //   pull A
     IM_ORA = 0xe9,  // * OR A
@@ -211,11 +211,19 @@ static const uint8_t pgmCount3[] = {
 };
 
 static const uint8_t pgmJumpTest[] = {
-    IM_LDA, 1,    // start at 1
-    AA_DEA,
-    AB_JCS, 11,
-    AB_JEQ, 15,
-// 7
+    IM_LDA, 0,
+    AA_INA,     // Count by ones until negative
+    AB_JPL, 2,
+    IM_ADC, 3,  // Count by threes until zero
+    AB_JNE, 5,
+    IP_CLC,
+    IM_ADC, 5,  // Count by fives until carry set
+    AB_JCC, 10,
+    IM_ADC, 7,  // Count by sevens until overflow set
+    AB_JVC, 14,
+    IM_ADC, 1,  // Put a 1 back into B for the visual
+    AB_JMP, 0
+/* 7
     IM_LDA, 22,
     IP_OUT,
     AB_JMP, 0x0a,
@@ -227,6 +235,7 @@ static const uint8_t pgmJumpTest[] = {
     IM_LDA, 44,
     IP_OUT,
     AB_JMP, 0x13
+*/
 };
 
 static const uint8_t pgmStack1[] = {

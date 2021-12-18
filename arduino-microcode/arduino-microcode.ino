@@ -785,14 +785,14 @@ void buildInstruction(uint8_t opcode) {
     microcode_t mc = instructionGroupDefinitions[group].mcode;
     if (gen == GEN_JUMP) {
         code[2] = RPI | WM;
-        code[3] = RR | WP | JE | N;
+        code[3] = RR | JE | N;
         code[4] = code[5] = code[6] = code[7] = 0;
     } else if (gen == GEN_BRANCH) {
         code[2] = RPI | WM;
         code[3] = RR | WD;           // offset to adder D
         code[4] = RX | WB;           // save X
         code[5] = RP | WX;
-        code[6] = RDX | WP | JE;     // PC + offset (X + D) to PC - jump if WP set
+        code[6] = RDX | JE;          // PC + offset (X + D) to PC - jump if JMP set
         code[7] = RB | WX | N;       // restore previous X
     } else if (gen == GEN_ALU) {
         code[5] = code[6] = code[7] = 0;
