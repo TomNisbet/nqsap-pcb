@@ -92,7 +92,7 @@ enum {
     RE_BNE = 0xcb,  //   branch if not equal (zero clear)
     RE_BVS = 0xcc,  //   branch if overflow set
     RE_BVC = 0xcd,  //   branch if overflow clear
-    RE_BMI = 0xce,  //   branch if plus (negative set)
+    RE_BMI = 0xce,  //   branch if minus (negative set)
     RE_BPL = 0xcf,  //   branch if plus (negative clear)
     AA_LSR = 0xd0,  //   logical shift right A
     AB_LSR = 0xd2,  //   logical shift right memory
@@ -106,7 +106,7 @@ enum {
     AB_JNE = 0xdb,  //   jump if not equal (zero clear)
     AB_JVS = 0xdc,  //   jump if overflow set
     AB_JVC = 0xdd,  //   jump if overflow clear
-    AB_JMI = 0xde,  //   jump if plus (negative set)
+    AB_JMI = 0xde,  //   jump if minus (negative set)
     AB_JPL = 0xdf,  //   jump if plus (negative clear)
     IP_PLA = 0xe8,  //   pull A
     IM_ORA = 0xe9,  // * OR A

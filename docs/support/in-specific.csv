@@ -90,7 +90,7 @@ RE_BEQ,0xca,branch if equal (zero set),n,2,8,y
 RE_BNE,0xcb,branch if not equal (zero clear),n,2,8,y
 RE_BVS,0xcc,branch if overflow set,n,2,8,y
 RE_BVC,0xcd,branch if overflow clear,n,2,8,y
-RE_BMI,0xce,branch if plus (negative set),n,2,8,y
+RE_BMI,0xce,branch if minus (negative set),n,2,8,y
 RE_BPL,0xcf,branch if plus (negative clear),n,2,8,y
 AA_LSR,0xd0,logical shift right A,n,1,4,
 AB_LSR,0xd2,logical shift right memory,n,2,6,
@@ -104,7 +104,7 @@ AB_JEQ,0xda,jump if equal (zero set),n,2,4,y
 AB_JNE,0xdb,jump if not equal (zero clear),n,2,4,y
 AB_JVS,0xdc,jump if overflow set,n,2,4,y
 AB_JVC,0xdd,jump if overflow clear,n,2,4,y
-AB_JMI,0xde,jump if plus (negative set),n,2,4,y
+AB_JMI,0xde,jump if minus (negative set),n,2,4,y
 AB_JPL,0xdf,jump if plus (negative clear),n,2,4,y
 IP_PLA,0xe8,pull A,n,1,5,
 IM_ORA,0xe9,OR A,y,2,5,

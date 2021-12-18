@@ -4,3 +4,4 @@
 *.zip
 scratch/
 archive/
+.DS_Store
