@@ -148,7 +148,7 @@ void fail() {
 #define RDY   RD | C1       // Read D+Y
 #define CL    0             // 0 - Carry source ALU
 #define CI    C0            // 1 - Carry source ALU inverted
-#define CH    C1            // 2 - Carry source shift right (H lsb)
+#define CH    C1            // 2 - Carry source shift right (B lsb)
 
 
 #define WR   W0             // 1 Write RAM

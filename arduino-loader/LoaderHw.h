@@ -38,10 +38,13 @@ class LoaderHw
     bool mEnabled;
 
     bool burnByte(byte value, uint32_t address);
+    bool valueTest(uint8_t writeVal, uint8_t readVal, const char * s="");
     bool testRegister(unsigned reg, bool isRw);
+    bool jumpTest(uint8_t f, uint8_t jmp);
+    bool testFlags();
+    bool testStack();
     bool shiftTest(uint8_t val, uint8_t carry);
     bool testShifter();
-    bool testFlags();
     bool testMemory();
     bool testAlu();
     bool testAluOperation(uint8_t op, const char * opName, uint8_t a, uint8_t b, uint8_t carry);

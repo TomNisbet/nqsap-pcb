@@ -347,6 +347,7 @@ bool LoaderHw::testHardware() {
     }
 
     for (ix = 0; (ix < numRwRegisters()); ix++) {
+        // TODO - can force D to zero with C0/C1 when ix==REG_D
         writeRegister(REG_X, 0);   // Have adder return D+0 for D register test
         writeRegister(REG_Y, 0);
         if (!testRegister(rwRegisters[ix], true)) {
@@ -355,6 +356,7 @@ bool LoaderHw::testHardware() {
     }
 
     bool ret = testFlags();
+    //if (ret) ret = testStack();
     if (ret) ret = testShifter();
     if (ret) ret = testMemory();
     if (ret) ret = testAlu();
@@ -390,6 +392,20 @@ bool LoaderHw::burnByte(byte value, uint32_t address) {
     return true;
 }
 
+
+bool LoaderHw::valueTest(uint8_t writeVal, uint8_t readVal, const char * s) {
+    if (readVal != writeVal) {
+        Serial.print(F("failed"));
+        Serial.print(s);
+        Serial.print(F(", read="));
+        Serial.print(readVal, HEX);
+        Serial.print(F(", expected="));
+        Serial.println(writeVal, HEX);
+        return false;
+    }
+    return true;
+}
+
 static const uint8_t patterns[] = {
     0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80,
     0x00, 0x80, 0xc0, 0xe0, 0xf0, 0xf8, 0xfc, 0xfe, 0xff,
@@ -399,7 +415,7 @@ static const uint8_t patterns[] = {
 };
 
 bool LoaderHw::testRegister(unsigned reg, bool isRw) {
-    Serial.print("Testing ");
+    Serial.print(F("Testing "));
     Serial.print(registerNames[reg]);
     Serial.print(": ");
 
@@ -409,17 +425,45 @@ bool LoaderHw::testRegister(unsigned reg, bool isRw) {
         selectWriteRegister(0);
         uint8_t readVal = readRegister(reg);
         delay(DELAY_LEDS);
-        if (isRw && (readVal != patterns[ix])) {
-            char s[60];
-            sprintf(s, "failed, read=%02x, expected=%02x", readVal, patterns[ix]);
-            Serial.println(s);
-            return false;
-        }
+        if (isRw && !valueTest(patterns[ix], readVal))  return false;
     }
 
     Serial.println(F("pass"));
     selectReadRegister(REG_NONE);
     selectWriteRegister(REG_NONE);
+    return true;
+}
+
+bool LoaderHw::jumpTest(uint8_t f, uint8_t jmp) {
+    writeRegister(REG_IR, jmp);
+    writeRegister(REG_A, 0x55);
+    writeRegister(REG_PC, 0xaa);
+    controlBitsOffOn(CTL_NONE, CTL_JE);
+    selectReadRegister(REG_A);
+    clkPulse();
+    uint8_t pc = readRegister(REG_PC);
+    bool jumped = false;
+    if (pc == 0x55) jumped = true;
+    else if (pc != 0xaa) {
+        Serial.print(F("failed, invalid PC value="));
+        Serial.println(pc, HEX);
+    }
+
+    // The lower three bits of the IR select the jump condition.  They follow the same
+    // order as the flag bits on the bus, altrnating between flag set and not set.  The
+    // conditions, starting from zero, are: [CS, CC, ZS, ZC, VS, VC, NS, NC].  With this
+    // order, the LSB of the IR determines jump on set or clear and the next two bits
+    // determine the flag that is being checked.
+    uint8_t bit = 1 << (jmp >> 1);
+    bool shouldJump = ((jmp & 1)==0) == ((f & bit)==bit);
+    if (jumped != shouldJump) {
+        char s[60];
+        Serial.print(F("failed, conditional jump="));
+        sprintf(s, "%d, flags=%02x, jmp=%d", jumped, f, jmp);
+        Serial.println(s);
+        return false;
+    }
+
     return true;
 }
 
@@ -436,12 +480,46 @@ bool LoaderHw::testFlags() {
             Serial.println(s);
             return false;
         }
+        for (uint8_t jmp = 0; (jmp < 8); jmp++) {
+            if (!jumpTest(ix, jmp))  return false;
+        }
     }
     writeFlags(FB_NONE);
     Serial.println(F("pass"));
     return true;
 }
 
+bool LoaderHw::testStack() {
+    Serial.print(F("Testing Stack Pointer: "));
+
+    for (unsigned ix = 0; (ix < sizeof(patterns)); ix++) {
+        uint8_t writeVal = patterns[ix];
+        writeRegister(REG_SP, writeVal);
+        delayMicroseconds(2);
+        selectWriteRegister(0);
+        uint8_t readVal = readRegister(REG_SP);
+        delay(DELAY_LEDS);
+        if (!valueTest(writeVal, readVal))  return false;
+        controlBitsOffOn(CTL_NONE, CTL_SE|CTL_C0);
+        clkPulse();
+        clkPulse();
+        clkPulse();
+        readVal = readRegister(REG_SP);
+        if (!valueTest(writeVal+3, readVal, " on inc"))  return false;
+        controlBitsOffOn(CTL_C0, CTL_SE|CTL_C1);
+        clkPulse();
+        clkPulse();
+        clkPulse();
+        readVal = readRegister(REG_SP);
+        if (!valueTest(writeVal-3, readVal, " on dec"))  return false;
+        controlBitsOffOn(CTL_SE|CTL_C0|CTL_C1, CTL_NONE);
+    }
+
+    Serial.println(F("pass"));
+    selectReadRegister(REG_NONE);
+    selectWriteRegister(REG_NONE);
+    return true;
+}
 
 bool LoaderHw::shiftTest(uint8_t val, uint8_t carry) {
     uint8_t expected;

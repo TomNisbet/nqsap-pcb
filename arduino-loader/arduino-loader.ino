@@ -212,30 +212,25 @@ static const uint8_t pgmCount3[] = {
 
 static const uint8_t pgmJumpTest[] = {
     IM_LDA, 0,
-    AA_INA,     // Count by ones until negative
-    AB_JPL, 2,
-    IM_ADC, 3,  // Count by threes until zero
-    AB_JNE, 5,
     IP_CLC,
+// 3
+    IM_ADC, 1,     // Count by ones until negative
+    AB_JPL, 3,
+// 7
+    IP_CLC,
+    IM_ADC, 3,  // Count by threes until zero
+    AB_JNE, 7,
+    IP_CLC,
+// 12
     IM_ADC, 5,  // Count by fives until carry set
-    AB_JCC, 10,
+    AB_JCC, 12,
+    IM_LDA, 0,
+    IP_CLV,
+// 19
+    IP_CLC,
     IM_ADC, 7,  // Count by sevens until overflow set
-    AB_JVC, 14,
-    IM_ADC, 1,  // Put a 1 back into B for the visual
+    AB_JVC, 19,
     AB_JMP, 0
-/* 7
-    IM_LDA, 22,
-    IP_OUT,
-    AB_JMP, 0x0a,
-// 11
-    IM_LDA, 33,
-    IP_OUT,
-    AB_JMP, 0x0f,
-// 15
-    IM_LDA, 44,
-    IP_OUT,
-    AB_JMP, 0x13
-*/
 };
 
 static const uint8_t pgmStack1[] = {
