@@ -54,4 +54,4 @@ keeping all of the bus connections to the breadboard intact.
 
 ## Results
 
-[![Initial build](../../assets/images/boards1.gif "initial NQSAP-PCB build"){:width="400px"}](../../assets/images/boards1.gif)
+[![Initial build](../../assets/images/build1.gif "initial NQSAP-PCB build"){:width="400px"}](../../assets/images/build1.gif)

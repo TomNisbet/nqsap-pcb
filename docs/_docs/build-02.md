@@ -47,4 +47,4 @@ test, so these will be shortened appropriately.
 
 ## Results
 
-[![Second set self test](../../assets/images/boards2.gif "second set of boards"){:width="400px"}](../../assets/images/boards2.gif)
+[![Second set self test](../../assets/images/build2.gif "second set of boards"){:width="400px"}](../../assets/images/build2.gif)
