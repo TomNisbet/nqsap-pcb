@@ -4,7 +4,7 @@ permalink: /docs/build-03/
 excerpt: "NQSAP-PCB computer build 3"
 ---
 
-[![Third set of boards](../../assets/images/boards3-500.jpg "Second set of boards")](../../assets/images/boards3.jpg)
+[![Third set of boards](../../assets/images/boards3-500.jpg "Third set of boards")](../../assets/images/boards3.jpg)
 
 The third batch of boards contained an updated A/B Register module, an updated IR/RC
 module, and the first boards for the ALU and Flags modules. The ALU and flags to round out

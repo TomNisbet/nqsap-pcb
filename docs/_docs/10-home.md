@@ -3,7 +3,7 @@ title: "NQSAP-PCB 8-bit TTL Computer"
 permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
-[![NQSAP-PCB](assets/images/nqsap-pcb-500.jpg "initial NQSAP-PCB build")](assets/images/nqsap-pcb.jpg)
+[![NQSAP-PCB](assets/images/build3-500.jpg "initial NQSAP-PCB build")](assets/images/build-3.jpg)
 
 The Not Quite Simple As Possible Computer - PCB version
 
@@ -18,3 +18,4 @@ Highlights of the design are:
  and XOR
 * 3-to-8 decoders for register selection simplifies wiring and reduces the number of
   microcode bits needed while also protecting against inadvertent bus collisions
+* Hardware-based conditional jumps

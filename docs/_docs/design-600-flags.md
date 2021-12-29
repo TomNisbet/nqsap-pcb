@@ -148,7 +148,7 @@ subtraction.
 
 The Carry flag has several inputs that can set it.  For arithmetic operations, it uses the
 carry output or the inverted carry output of the 74HCT181 ALU chip.  For shift right
-operations, it is set by the LSB of the B register.  A 74HCT151s chooses from the
+operations, it is set by the LSB of the B register.  A 74HCT151 chooses from the
 different inputs as selected by the C0 and C1 bits from the control ROMs.
 
 Any or all of the flags can also be loaded from the bus.  This allows for a "pull flags"
