@@ -4,7 +4,8 @@ permalink: /docs/build-03/
 excerpt: "NQSAP-PCB computer build 3"
 ---
 
-The third batch of boards contained an updated A/B Register module, an updated IR/RC
-module, and the first boards for the ALU and Flags modules. The ALU and flags to round out
-the functionality and allow for programs that actually perform calculations and do
-conditional jumps.
+[![Third build](../../assets/images/boards3-500.jpg "third NQSAP-PCB build")](../../assets/images/boards3.jpg)
+
+The goal of the initial order of boards was to verify the overall physical and electrical
+design.  The backplane and interconnect boards were designed, along with a few other
+boards to verify fit and basic functionality.
