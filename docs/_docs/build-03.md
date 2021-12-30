@@ -1,6 +1,6 @@
 ---
 title: "Build 3"
-permalink: /docs/build-03/
+permalink: /docs/build-03x/
 excerpt: "NQSAP-PCB computer build 3"
 ---
 
