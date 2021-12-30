@@ -4,7 +4,7 @@ permalink: /docs/alu/
 excerpt: "Building the Arithmetic Logic Unit (ALU) of the NQSAP computer"
 ---
 
-[![Arithmetic Logic Unit (ALU)](../../assets/images/alu-1.jpg "ALU"){:width="400px"}](../../assets/images/alu-1.jpg)
+[![Arithmetic Logic Unit (ALU)](../../assets/images/alu-500.jpg "ALU")](../../assets/images/alu.jpg)
 
 The NQSAP-PCB computer uses a pair of 74LS181 4-bit ALU chips instead of the simple
 adder/subtractor circuit in the SAP-1.  The advantage to this is a greatly increased set
@@ -21,7 +21,7 @@ can be generated programmatically in the Arduino code.  Because the Mode and Sel
 are wired to the Instruction Register, only the Carry-in signal is provided by the
 microcode ROMs.
 
-[![NQSAP ALU schematic)](../../assets/images/alu-schematic.png "ALU schematic"){:width="400px"}](../../assets/images/alu-schematic.png)
+[![NQSAP ALU schematic)](../../assets/images/alu-schematic.png "ALU schematic"){:width="500px"}](../../assets/images/alu-schematic.png)
 
 The inputs to the ALU are the A Register (H) and the B register.  All ALU instructions
 write their result to the A register.
@@ -74,7 +74,7 @@ on the Flags module.  Ths was done because the Flags module was already densly p
 and the ALU module had free space.  It was easy enough to place the three flag detection
 outputs on the interconnect between the boards.
 
-See the [Flag Calculations section of the ALU page](alu/#flag-calculations) for a
+See the [Flag Calculations section of the Flags page](flags/#flag-calculations) for a
 description of the flag detection hardware.
 
 ### Zero flag
