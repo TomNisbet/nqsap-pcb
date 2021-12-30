@@ -4,7 +4,7 @@ permalink: /docs/alu/
 excerpt: "Building the Arithmetic Logic Unit (ALU) of the NQSAP computer"
 ---
 
-[![Arithmetic Logic Unit (ALU)](../../assets/images/alu-500.jpg "ALU")](../../assets/images/alu.jpg)
+[![Arithmetic Logic Unit (ALU)](../../assets/images/alu-board-500.jpg "ALU")](../../assets/images/alu-board.jpg)
 
 The NQSAP-PCB computer uses a pair of 74LS181 4-bit ALU chips instead of the simple
 adder/subtractor circuit in the SAP-1.  The advantage to this is a greatly increased set
@@ -74,7 +74,7 @@ on the Flags module.  Ths was done because the Flags module was already densly p
 and the ALU module had free space.  It was easy enough to place the three flag detection
 outputs on the interconnect between the boards.
 
-See the [Flag Calculations section of the Flags page](flags/#flag-calculations) for a
+See the [Flag Calculations section of the Flags page](../flags/#flag-calculations) for a
 description of the flag detection hardware.
 
 ### Zero flag
