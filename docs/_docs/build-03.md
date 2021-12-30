@@ -68,7 +68,7 @@ bus.
 
 ## Results
 
-[![Third set self test](../../assets/images/boards3.gif "third set of boards"){:width="400px"}](../../assets/images/boards3.gif)
+[![Third set self test](../../assets/images/build3.gif "third set of boards"){:width="400px"}](../../assets/images/build3.gif)
 
 This shows the NQSAP-PCB with the ALU and Flags boards from the third build, as well as a
 prototyped Program Counter (upper right) and a proof-pf-concept Stack Pointer (upper

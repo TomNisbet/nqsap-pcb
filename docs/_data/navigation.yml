@@ -40,6 +40,12 @@ docs:
         url: /docs/in-details/
       - title: "Opcode Table"
         url: /docs/in-by-opcode/
+  - title: "References"
+    children:
+      - title: "74181 ALU Notes"
+        url: /docs/74181-alu-notes/
+      - title: "Further Reading"
+        url: /docs/further-reading/
   - title: "Links"
     children:
       - title: "Code and Schematics"
