@@ -8,8 +8,6 @@ docs:
         url: /docs/build-01/
       - title: "Build 2"
         url: /docs/build-02/
-      - title: "Build 3"
-        url: /docs/build-03/
   - title: "Design"
     children:
       - title: "Backplane"
