@@ -6,7 +6,7 @@
 #include "XModem.h"
 
 
-static const char * MY_VERSION = "5.0";
+static const char * MY_VERSION = "5.1";
 
 
 // Global status
@@ -832,7 +832,7 @@ void processCommand() {
         if (argc < 1) { a1 = 1; }
         for (unsigned ix = 0; (ix < a1); ix++) {
             hw.clkPulse();
-            delay(10);
+            delay(2);
         }
         break;
 

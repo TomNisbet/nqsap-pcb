@@ -144,10 +144,10 @@ static uint8_t valSelects = 0;
 
 static const char * registerNames[] = {
     "none", "MEM", "MAR", "03", "04",  "05",  "SP",  "PC",
-    "A",    "B",   "H",   "X",  "Y",   "D",   "OUT", "IR"
+    "A",    "B",   "OUT", "X",  "Y",   "D",   "OUT", "ALU"
 };
-static const unsigned woRegisters[] = { REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
-static const unsigned rwRegisters[] = { REG_PC, REG_A, REG_B }; //REG_PC, REG_B, REG_SP, REG_A };
+static const unsigned woRegisters[] = { REG_OUT, REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
+static const unsigned rwRegisters[] = { REG_SP, REG_PC, REG_A, REG_B }; //REG_PC, REG_B, REG_SP, REG_A };
 //static const unsigned rwRegisters[] = { REG_PC, REG_D, REG_X, REG_Y, REG_B, REG_SP, REG_A };
 static unsigned numWoRegisters() { return sizeof(woRegisters) / sizeof(*woRegisters); }
 static unsigned numRwRegisters() { return sizeof(rwRegisters) / sizeof(*rwRegisters); }
@@ -254,6 +254,8 @@ void LoaderHw::clearAll() {
         writeRegister(ix, 0);
     }
     writeControls(0);
+    selectReadRegister(REG_NONE);
+    selectWriteRegister(REG_NONE);
 }
 
 // Return a name for a given register number
@@ -356,7 +358,7 @@ bool LoaderHw::testHardware() {
     }
 
     bool ret = testFlags();
-    //if (ret) ret = testStack();
+    if (ret) ret = testCounters(11);
     if (ret) ret = testShifter();
     if (ret) ret = testMemory();
     if (ret) ret = testAlu();
@@ -434,23 +436,29 @@ bool LoaderHw::testRegister(unsigned reg, bool isRw) {
     return true;
 }
 
+// Test the conditional jump by loading a value into the PC and a different value into
+// the SP.  Read the SP onto the bus and then test the PC after a clock cycle with the
+// JE signal asserted.  If the PC takes the SP value, then a conditional jump happened.
 bool LoaderHw::jumpTest(uint8_t f, uint8_t jmp) {
+    enum { JUMP_YES = 0x0f, JUMP_NO = 0xf0 };
+
     writeRegister(REG_IR, jmp);
-    writeRegister(REG_A, 0x55);
-    writeRegister(REG_PC, 0xaa);
+    writeRegister(REG_SP, JUMP_YES);
+    writeRegister(REG_PC, JUMP_NO);
+    selectWriteRegister(REG_NONE);
     controlBitsOffOn(CTL_NONE, CTL_JE);
-    selectReadRegister(REG_A);
+    selectReadRegister(REG_SP);
     clkPulse();
     uint8_t pc = readRegister(REG_PC);
     bool jumped = false;
-    if (pc == 0x55) jumped = true;
-    else if (pc != 0xaa) {
+    if (pc == JUMP_YES) jumped = true;
+    else if (pc != JUMP_NO) {
         Serial.print(F("failed, invalid PC value="));
         Serial.println(pc, HEX);
     }
 
     // The lower three bits of the IR select the jump condition.  They follow the same
-    // order as the flag bits on the bus, altrnating between flag set and not set.  The
+    // order as the flag bits on the bus, alternating between flag set and not set.  The
     // conditions, starting from zero, are: [CS, CC, ZS, ZC, VS, VC, NS, NC].  With this
     // order, the LSB of the IR determines jump on set or clear and the next two bits
     // determine the flag that is being checked.
@@ -458,12 +466,13 @@ bool LoaderHw::jumpTest(uint8_t f, uint8_t jmp) {
     bool shouldJump = ((jmp & 1)==0) == ((f & bit)==bit);
     if (jumped != shouldJump) {
         char s[60];
-        Serial.print(F("failed, conditional jump="));
-        sprintf(s, "%d, flags=%02x, jmp=%d", jumped, f, jmp);
+        Serial.print(F("failed conditional jump, jumped="));
+        sprintf(s, "%d, flags=%02x, jmp type=%d", jumped, f, jmp);
         Serial.println(s);
         return false;
     }
 
+    controlBitsOffOn(CTL_JE, CTL_NONE);
     return true;
 }
 
@@ -473,6 +482,7 @@ bool LoaderHw::testFlags() {
         uint8_t flags = ((ix & 0x0c) << 4) | (ix & 0x03);
         writeFlags(flags);
         uint8_t readVal = readRegister(REG_FLG);
+        selectReadRegister(REG_NONE);
         delay(DELAY_LEDS);
         if (readVal != flags) {
             char s[60];
@@ -489,30 +499,42 @@ bool LoaderHw::testFlags() {
     return true;
 }
 
-bool LoaderHw::testStack() {
-    Serial.print(F("Testing Stack Pointer: "));
+bool LoaderHw::testCounters(uint8_t count) {
+    Serial.print(F("Testing counters: "));
 
     for (unsigned ix = 0; (ix < sizeof(patterns)); ix++) {
         uint8_t writeVal = patterns[ix];
+        writeRegister(REG_PC, writeVal);
+        delayMicroseconds(2);
         writeRegister(REG_SP, writeVal);
         delayMicroseconds(2);
         selectWriteRegister(0);
-        uint8_t readVal = readRegister(REG_SP);
-        delay(DELAY_LEDS);
-        if (!valueTest(writeVal, readVal))  return false;
-        controlBitsOffOn(CTL_NONE, CTL_SE|CTL_C0);
-        clkPulse();
-        clkPulse();
-        clkPulse();
+        uint8_t readVal = readRegister(REG_PC);
+        readRegister(REG_NONE);
+        delay(20);
+        if (!valueTest(writeVal, readVal, " PC read"))  return false;
         readVal = readRegister(REG_SP);
-        if (!valueTest(writeVal+3, readVal, " on inc"))  return false;
-        controlBitsOffOn(CTL_C0, CTL_SE|CTL_C1);
-        clkPulse();
-        clkPulse();
-        clkPulse();
+        readRegister(REG_NONE);
+        if (!valueTest(writeVal, readVal, " SP read"))  return false;
+        controlBitsOffOn(CTL_C0, CTL_PI|CTL_SE|CTL_C1);
+        for (int jx = 0; (jx < count); jx++) {
+            clkPulse();
+            delay(3);
+        }
+        readVal = readRegister(REG_PC);
+        if (!valueTest(writeVal + count, readVal, " PC inc"))  return false;
         readVal = readRegister(REG_SP);
-        if (!valueTest(writeVal-3, readVal, " on dec"))  return false;
-        controlBitsOffOn(CTL_SE|CTL_C0|CTL_C1, CTL_NONE);
+        if (!valueTest(writeVal + count, readVal, " SP inc"))  return false;
+        controlBitsOffOn(CTL_PI|CTL_C1, CTL_SE|CTL_C0);
+        readRegister(REG_NONE);
+        for (int jx = 0; (jx <= count); jx++) {
+            clkPulse();
+            delay(3);
+        }
+        readVal = readRegister(REG_SP);
+        readRegister(REG_NONE);
+        if (!valueTest(writeVal - 1, readVal, " SP dec"))  return false;
+        controlBitsOffOn(CTL_PI|CTL_SE|CTL_C0|CTL_C1, CTL_NONE);
     }
 
     Serial.println(F("pass"));

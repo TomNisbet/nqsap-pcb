@@ -42,7 +42,7 @@ class LoaderHw
     bool testRegister(unsigned reg, bool isRw);
     bool jumpTest(uint8_t f, uint8_t jmp);
     bool testFlags();
-    bool testStack();
+    bool testCounters(uint8_t count);
     bool shiftTest(uint8_t val, uint8_t carry);
     bool testShifter();
     bool testMemory();
