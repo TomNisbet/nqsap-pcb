@@ -25,11 +25,21 @@ which is extreme overkill, since only 256 of the 32768 bytes are used.  But it i
 wire because it does not require a separate bus driver.
 
 The 32K RAM chip is only using eight of the fifteen available address lines to access only
-256 bytes of memory.  Two additional address lines from the microcode can segment the RAM
-into separate areas for program, data, and stack storage to allow for a total of 1K of
-storage.
+256 bytes of memory.  Two additional address lines from the microcode (M0 and M1) can
+segment the RAM into separate areas for program, data, and stack storage to allow for a
+total of 1K of storage.  Jumpers are used to connect the M0 and M1 lines to the RAM, so
+the use of either of these features is optional.  This allows the RAM to be used as 256,
+512, or 1024 bytes with separate or combined data/code and data/stack areas.  Because ROM
+control lines are scarse in this design, the use of jumpers also lets the M0 and M1 lines
+be used elsewhere to add new functionality.
 
-This Harvard-like architecture would mean that the NQSAP would not support self-modifying
-code because the load and store operations would not be able to access program storage.
-It also means that the Loader would not be able to initialize data in the memory area
-unless it is able to access another control signal to select memory areas.
+This use of separate data and code areas would mean that the NQSAP-PCB would not support
+self-modifying code because the register load and store operations would not be able to
+access program storage.  This is another reason to use jumpers for the M0 and M1 selects.
+Combined areas can be used if self-modifying code is desired and separate areas can be
+used to maximize RAM for larger programs.
+
+Note that the M0 and M1 jumpers allow for a total of four RAM areas.  In addition to data,
+code, and stack, a fourth area could be defined by adding additional instructions in the
+microcode.  This could be a second stack with its own push and pull instructions, or a
+second data area with new register load and save instructions to access the new block.
