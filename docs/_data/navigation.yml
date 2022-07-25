@@ -9,7 +9,9 @@ docs:
       - title: "Build 2"
         url: /docs/build-02/
       - title: "Build 3"
-        url: /docs/build-03x/
+        url: /docs/build-03/
+      - title: "Build 4"
+        url: /docs/build-04/
   - title: "Design"
     children:
       - title: "Backplane"
