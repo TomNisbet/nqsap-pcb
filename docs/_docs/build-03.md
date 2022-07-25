@@ -71,6 +71,6 @@ bus.
 [![Third set self test](../../assets/images/build3.gif "third set of boards"){:width="400px"}](../../assets/images/build3.gif)
 
 This shows the NQSAP-PCB with the ALU and Flags boards from the third build, as well as a
-prototyped Program Counter (upper right) and a proof-pf-concept Stack Pointer (upper
+prototyped Program Counter (upper right) and a proof-of-concept Stack Pointer (upper
 left). The Arduino Loader is not active and the system is running a simple program that
 loads a sequence of values into the A register.

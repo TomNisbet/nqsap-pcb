@@ -28,7 +28,7 @@ their operation was checked with the Loader/debugger.
 The dream of a perfect build ended with the [IR-RC](../ir-rc/) board.  This one had two minor
 problems that will be fixed with a new board update.  
 
-The first problem was the T-EXT LED wired to Vcc instead of group.  The temporary fix was
+The first problem was the T-EXT LED wired to Vcc instead of ground.  The temporary fix was
 to install the LED backwards, causing it to display the inverted signal.
 
 The second problem is that the Ring Counter requires an inverted N signal from the bus.

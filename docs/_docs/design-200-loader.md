@@ -42,7 +42,8 @@ available via the USB interface:
   * Test all registers with a pattern that can be visually observed
   * Test all read/write registers by reading back the patterns written
   * Test memory with a set of patterns including walking bits
-  * (future) Test the ALU by writing operands and operations and verifying the result
+  * Test the ALU by writing operands and operations and verifying the result
+  * Test the calculation of the flag values and the conditional jumps
 
 ## Loader Design
 

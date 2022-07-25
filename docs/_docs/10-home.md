@@ -3,7 +3,7 @@ title: "NQSAP-PCB 8-bit TTL Computer"
 permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
-[![NQSAP-PCB](assets/images/build3-500.jpg "initial NQSAP-PCB build")](assets/images/build-3.jpg)
+[![NQSAP-PCB](assets/images/build4-500.jpg "initial NQSAP-PCB build")](assets/images/build-3.jpg)
 
 The Not Quite Simple As Possible Computer - PCB version
 
@@ -12,10 +12,13 @@ NQSAP-PCB is the second iteration of the
 
 Highlights of the design are:
 
-* [Arduino-based loader/debugger](docs/loader/) to load programs and run interactive diagnostics
-* 8-bit addressing extends the size of memory and number of opcodes
-* 74LS181 ALU provides arithmetic and logic operations including add, subtract, AND, OR,
- and XOR
-* 3-to-8 decoders for register selection simplifies wiring and reduces the number of
+* Modular [backplane](docs/backplane) and bus connectors, providing flexible arrangement
+ of the computing boards to easily modify and extend the computer's functionality.
+* [Arduino-based loader/debugger](docs/loader/) with full access to all data and microcode
+control lines to load programs and run interactive diagnostics
+* [74LS181 ALU](docs/alu) provides arithmetic and logic operations including add,
+subtract, AND, OR, and XOR
+* Four [flag registers](docs/flags) with hardware-based conditional jumps
+* 3-to-8 decoders for register selection simplify wiring and reduce the number of
   microcode bits needed while also protecting against inadvertent bus collisions
-* Hardware-based conditional jumps
+* 8-bit addressing extends the size of memory and number of opcodes
