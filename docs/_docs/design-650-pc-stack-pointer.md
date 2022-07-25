@@ -1,41 +1,59 @@
 ---
 title: "Stack Pointer"
-permalink: /docs/stack-pointer/
+permalink: /docs/program-counter-stack-pointer/
 excerpt: "Building the stack pointer of the NQSAP computer"
 ---
 
-[![Stack Pointer](../../assets/images/stack-pointer.jpg "stack pointer build")](../../assets/images/stack-pointer.jpg)
+[![Program Counter and Stack Pointer](../../assets/images/pc-sp-500.jpg "program counter and stack pointer build")](../../assets/images/pc-sp.jpg)
+
+The Program Counter and Stack Pointer module implements two unrelated resisters.  There
+are no interconnections or dependencies between the PC and SP, so they are co-located only
+because each design is simple and both could be implemented together on one board.  The
+PC/SP board does not contain any register select hardware, so the read and write selects
+for the PC and SP are provided over the interconnects from the
+[RAM/MAR board](docs/ram-mar).
+
+## Program Counter
+
+[![Program Counter and Stack Pointer Schematic](../../assets/images/pc-sp-schematic.png "program counter and stack pointer"){:width="400px"}](../../assets/images/pc-sp-schematic.png)
+
+The Program Counter (PC) is implemented using two 74HCT161 4-bit counters.  It increments
+on any clock cycle that has the Program Increment (PI) signal asserted.  The PC is loaded
+with a new value when either the Write Program (WP) signal or the conditional JMP signal
+is low. The WP signal is produced by the register selects to perform an unconitional jump.
+The JMP signal is produced by the [Flags Module](docs/flags).
+
+## Stack Pointer
 
 The stack pointer (SP) is an 8-bit register with read/write access to the bus.  It enables
 new instructions to push and pull registers (PHA, PLA) and to call and return from
-subroutines (JSR, RTS).  There are also new instructions to load the SP from an immediate
-value (LIS) and to transfer values from A to SP (TAS) and from SP to A (TSA).  If no stack
-operations are needed, the SP can be used as a general-purpose register.
+subroutines (JSR, RTS).  There are also instructions to load the SP to and from the X
+register using the TXS and TSX instructions.  If no stack operations are needed, the SP
+can also be used as a general-purpose register.
 
-## Hardware
+The SP is implemented using a pair of 74HCT193 4-bit up/down counters.  Output to the bus is controlled via the usual 74LS245 bus transceiver.
 
-The SP is implemented using a pair of 4-bit up/down counters with the count controls tied
-to a microcode ROM.  Output to the bus is controlled via the usual 74LS245 bus
-transceiver.  In the picture above, the SP is the three chips below the clock circuit, to
-the left of the two-chip MAR.
+The CLR signal is not used to reset the counter at system reset so the SP always starts in
+an unknown state.  This isn't a problem, because any programs that use the SP will want to
+initialize it to point to a free memory area before any stack operations are performed.
 
-The counters used for the SP are 74LS169 4-bit up/down counters.  This chip fits nicely
-with the NQSAP design because it has both a clock input and a count enable input.  The
-enable signal makes it simple to initiate a count operation from the control ROMs.  This
-signal, plus the up/down signal allow the control ROMs to do the increment and decrement
-operations of the SP in microcode.
+Unlike the 74HCT161, the 74HCT193 counters do not have a master clock or a count enable
+control.  Counting is performed by pulsing the UP or DOWN pins and loading a new value is
+performed by pulsing the LOAD signal.  Additional logic is used to AND these signals with
+the master system clock.  To load a new value, the CLK and WS signals are combined.
 
-The 74LS169 does not have a CLR signal to reset the counter at system reset so the SP
-always starts in an unknown state.  This isn't a problem, because any programs that use
-the SP will want to initialize it to point to a free memory area before any stack
-operations are performed.
+Spare bus and microcode signals are in short supply.  Rather than adding two new signals
+for the SP count up and down operations, a single Stack Enable (SE) signal was added.
+This is used in conjunction with the C0 and C1 carry control signals to control counting
+in the SP. The SE and C0 signals are asserted to count down and the SE and C1 signals are
+used to count up.  These are combined with the CLK signal to produce the pulses for the
+DOWN and UP lines.
 
-An early design used a 74LS193 4-bit up/down counter.  While this is similar to the 169,
-it lacks the count enable control.  It is possible to use this chip, but an external
-gate must be used to only provide a clock pulse to the counter when the count enable
-signal is asserted from the microcode ROM.  This must be designed carefully because the
-ROM glitch issue can cause errant clock pulses while the ROM address lines are being
-switched by the IR and Ring Counter.
+The shared use of the C0 and C1 signals means that the carry flag cannot be modified in
+the same microinstruction step where the SP is counting.  The normal use of the C0 and C1
+signals will not cause the SP to count because the SE signal will not be asserted.  Note
+that the C0 and C1 signals will also be shared by the XY registers, so SP and indexing
+operations also cannot happen in a single microinstruction step.
 
 ## Microcode
 
@@ -55,6 +73,8 @@ accessible by the user, so it is a good candidate for the microcode to use.
 
 ## Bill of Materials
 
+* 74HCT00 quad 2-input NAND gate(1)
+* 74HCT10 triple 3-input NAND(1)
 * 74LS161 4-bit counter (2)
 * 74LS193 4-bit up/down counter (2)
 * 74HCT245 8-bit bus transceiver (2)

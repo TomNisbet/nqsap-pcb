@@ -98,10 +98,10 @@ middle of an instruction execution.
 The inverted and non-inverted values of the four flags are fed into the inputs of a
 74HCT151 8-to-1 selector.  Because the flip flops provide both Q and not-Q outputs, the
 selector can choose to jump on a flag set or flag clear value with no additional inverters
-or gates needed.  The output of the selector drives the LOAD line of the PC.  The enable
-line of the selector is controlled by the Conditional Jump Enable (JE) signal from the
-microcode ROM.  If the JE signal is not asserted then the values at the selector inputs
-are ignored and the PC LOAD is not enabled.
+or gates needed.  The active-low JMP output of the selector drives the LOAD line of the
+PC.  The enable line of the selector is controlled by the Conditional Jump Enable (JE)
+signal from the microcode ROM.  If the JE signal is not asserted then the values at the
+selector inputs are ignored and the PC LOAD is not enabled.
 
 Before going to the PC LOAD input, the output of the conditional jump selector is NORed
 with the Write PC (WP) signal from the register selectors.  This allows the control ROM to

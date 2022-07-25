@@ -23,7 +23,7 @@ the bus through a 74LS245 transceiver.
 
 ### Output Register
 
-Despite the simple design, the [Output Register](../design-700-output-register/) boards
+Despite the simple design, the [Output Register](../output-register/) boards
 had one clumsy mistake.  Two enable pins on the 74HCT138 were left unconnected.  A simple
 patch wire was added to ground these pins and then the board worked as expected.
 
