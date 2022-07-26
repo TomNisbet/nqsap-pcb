@@ -49,10 +49,6 @@ The star of this design is the 74HCT151 8-to-1 selector.  It is used to replace 
 logic for the Carry and oVerflow flag calculations and also to select a flag source for
 the conditional jump.
 
-The gates at the bottom of the drawing that generate the B-CLK and ALU-S0 signals are not
-part of the flags design but they use some of the spare logic gates.  These will likely be
-moved to other pages as more schematics are drawn.
-
 ## Flag Registers
 
 Each of the four flags is stored in its own D flip flop rather than a single register chip
@@ -192,12 +188,12 @@ The table below shows the usage of the carry flag for each instruction.
 The input to the Carry flag is described in the [Flag Calculations](#flag-calculations)
 section.  
 
-The output of the Carry flag to the ALU and H register is controlled by the LC and LS
+The output of the Carry flag to the ALU and H register is controlled by the CC and CS
 lines from the Control ROM.  These two lines can force a clear or set value or just pass
 through the current value of the Carry flag.  Note that the ALU uses negative logic for
 the carry flag, so the inverted value of the Carry flag is used.  The inverter is placed
-after the LC and LS logic, so asserting LS will present a LOW to the ALU and LC will
-present a HIGH.
+after the CC and CS logic, so asserting CS will present a LOW to the ALU and CC will
+present a HIGH to the ALU.
 
 ## Control ROM Summary
 
