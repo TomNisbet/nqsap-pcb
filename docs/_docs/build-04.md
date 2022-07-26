@@ -9,16 +9,17 @@ excerpt: "NQSAP-PCB computer build 4"
 The fourth batch of boards contained the first boards for the Program Counter / Stack
 Pointer and the LED Output Display.  The nine boards from the first four builds can be
 assembled to form a Turing-complete 8-bit CPU.  One additional build is planned to add
-ths DXY Register functionality from the original breadboard NQSAP computer.
+the DXY Register functionality from the original breadboard NQSAP computer.
 
 ## Program Counter and Stack Pointer
 
 [![Program Counter and Stack Pointer](../../assets/images/pc-sp-board-500.jpg "program counter / stack pointer")](../../assets/images/pc-sp-board.jpg)
 
-The next expansion added a [Program Counter and Stack Pointer](../program-counter-stack-pointer/) boards passed the register load test, but would not count correctly.  The
-Program Increment (PI) signal was wired to the high counter and the carry from that counter
-was wired to the low counter.  After a few wires to swap the signals between the two chips,
-the PC passed all tests.
+The [Program Counter and Stack Pointer](../program-counter-stack-pointer/) boards passed
+the register load test, but would not count correctly.  The Program Increment (PI) signal
+was mistakenly wired to the high counter and the carry out from that counter was wired to
+the carry in of the low counter.  After a few wires to swap the signals between the two
+chips, the PC passed all tests.
 
 
 
