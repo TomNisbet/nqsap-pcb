@@ -13,7 +13,7 @@ ths DXY Register functionality from the original breadboard NQSAP computer.
 
 ## Program Counter and Stack Pointer
 
-[![Program Counter and Stack Pointer](../../assets/images/pc-sp-build.jpg "stack pointer"){:width="400px"}](../../assets/images/stack pointer-build.jpg)
+[![Program Counter and Stack Pointer](../../assets/images/pc-sp-board-500.jpg "program counter / stack pointer")](../../assets/images/pc-sp-board.jpg)
 
 The next expansion added a [Program Counter and Stack Pointer](../program-counter-stack-pointer/) boards passed the register load test, but would not count correctly.  The
 Program Increment (PI) signal was wired to the high counter and the carry from that counter

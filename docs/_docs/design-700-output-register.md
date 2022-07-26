@@ -4,7 +4,7 @@ permalink: /docs/output-register/
 excerpt: "Output register and display of the NQSAP computer"
 ---
 
-[![Output register and display](../../assets/images/output-register.jpg "output register")](../../assets/images/output-register.jpg)
+[![Output register and display](../../assets/images/output-register-board-500.jpg "output register")](../../assets/images/output-register-board.jpg)
 
 The NQSAP uses a different approach to the output display than the Ben Eater SAP-1.
 Instead of driving an LED display with a sequencer and an EEPROM, an ATmega328 is used.
@@ -19,6 +19,8 @@ The output register can be jumpered to display its result in one of three modes:
 * hex (00 to ff)
 * signed decimal (-128 to 127)
 * unsigned decimal (0 to 255)
+
+[![Output Register Schematic](../../assets/images/output-register-schematic.png "output register"){:width="400px"}](../../assets/images/output-register-schematic.png)
 
 The output register hardware is exteremely minimal due to the use of segment multiplexing
 instead of digit multiplexing.  The removes the need for transistors or other drivers so

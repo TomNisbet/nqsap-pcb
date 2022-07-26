@@ -34,6 +34,10 @@ docs:
         url: /docs/alu/
       - title: "Flags and Jump Control"
         url: /docs/flags/
+      - title: "PC and SP"
+        url: /docs/program-counter-stack-pointer/
+      - title: "Output Register"
+        url: /docs/output-register/
   - title: "Instruction Set"
     children:
       - title: "Instruction Summary"

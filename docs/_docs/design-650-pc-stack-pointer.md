@@ -1,27 +1,27 @@
 ---
-title: "Stack Pointer"
+title: "Program Counter and Stack Pointer"
 permalink: /docs/program-counter-stack-pointer/
 excerpt: "Building the stack pointer of the NQSAP computer"
 ---
 
-[![Program Counter and Stack Pointer](../../assets/images/pc-sp-500.jpg "program counter and stack pointer build")](../../assets/images/pc-sp.jpg)
+[![Program Counter and Stack Pointer](../../assets/images/pc-sp-board-500.jpg "program counter and stack pointer build")](../../assets/images/pc-sp-board.jpg)
 
 The Program Counter and Stack Pointer module implements two unrelated resisters.  There
 are no interconnections or dependencies between the PC and SP, so they are co-located only
 because each design is simple and both could be implemented together on one board.  The
 PC/SP board does not contain any register select hardware, so the read and write selects
 for the PC and SP are provided over the interconnects from the
-[RAM/MAR board](docs/ram-mar).
-
-## Program Counter
+[RAM/MAR board](../ram-mar).
 
 [![Program Counter and Stack Pointer Schematic](../../assets/images/pc-sp-schematic.png "program counter and stack pointer"){:width="400px"}](../../assets/images/pc-sp-schematic.png)
+
+## Program Counter
 
 The Program Counter (PC) is implemented using two 74HCT161 4-bit counters.  It increments
 on any clock cycle that has the Program Increment (PI) signal asserted.  The PC is loaded
 with a new value when either the Write Program (WP) signal or the conditional JMP signal
 is low. The WP signal is produced by the register selects to perform an unconitional jump.
-The JMP signal is produced by the [Flags Module](docs/flags).
+The JMP signal is produced by the [Flags Module](../flags).
 
 ## Stack Pointer
 
