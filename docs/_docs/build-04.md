@@ -15,9 +15,10 @@ ths DXY Register functionality from the original breadboard NQSAP computer.
 
 [![Program Counter and Stack Pointer](../../assets/images/pc-sp-build.jpg "stack pointer"){:width="400px"}](../../assets/images/stack pointer-build.jpg)
 
-The next expansion added a [stack pointer](../stack-pointer/) and its associated JSR, RTS,
-push, and pull instructions.  The hardware is a pair of 4-bit up/down counters wired to
-the bus through a 74LS245 transceiver.
+The next expansion added a [Program Counter and Stack Pointer](../program-counter-stack-pointer/) boards passed the register load test, but would not count correctly.  The
+Program Increment (PI) signal was wired to the high counter and the carry from that counter
+was wired to the low counter.  After a few wires to swap the signals between the two chips,
+the PC passed all tests.
 
 
 
@@ -33,5 +34,5 @@ patch wire was added to ground these pins and then the board worked as expected.
 
 This shows the NQSAP-PCB with all of the boards from the first four builds. The new PC/SP
 board is in the upper right and the new Output Register is upper left.  The Arduino Loader
-is not active and the system is running a simple program that loads a sequence of values
-into the A register.
+is not active and the system is running a simple program that counts and saves and
+restores values from the stack.
