@@ -29,7 +29,7 @@ The NQSAP design addresses the following SAP-1 limitations:
 * Limited number of ROM address lines available to expand to more flags
 * Changing flag values causes the control ROM outputs to briefly glitch to unknown values
 
-## Hardware Overview
+## Hardware overview
 
 [![Flags Schematic](../../assets/images/flags-schematic.png "flags and jump logic"){:width="400px"}](../../assets/images/flags-schematic.png)
 
@@ -49,7 +49,7 @@ The star of this design is the 74HCT151 8-to-1 selector.  It is used to replace 
 logic for the Carry and oVerflow flag calculations and also to select a flag source for
 the conditional jump.
 
-## Flag Registers
+## Flag registers
 
 Each of the four flags is stored in its own D flip flop rather than a single register chip
 for all flags.  This is implemented as a pair of 74HCT74 dual D flip flops.  Each flag has
@@ -69,7 +69,7 @@ selects from either the bus or the individual flag calculation hardware as the s
 loading new values into the flags.  The Pull Processor Status (PLP) instruction uses the
 bus read capability to restore previously saved values of the flags.
 
-## Setting and Clearing
+## Setting and clearing
 
 The Reset inputs of the flag registers are tied to the master reset (RST) signal so that
 the flags are all cleared at reset.  The Set inputs are not used.
@@ -81,7 +81,7 @@ loaded from the bus, so putting zeroes on the bus and then selectively loading i
 flags allows instructions to clear flags.  Similarly, flags are set using the ALU all-ones
 and loading from the bus.
 
-## Conditional Jump
+## Conditional jump
 
 The conditional jump determination is done in hardware, with a circuit that drives the
 LOAD enable of the Program Counter (PC).  Unlike the SAP-1, the flag values are not
@@ -125,7 +125,7 @@ using more cycles than other approaches might need.  It might be possible for th
 conditional jump logic to drive the Next Instruction (N) signal instead of the PC LOAD
 signal, allowing a flag condition to terminate a jump instruction early.
 
-## Flag Calculations
+## Flag calculations
 
 The Negative flag is simply the MSB of the data bus.  Because it is wired to the bus
 instead of the ALU output, the Negative flag can be updated on non-ALU  operations such as
@@ -154,7 +154,7 @@ operation that puts all ones on the bus and another that puts out all zeroes.  B
 the ALU in one of these modes and enabling individual flag load lines, a flag can be set
 or cleared by the microcode.
 
-## Carry Flag Usage by the ALU and H Register
+## Carry Flag usage by the ALU and H Register
 
 In addition to its use in the conditional jump instructions, the Carry flag output is also
 used as an input to the ALU (L) and the sHift (H) Register.  Depending on the operation,
@@ -195,7 +195,7 @@ the carry flag, so the inverted value of the Carry flag is used.  The inverter i
 after the CC and CS logic, so asserting CS will present a LOW to the ALU and CC will
 present a HIGH to the ALU.
 
-## Control ROM Summary
+## Control ROM summary
 
 The table below shows the Control ROM lines related to flags.
 
@@ -213,7 +213,7 @@ The table below shows the Control ROM lines related to flags.
 | LC   | ALU carry input clear  |
 |====
 
-## Bill of Materials
+## Bill of materials
 
 * 74HCT02 quad 2-input NOR gate (1)
 * 74HCT08 quad 2-input AND gate (1)
