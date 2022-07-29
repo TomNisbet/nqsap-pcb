@@ -20,6 +20,3 @@ control lines to load programs and run interactive diagnostics
 subtract, AND, OR, and XOR
 * Four [flag registers](docs/flags) with hardware-based conditional jumps
 * Double-buffered [Instruction Register](docs/ir-rc) to mitigate issues with control EEPROM output glitching
-* 3-to-8 decoders for register selection simplify wiring and reduce the number of
-  microcode bits needed while also protecting against inadvertent bus collisions
-* 8-bit addressing extends the size of memory and number of opcodes

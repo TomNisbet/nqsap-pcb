@@ -19,8 +19,8 @@ the counter. Still, the ring counter terminology is used to match the Ben Eater 
 
 ## Instruction Register
 
-The Instruction Register is double buffered to reduce glitches with the EEPROM address
-lines change.  In the non-buffered design, the EEPROM outputs will be in an unknown state
+The Instruction Register is double buffered to reduce [glitches when the EEPROM address
+lines change](../eeprom-glitch).  In the non-buffered design, the EEPROM outputs will be in an unknown state
 for about 100ns when the Ring Counter address changes on every falling edge of the system
 clock.  In addition, the outputs will also glitch on the rising edge of the clock at
 instruction step T1 when the IR is loaded with the new opcode.  The double buffer adds

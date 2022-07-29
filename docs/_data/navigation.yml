@@ -50,6 +50,8 @@ docs:
     children:
       - title: "74181 ALU Notes"
         url: /docs/74181-alu-notes/
+      - title: "EEPROM Glitch"
+        url: /docs/74181-eeprom-glitch/
       - title: "Further Reading"
         url: /docs/further-reading/
   - title: "Links"

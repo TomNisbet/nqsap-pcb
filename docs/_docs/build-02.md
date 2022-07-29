@@ -40,7 +40,7 @@ version of the board will add a hex inverter to produce the needed signals local
 ### RAM and MAR
 
 The [RAM and MAR](../ram-mar/) module worked as designed and was verified by the self test
-routines on the Loader/debugger.  The timing of this test will need to be adjusted because
+routines on the Loader/Debugger.  The timing of this test will need to be adjusted because
 the Loader's new shift register design is slower that the previous parallel register
 design. Most of the tests have timing delays built-in to allow visual observation of the
 test, so these will be shortened appropriately.

@@ -1,0 +1,17 @@
+{
+  signal: [
+    {node: ".A...B...E...F"},
+    {node: ".....C...D...G...H"},
+    {name: 'clk', wave: "Hl.H.l.H.l.H.l.H.l."},
+    {name: 'CO', wave: "l.xh......xl..xl..xl......xl......xl..", period: '0.5'},
+    {name: 'MI', wave: "l.xh......xl..xl..xl......xl......xl..", period: '0.5'},
+  ],
+
+  head:{
+    text: 'Move PC to MAR',
+    tick: 0,
+    every: 1
+  },
+
+  edge: ["A<->B step 0", "C<->D step 1", "E<->F step 2", "G<->H step 3"]
+}

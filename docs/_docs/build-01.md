@@ -43,7 +43,7 @@ next version will use a more common footprint, either DIP or SOIC, for the parts
 
 ### Template Boards
 
-A blank module board was created to server as a layout template for all module boards.  A
+A blank module board was created to serve as a layout template for all module boards.  A
 set of these boards was included in the first board build.  A populated template board was
 used as a guide when soldering connections onto backplane boards.  
 

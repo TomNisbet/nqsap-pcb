@@ -18,7 +18,8 @@ non-ALU instructins.
 The sHift register (register H), is a read-only register that returns the contents of the
 B register shifted one position to the right.  The LSB of B shifts into the Carry flag.
 The MSB of H is populated by the carry flag for the ROR (rotate right) instruction and is
-hard-coded to zero for the LSR (logical shift right) instruction.
+hard-coded to zero for the LSR (logical shift right) instruction.  Note that H is not an
+actual register.  It is simply a alternate way of reading the value of the B register.
 
 
 [![A-B registers schematic](../../assets/images/ab-registers-schematic.png "A-B registers schematic"){:width="720px"}](../../assets/images/ab-registers-schematic.png)

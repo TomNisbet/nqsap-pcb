@@ -7,7 +7,7 @@ excerpt: "NQSAP-PCB computer build 3"
 [![Third set of boards](../../assets/images/boards3-500.jpg "Third set of boards")](../../assets/images/boards3.jpg)
 
 The third batch of boards contained an updated A/B Register module, an updated IR/RC
-module, and the first boards for the ALU and Flags modules. The ALU and flags to round out
+module, and the first boards for the ALU and Flags modules. The ALU and flags round out
 the functionality and allow for programs that actually perform calculations and do
 conditional jumps.
 
@@ -17,21 +17,22 @@ The updated v1.1 [IR-RC](../ir-rc/) board fixes two minor problems from the init
 The T-EXT LED is now correctly wired so that it lights to indicate that the Ring Counter
 is executing the extended microcode steps 8 to 15.
 
-The new board also adds a hex inverter to invert The CLK and N control signals for its
-use. The inverted CLK was originaly created by the Loader module and passed through the
-Microcode module on the interconnect bus.
+The new board also adds a onboard hex inverter to invert The CLK and N control signals for
+its use. The inverted CLK was originaly created by the Loader module and passed through
+the Microcode module on the interconnect bus.
 
 ### A/B Registers
 
 The original [A and B Registers](../ab-registers/) functioned as designed, but a v2.0
-board was designed for this build to add new functionality.  The new version adds a shift
-register (register H) output from the B register.  When selected, this read-only register
+board was designed for this build to add new functionality.  The new version adds a
+virtual shift register (register H) output from the B register.  When selected, this
 outputs the contents of the B register shifted one place to the right.  The LSB of B is
 shifted into the Carry flag.  The MSB of the H register is the current contents of the
 Carry flag, although it can also be forced to zero using the CC bit from the microcode.
 This register is used for the LSR and ROR instructions.  Note that left shift instructions
 (ASL and ROL) don't require a shift register because they can be produced by the ALU's A+A
-operation.
+operation.  Note also that H is not actually a register, it is just a second bus
+transceiver that reads to contents of the B register.
 
 The new A/B Register module also swapped out the hard-to-find SOP-16 74HCT138s for
 standard DIP-16 packages.

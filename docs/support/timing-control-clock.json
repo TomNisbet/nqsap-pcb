@@ -1,0 +1,17 @@
+{
+  signal: [
+    {node: ".A...B...E...F"},
+    {node: ".....C...D...G...H"},
+    {name: 'clk', wave: "Hl.H.l.H.l.H.l.H.l."},
+    {name: 'some ctl', wave: "l.xl......xl..xl..xl......xh......xl..", period: '0.5'},
+    {name: 'ctl AND clk', wave: "l.............xl..............H...l...", period: '0.5'},
+  ],
+
+  head:{
+    text: 'Control Clock Signal',
+    tick: 0,
+    every: 1
+  },
+
+  edge: ["A<->B step 0", "C<->D step 1", "E<->F step 2", "G<->H step 3"]
+}

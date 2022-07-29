@@ -43,7 +43,9 @@ available via the USB interface:
   * Test all read/write registers by reading back the patterns written
   * Test memory with a set of patterns including walking bits
   * Test the ALU by writing operands and operations and verifying the result
+  * Test the right-shifted value of the B register as presented on the H register
   * Test the calculation of the flag values and the conditional jumps
+  * Test the increment and decrement operations of the Stack Pointer
 
 ## Loader Design
 
