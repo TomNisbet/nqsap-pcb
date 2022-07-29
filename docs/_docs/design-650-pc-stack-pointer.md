@@ -20,7 +20,7 @@ for the PC and SP are provided over the interconnects from the
 The Program Counter (PC) is implemented using two 74HCT161 4-bit counters.  It increments
 on any clock cycle that has the Program Increment (PI) signal asserted.  The PC is loaded
 with a new value when either the Write Program (WP) signal or the conditional JMP signal
-is low. The WP signal is produced by the register selects to perform an unconitional jump.
+is low. The WP signal is produced by the register selects to perform an unconditional jump.
 The JMP signal is produced by the [Flags Module](../flags).
 
 ## Stack Pointer
@@ -31,7 +31,8 @@ subroutines (JSR, RTS).  There are also instructions to load the SP to and from 
 register using the TXS and TSX instructions.  If no stack operations are needed, the SP
 can also be used as a general-purpose register.
 
-The SP is implemented using a pair of 74HCT193 4-bit up/down counters.  Output to the bus is controlled via the usual 74LS245 bus transceiver.
+The SP is implemented using a pair of 74HCT193 4-bit up/down counters.  Output to the bus
+is controlled via the usual 74LS245 bus transceiver.
 
 The CLR signal is not used to reset the counter at system reset so the SP always starts in
 an unknown state.  This isn't a problem, because any programs that use the SP will want to
