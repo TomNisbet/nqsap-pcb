@@ -16,11 +16,10 @@ the DXY Register functionality from the original breadboard NQSAP computer.
 [![Program Counter and Stack Pointer](../../assets/images/pc-sp-board-500.jpg "program counter / stack pointer")](../../assets/images/pc-sp-board.jpg)
 
 The [Program Counter and Stack Pointer](../program-counter-stack-pointer/) boards passed
-the register load test, but would not count correctly.  The Program Increment (PI) signal
-was mistakenly wired to the high counter and the carry out from that counter was wired to
-the carry in of the low counter.  After a few wires to swap the signals between the two
-chips, the PC passed all tests.
-
+the register load test, but the Program Counter (PC) would not count correctly.  The
+Program Increment (PI) signal was mistakenly wired to the high counter and the carry out
+from that counter was wired to the carry in of the low counter.  After a few wires to swap
+the signals between the two chips, the PC passed all tests.
 
 
 ### Output Register

@@ -28,7 +28,7 @@ other chips, then spurious clock pulses could be generated.
 
 ## Instruction cycle
 
-The [WaveDrom timing diagram](https://wavedrom.com) below shows the first four clock
+The [WaveDrom](https://wavedrom.com) timing diagram below shows the first four clock
 cycles for an instruction in the SAP-1 and NQSAP computers.  The Ring Counter value
 changes on every falling clock edge and the Instruction Register value changes on the
 rising edge of microinstruction step 1 (T1).  Both of these events change the address
@@ -36,7 +36,7 @@ inputs to the EEPROMs and cause a brief period of uncertainty for all of the con
 outputs.  In addition, the SAP-1 also drives address lines with the outputs of the flags
 register, so this causes uncertainty on any rising edge that modifies the flags.
 
-[Instruction cycle timing](../../assets/images/timing-instruction-cycle.png "cycle timing showing EEPROM glitch")
+![Instruction cycle timing](../../assets/images/timing-instruction-cycle.png "cycle timing showing EEPROM glitch")
 
 For the SAP-1 design, these output glitches are not usually a problem.
 Many of the instruction steps in the SAP-1 designs move values from one register to
@@ -45,7 +45,7 @@ another.  The SAP-1 uses 74LS173 registers to read and store values from the bus
 moves the contents of the Program Counter (PC) to the Memory Address Register (MAR).  
 The timing diagram below shows the Program Counter Out (CO) and MAR In (MI) lines.
 
-[Instruction cycle with control clock](../../assets/images/timing-control-clock.png "cycle timing with control clock")
+![Instruction cycle with control clock](../../assets/images/timing-control-clock.png "cycle timing with control clock")
 
 The following steps take place during the first instruction step:
 * At marker 1, the Ring Counter is set to zero on the falling edge of CLK
@@ -71,7 +71,7 @@ cycle T3.  The control signal is asserted at marker 13 and the clock pulse begin
 marker 15.  
 
 
-[Instruction cycle with control clock](../../assets/images/timing-control-clock.png "cycle timing with control clock")
+![Instruction cycle with control clock](../../assets/images/timing-control-clock.png "cycle timing with control clock")
 
 Note that the signal uncertaintly at marker 13 does not cause a problem because the clock
 signal is still low at that point, so the state of the control signal does not matter.  Similarly, none of the other EEPROM glitching on the falling edge of the clock causes
