@@ -18,6 +18,8 @@ Each backplane board can hold three modules across.  Any module slot can hold on
 full-height or two half-height modules.  The full size module boards measure 90mm from the
 top row of pins to the bottom row.  The total board height is 96mm.
 
+[![Backplane with modules](../../assets/images/backplane-with-modules-500.jpg "backplane with module boards")](../../assets/images/backplane-with-modules.jpg)
+
 Backplane boards have additional 40-pin bus connectors on the top and bottom so that
 multiple backplane boards can be chained together to accomodate additional groups of three
 module boards.  A small Bus Connector board is used to connect the backplanes. Three Bus
