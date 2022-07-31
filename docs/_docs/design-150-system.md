@@ -29,7 +29,7 @@ the low 7 addresses or the high eight addresses.
 The picture above shows an example of a set of module boards sharing register select
 decode logic.  The RAM board has a pair of 3-to-8 decoders to provide read and write
 selects for the onboard RAM and MAR Register.  Additional selects are sent via the
-interconnects for use by the PC/SP modeule.  While this does create dependencies between
+interconnects for use by the PC/SP module.  While this does create dependencies between
 groups of modules, it does eliminate the need for decode logic on each board or a larger
 bus with centralized decoding.  In most cases, there are related boards that are already
 passing other signals as well.
@@ -48,7 +48,7 @@ The outputs of the Instruction Register and Ring Counter are sent to the Microco
 to be used as address inputs to the EEPROMs.  The Loader sends control signals to the
 Microcode board to disable the EEPROMs when the loader is active.
 
-**A/B, ALU, Flags**
+**A/B Registers, ALU, Flags**
 
 The A/B board passes the outputs of its registers to the ALU as the as the operands for
 arithmetic and logic calculations.  It also shares its register select signals.  The ALU
@@ -61,6 +61,38 @@ The RAM board has register select decoding for its own use and it shares additio
 lines over the intrconnect that are used by the PC/SP.  There are no other signals passed
 between the boards, so the PC/SP could just as easily get its register selects from another
 module or be re-spun to have them local.
+
+**D/Index Adder and X/Y Registers**
+
+An 8-bit value from the X/Y selector is passed to the Index Adder over the interconnects.
+The D/Index Adder Module also provides the X/Y register select values.
+
+## Register Selects
+
+|Decimal|Hex  |Write|Read |Write Module|Read Module|
+|:---:  |:---:|:---:|:---:|:---:       |:---:      |
+|  0    | 0   |none |none |            |           |
+|  1    | 1   |RAM  |RAM  |RAM         |RAM        |
+|2      |2    |MAR  |     |RAM         |           |
+|3      |3    |     |     |            |           |
+|4      |4    |     |     |            |           |
+|5      |5    |     |     |            |           |
+|6      |6    |SP   |SP   |RAM         |RAM        |
+|7      |7    |PC (Jump)|PC|RAM        |RAM        |
+|8      |8    |A    |A    |A/B         |A/B        |
+|9      |9    |B    |B    |A/B         |A/B        |
+|10     |A    |Output|H (sHift)|Output |A/B        |
+|11     |B    |X    |X    |D           |D          |
+|12     |C    |Y    |Y    |D           |D          |
+|13     |D    |D    |Adder|D           |D          |
+|14     |E    |     |ALU  |            |A/B        |
+|15     |F    |IR   |Flags|IR          |A/B        |
+|====
+
+Note that modules use only one 3-to-8 decoder chip, so they can decode
+either addresses 0-7 or 8-15.  The ALU and Flags modules use a local
+copy of the IR, so even though the A/B and IR board do not share any
+signals, they must both use addresses in the same group.
 
 ## Bus Signal List
 

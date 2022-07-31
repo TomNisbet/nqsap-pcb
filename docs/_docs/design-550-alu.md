@@ -21,6 +21,11 @@ can be generated programmatically in the Arduino code.  Because the Mode and Sel
 are wired to the Instruction Register, only the Carry-in signal is provided by the
 microcode ROMs.
 
+Rather than providing the outputs of the Instruction Register on the bus or requiring an
+interconnect between the IR and ALU, the ALU module keeps its own copy of the IR in a
+local register that loads on the WI signal.  Five bits of this register are used by the
+ALU, and three more are passed to the Flags Module for conditinal jump selection.
+
 [![NQSAP ALU schematic)](../../assets/images/alu-schematic.png "ALU schematic"){:width="500px"}](../../assets/images/alu-schematic.png)
 
 The inputs to the ALU are the A Register (H) and the B register.  All ALU instructions

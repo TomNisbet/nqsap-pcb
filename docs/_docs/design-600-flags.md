@@ -41,7 +41,7 @@ side of the schematic, the outputs of the flags go to a 74HCT245 that allows the
 placed on the bus.  The outputs also go to a 74HCT151 8-to-1 selector that controls the
 conditional jump.
 
-The NQSAP data bus is used as an input for flag calculations on the left side of the
+The NQSAP-PCB data bus is used as an input for flag calculations on the left side of the
 drawing, a direct input to the flag registers in the center, and an output source for the
 flags on the right.
 
@@ -87,9 +87,9 @@ The conditional jump determination is done in hardware, with a circuit that driv
 LOAD enable of the Program Counter (PC).  Unlike the SAP-1, the flag values are not
 connected to address lines in the Control ROM and the microcode cannot execute differently
 dependent on flag values.  The choice was made to allow for more flags, because ROM
-address lines are in short supply.  The other benefit is reduced ROM output glitching
-because changes in flags don't cause a new address to be set on the microcode ROM in the
-middle of an instruction execution.
+address lines are in short supply.  The other benefit is reduced
+[EEPROM output glitching](../eeprom-glitch) because changes in flags don't cause a new
+address to be set on the microcode ROM in the middle of an instruction execution.
 
 The inverted and non-inverted values of the four flags are fed into the inputs of a
 74HCT151 8-to-1 selector.  Because the flip flops provide both Q and not-Q outputs, the
