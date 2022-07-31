@@ -20,27 +20,47 @@ to the module boards.
 On the NQSAP-PCB build, the 4 register write selects and 4 register read selects are
 presented on the bus, using a total of 8 pins.  Register select decoding is performed
 locally and can be distributed across the module interconnects so that a group of three
-module boards on a single backplane board can share a single set of decoders.
-Rather than decode all 15 addresses, a module board will use a single 3-to-8 decoder to produce either the low 7 addresses or the high eight addresses.
+module boards on a single backplane board can share a single set of decoders. Rather than
+decode all 15 addresses, a module board will use a single 3-to-8 decoder to produce either
+the low 7 addresses or the high eight addresses.
 
 [![Register Select Interconnect](../../assets/images/select-interconnect-500.jpg "register select interconnect")](../../assets/images/select-interconnect.jpg)
 
-The picture abov shows an example of a set of module boards sharing register select decode
-logic.  The RAM board has a pair of 3-to-8 decoders to provide read and write selects for
-the onboard RAM and MAR Register.  Additional selects are sent via the interconnects for
-use by the PC/SP modeule.  While this does create dependencies between groups of modules,
-it does eliminate the need for decode logic on each board or a larger bus with centralized
-decoding.  In most cases, there are related boards that are already passing other signals as well.
+The picture above shows an example of a set of module boards sharing register select
+decode logic.  The RAM board has a pair of 3-to-8 decoders to provide read and write
+selects for the onboard RAM and MAR Register.  Additional selects are sent via the
+interconnects for use by the PC/SP modeule.  While this does create dependencies between
+groups of modules, it does eliminate the need for decode logic on each board or a larger
+bus with centralized decoding.  In most cases, there are related boards that are already
+passing other signals as well.
 
 ## Layout and Interconnects
 
-groups of three dependent on interconnects and shared register decode hardware
+The module interconnect headers on the backplane are used to connect signals that are
+common to a small number of boards.  These interconnects keep the bus connectors limited
+to signals that are typically used system-wide.  This does force the placement of some
+modules in the final assembled computer.  The current design has four groups of related
+modules that need to occupy the same backplane:
 
-Loader, Microcode, IR-RC
+**Loader, Microcode, IR/RC**
 
-A-B, ALU, Flags
+The outputs of the Instruction Register and Ring Counter are sent to the Microcode module
+to be used as address inputs to the EEPROMs.  The Loader sends control signals to the
+Microcode board to disable the EEPROMs when the loader is active.
 
-RAM provides decoding for additional boards
+**A/B, ALU, Flags**
+
+The A/B board passes the outputs of its registers to the ALU as the as the operands for
+arithmetic and logic calculations.  It also shares its register select signals.  The ALU
+board passes calculated flag values to the Flags board and also forwards register selects
+from the A/B board.
+
+**RAM and PC/SP**
+
+The RAM board has register select decoding for its own use and it shares additional select
+lines over the intrconnect that are used by the PC/SP.  There are no other signals passed
+between the boards, so the PC/SP could just as easily get its register selects from another
+module or be re-spun to have them local.
 
 ## Bus Signal List
 
@@ -86,4 +106,4 @@ RAM provides decoding for additional boards
 |38|n/c|(spare)|
 |39|~RST|master RESET (active low)|
 |40|Vcc|+5 Volts|
-====
+|====
