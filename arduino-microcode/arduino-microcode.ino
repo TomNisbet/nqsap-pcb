@@ -740,7 +740,7 @@ const template_t template0 PROGMEM = {
   { 0,          0,          0,          0,          0,          0,          0,          0    }, // fc
   { 0,          0,          0,          0,          0,          0,          0,          0    }, // fd
   { 0,          0,          0,          0,          0,          0,          0,          0    }, // fe
-  { 0,          0,          0,          0,          0,          0,          0,          0    }  // ff
+  { RA|WS|N,    0,          0,          0,          0,          0,          0,          0    }  // ff  - temp - TAS
 };
 
 
@@ -772,7 +772,7 @@ void buildInstruction(uint8_t opcode) {
     // Initialize the code buffer from a template.
     code[0] = F1;            // Fetch instruction from memory
     code[1] = F2;            // Opcode into IR (sets ALU mode and S bits)
-    memcpy_P(code + 2, template0[opcode], NUM_TEMPLATE_STEPS);
+    memcpy_P(code + 2, template0[opcode], NUM_TEMPLATE_STEPS*4);
     code[10] = code[11] = code[12] = code[13] = code[14] = code[15] = 0;
 
     // For each ALU instruction in the group being processed, generate a set of steps to
@@ -857,6 +857,46 @@ void burnCodeBuffer(uint16_t flags, uint8_t opcode) {
     }
 }
 
+const char hex[] = "0123456789abcdef";
+
+void printByte(byte b) {
+    char line[4];
+
+    line[0] = hex[b >> 4];
+    line[1] = hex[b & 0x0f];
+    line[2] = ' ';
+    line[3] = '\0';
+
+    Serial.print(line);
+}
+
+void printWord(word w) {
+    char line[6];
+
+    line[0] = hex[(w >> 12) & 0x0f];
+    line[1] = hex[(w >>  8) & 0x0f];
+    line[2] = hex[(w >>  4) & 0x0f];
+    line[3] = hex[(w)       & 0x0f];
+    line[4] = ' ';
+    line[5] = '\0';
+
+    Serial.print(line);
+}
+
+void printHex24(uint32_t u32) {
+    char line[8];
+
+    line[0] = hex[(u32 >> 20) & 0x0f];
+    line[1] = hex[(u32 >> 16) & 0x0f];
+    line[2] = hex[(u32 >> 12) & 0x0f];
+    line[3] = hex[(u32 >>  8) & 0x0f];
+    line[4] = hex[(u32 >>  4) & 0x0f];
+    line[5] = hex[(u32)       & 0x0f];
+    line[6] = ' ';
+    line[7] = '\0';
+
+    Serial.print(line);
+}
 void burnMicrocodeRoms() {
     for (uint16_t opcode = 0; (opcode < 256); opcode++) {
         if ((opcode & 0x0f) == 0) {
@@ -864,6 +904,15 @@ void burnMicrocodeRoms() {
             Serial.println(opcode, HEX);
         }
         buildInstruction(opcode);
+
+        printByte(opcode);
+        for (uint16_t rom = 0; (rom < 3); rom++) {
+            printWord(makeAddress(2 - rom, 0, opcode));
+        }
+        for (int step = 0; step < 11; step++) {
+            printHex24(code[step]);
+        }
+        Serial.println("");
         for (int flags = 0; (flags < NUM_FLAG_COMBOS); flags++) {
             burnCodeBuffer(flags, opcode);
         }

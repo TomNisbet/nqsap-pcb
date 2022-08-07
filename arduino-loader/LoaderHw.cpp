@@ -1,17 +1,5 @@
 #include "Configure.h"
 
-
-
-/*
-TODO
-- resolve register locations in spreadsheet, loader, and microcode
-- add carry bit to shifter test
-- add jump test (need more PC HW to check JMP signal?)
-- remove breadboard inverter for RC N
-*/
-
-
-
 enum {
     DELAY_LEDS = 80
 };
@@ -26,7 +14,7 @@ enum {
     LD2  = A0,   // OUTPUT - CLK the R2 register (register selects)
     SER  = A1,   // OUTPUT - Serial data to the R0/R1/R2 registers
     RCLK = A2,   // OUTPUT - output the values of all shift registers to the pins
-    LD0  = A3,   // OUTPUT - CLK the R0 and R1 registers as 16 bits
+    LD0  = A3,   // OUTPUT - CLK the R0 and R1 registers as 16 bits (control signals)
     RST  = A4,   // OUTPUT - drives the host RST line
     CLK  = A5    // OUTPUT - drives the host CLK line
 };
@@ -97,6 +85,11 @@ enum {
     CTL_N  = 0x0002, // next instruction (clear ring counter)
     CTL_PI = 0x0001, // program counter increment
 
+    CTL_DY = CTL_C0,    // C0 and C1 also used to select source for the DXY Adder
+    CTL_DZ = CTL_C1,
+    CTL_SP_DN = CTL_C0, // C0 and C1 also used to control SP count direction
+    CTL_SP_UP = CTL_C1,
+
     CTL_ALL_FLAGS = CTL_FN | CTL_FV | CTL_FZ | CTL_FC,
 
     CTL_C_ALU = 0,              // carry source ALU
@@ -118,9 +111,6 @@ enum {
   FB_ALL  = 0xc3
 };
 
-// Write register is PC0-2 (pin A0-A2)
-// Read register is PC3-5 (pin A3-A5)
-// PC6 and PC7 (pin A6, A7) are analog input only and are not used
 enum {
     REG_NONE= 0x00,    // No register selected
     REG_MEM = 0x01, // r/w
@@ -146,9 +136,8 @@ static const char * registerNames[] = {
     "none", "MEM", "MAR", "03", "04",  "05",  "SP",  "PC",
     "A",    "B",   "OUT", "X",  "Y",   "D",   "OUT", "ALU"
 };
-static const unsigned woRegisters[] = { REG_OUT, REG_MAR, REG_IR }; // REG_MAR, REG_IR, REG_OUT };
-static const unsigned rwRegisters[] = { REG_SP, REG_PC, REG_A, REG_B }; //REG_PC, REG_B, REG_SP, REG_A };
-//static const unsigned rwRegisters[] = { REG_PC, REG_D, REG_X, REG_Y, REG_B, REG_SP, REG_A };
+static const unsigned woRegisters[] = { REG_MAR, REG_IR, REG_OUT };
+static const unsigned rwRegisters[] = { REG_D, REG_X, REG_Y, REG_SP, REG_PC, REG_A, REG_B };
 static unsigned numWoRegisters() { return sizeof(woRegisters) / sizeof(*woRegisters); }
 static unsigned numRwRegisters() { return sizeof(rwRegisters) / sizeof(*rwRegisters); }
 
@@ -176,10 +165,6 @@ void LoaderHw::begin() {
     // Care must be taken to ensure that the bus is never left in the OUTPUT
     // mode when control is handed back to the host computer.
     setDataBusMode(INPUT);
-
-    // Set register selects as outputs
-    //DDRC = 0x3f;
-    //PORTC = 0x00;
 
     // External pull-up resistors are present on RST and PGM.  An external pull-down is on
     // CLK.  This allows the system to function as normal if the arduino is not present,
@@ -340,7 +325,7 @@ bool LoaderHw::testHardware() {
     }
     controlBitsOffOn(CTL_ALL, CTL_NONE);
     delay(DELAY_LEDS);
-    controlBitsOffOn(CTL_ALL, CTL_N);
+    controlBitsOffOn(CTL_ALL, CTL_N|CTL_DZ);
 
     for (ix = 0; (ix < numWoRegisters()); ix++) {
         if (!testRegister(woRegisters[ix], false)) {
@@ -349,20 +334,22 @@ bool LoaderHw::testHardware() {
     }
 
     for (ix = 0; (ix < numRwRegisters()); ix++) {
-        // TODO - can force D to zero with C0/C1 when ix==REG_D
-        writeRegister(REG_X, 0);   // Have adder return D+0 for D register test
-        writeRegister(REG_Y, 0);
-        if (!testRegister(rwRegisters[ix], true)) {
+        unsigned reg = rwRegisters[ix];
+        if (reg == REG_X)        controlBitsOffOn(CTL_DY|CTL_DZ, CTL_NONE);
+        else if (reg == REG_Y)   controlBitsOffOn(CTL_DZ, CTL_DY);
+        else                     controlBitsOffOn(CTL_DY, CTL_DZ);
+        if (!testRegister(reg, true)) {
             return false;
         }
     }
+    controlBitsOffOn(CTL_DY, CTL_DZ);
 
     bool ret = testFlags();
+    if (ret) ret = testAdder();
     if (ret) ret = testCounters(11);
     if (ret) ret = testShifter();
     if (ret) ret = testMemory();
     if (ret) ret = testAlu();
-    //if (ret) ret = testAdder();
 
     if (ret) {
         // Leave the registers as-is if a test failed, otherwise clear all registers.
@@ -389,8 +376,6 @@ bool LoaderHw::burnByte(byte value, uint32_t address) {
     setDataBusMode(INPUT);
     delayMicroseconds(1);
 
-    // Read back the value and return success if it matches
-//    return readByte(address) == value;
     return true;
 }
 
@@ -516,7 +501,7 @@ bool LoaderHw::testCounters(uint8_t count) {
         readVal = readRegister(REG_SP);
         readRegister(REG_NONE);
         if (!valueTest(writeVal, readVal, " SP read"))  return false;
-        controlBitsOffOn(CTL_C0, CTL_PI|CTL_SE|CTL_C1);
+        controlBitsOffOn(CTL_SP_DN, CTL_PI|CTL_SE|CTL_SP_UP);
         for (int jx = 0; (jx < count); jx++) {
             clkPulse();
             delay(3);
@@ -525,7 +510,7 @@ bool LoaderHw::testCounters(uint8_t count) {
         if (!valueTest(writeVal + count, readVal, " PC inc"))  return false;
         readVal = readRegister(REG_SP);
         if (!valueTest(writeVal + count, readVal, " SP inc"))  return false;
-        controlBitsOffOn(CTL_PI|CTL_C1, CTL_SE|CTL_C0);
+        controlBitsOffOn(CTL_PI|CTL_SP_UP, CTL_SE|CTL_SP_DN);
         readRegister(REG_NONE);
         for (int jx = 0; (jx <= count); jx++) {
             clkPulse();
@@ -534,7 +519,7 @@ bool LoaderHw::testCounters(uint8_t count) {
         readVal = readRegister(REG_SP);
         readRegister(REG_NONE);
         if (!valueTest(writeVal - 1, readVal, " SP dec"))  return false;
-        controlBitsOffOn(CTL_PI|CTL_SE|CTL_C0|CTL_C1, CTL_NONE);
+        controlBitsOffOn(CTL_PI|CTL_SE|CTL_SP_DN|CTL_SP_UP, CTL_NONE);
     }
 
     Serial.println(F("pass"));
@@ -749,6 +734,7 @@ bool LoaderHw::testAdder() {
 
     Serial.print(F("Testing DXY adder: "));
     for (unsigned aIndex = 0; (aIndex < numPatterns); aIndex++) {
+        delay(DELAY_LEDS);
         for (unsigned bIndex = 0; (bIndex < numPatterns); bIndex++) {
             if (!testAdderOperation(patterns[aIndex], patterns[bIndex])) {
                 return false;
@@ -761,12 +747,11 @@ bool LoaderHw::testAdder() {
 
 
 bool LoaderHw::testAdderOperation(uint8_t a, uint8_t b) {
-    // The Loader cannot switch between X and Y as the adder source but it can be
-    // hard-wired temporarily for testing.  Put the operand in both X and Y so that the
-    // add operation works no matter the selected source.
+    controlBitsOffOn(CTL_DY|CTL_DZ, CTL_NONE);
     writeRegister(REG_X, a);
-    writeRegister(REG_Y, a);
+    writeRegister(REG_Y, 0);
     writeRegister(REG_D, b);
+    writeRegister(REG_Y, 0);
     writeRegister(REG_NONE, 0); // don't want the next CLK to write the D register
     uint8_t readVal = readRegister(REG_D);
     uint8_t expectedVal = a + b;

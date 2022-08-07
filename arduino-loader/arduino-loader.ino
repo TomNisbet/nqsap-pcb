@@ -140,7 +140,9 @@ enum {
     AB_DEC = 0xf2,  // * decrement memory
     AX_DEC = 0xf3,  // * decrement memory
     IP_DEX = 0xf5,  // * decrement X
-    IP_DEY = 0xf6   // * decrement Y
+    IP_DEY = 0xf6,  // * decrement Y
+
+    IP_TAS = 0xff   // temporary instruction to load the SP because X is not implemented yet for TXS
 };
 
 
@@ -234,12 +236,14 @@ static const uint8_t pgmJumpTest[] = {
 };
 
 static const uint8_t pgmStack1[] = {
+    IM_LDX, 0x80,
+    IP_TXS,
     IM_LDA, 10,    // Test stack - load value to A and push, change A, pop
     IP_PHA,
     AA_INA,
     AA_INA,
     IP_PLA,
-    AB_JMP, 0x06
+    AB_JMP, 0x03
 };
 
 static const uint8_t pgmStack2[] = {
@@ -422,7 +426,7 @@ void printWord(word w) {
 * Prints a 32 bit value as a hex.
 *
 * Note that no values over 4 digits are used in
-* this appication, so only 4 digits are printed.*/
+* this application, so only 4 digits are printed.*/
 void printHex32(uint32_t u32) {
     char line[6];
 
