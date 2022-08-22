@@ -70,7 +70,36 @@ Note that the Jump to Subroutine (JSR) uses a few tricks in the microcode.  The 
 the PC is needed to retrieve the subroutine address, but the PC also needs to be saved
 onto the stack before being overwritten with the new address.  The ALU B register is used
 for temporary storage to save the subroutine address.  The B register is not directly
-accessible by the user, so it is a good candidate for the microcode to use.
+accessible by the user, so it is a good candidate for the microcode to use.  The example
+below shows a JSR instruction at memory address 20.
+
+| Address | Contents    |
+|:---:    | :---        |
+| 20      | JSR opcode  |
+| 21      | JSR address |
+| 22      | next opcode |
+|====
+
+After the instruction fetch, the PC will have the value 21 and JSR microcode performs the
+following steps:
+
+1. move the PC value to the MAR and increment the PC.  MAR contains 21 and PC contains 22.
+1. read the subroutine address from RAM[21] and place it in B for temp storage
+1. move the SP value into the MAR and increment the SP.
+1. store the PC value (which points to the next instruction) in memory, i.e. push the JSR return address on the stack.
+1. move the B register value into the PC, effectively jumping to the subroutine
+
+Note that the B register is needed because the PC value that is pushed to the stack is the
+one address after the location that hold the subroutine address.  If the PC value was
+incremented and pushed before fetching the subroutine address, there would be no way to
+fetch the address because the PC has already moved past it.
+
+An alternate approach that would not require temporary storage would be to push the PC
+while it was still pointing to the subroutine address instead of pointing to the next
+opcode. The RTS instruction would then need to increment the PC after fetching it from the
+stack. The downside to this is that the PC address on the stack would not be the true
+return address.
+
 
 ## Bill of Materials
 
