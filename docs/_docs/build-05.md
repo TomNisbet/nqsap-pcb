@@ -15,7 +15,7 @@ CPU with many of the instructions and addressing modes of a 6502 processor.
 
 ## X and Y Register and Index Adder
 
-[![X and Y registers](../../assets/images/dxy-registers-500.jpg "program counter / stack pointer")](../../assets/images/dy-registers.jpg)
+[![X and Y registers](../../assets/images/dxy-registers-500.jpg "XY registers and index adder")](../../assets/images/dxy-registers.jpg)
 
 The [XY Registers and Index Adder](../dxy-registers/) boards passed
 
