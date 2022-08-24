@@ -38,6 +38,8 @@ docs:
         url: /docs/program-counter-stack-pointer/
       - title: "Output Register"
         url: /docs/output-register/
+      - title: "XY and Adder"
+        url: /docs/dxy-registers/
   - title: "Instruction Set"
     children:
       - title: "Instruction Summary"
