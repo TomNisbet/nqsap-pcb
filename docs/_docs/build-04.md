@@ -4,7 +4,7 @@ permalink: /docs/build-04/
 excerpt: "NQSAP-PCB computer build 4"
 ---
 
-[![Fourth set of boards](../../assets/images/boards4-500.jpg "Third set of boards")](../../assets/images/boards4.jpg)
+[![Fourth set of boards](../../assets/images/boards4-500.jpg "Fourth set of boards")](../../assets/images/boards4.jpg)
 
 The fourth batch of boards contained the first boards for the Program Counter / Stack
 Pointer and the LED Output Display.  The nine boards from the first four builds can be
