@@ -4,7 +4,7 @@ permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
 
-[![NQSAP-PCB TTL computer](../../assets/images/build5-500.jpg "NQSAP-PCB")](../../assets/images/build5.jpg)
+[![NQSAP-PCB TTL computer](assets/images/build5-500.jpg "NQSAP-PCB")](assets/images/build5.jpg)
 The Not Quite Simple As Possible Computer - PCB version
 
 NQSAP-PCB is the second iteration of the
