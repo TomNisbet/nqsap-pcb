@@ -4,7 +4,7 @@ permalink: /
 excerpt: "NQSAP-PCB: PCB version of the Not Quite Simple As Possible computer"
 ---
 [![NQSAP-PCB](assets/images/build4-500.jpg "initial NQSAP-PCB build")](assets/images/build4.jpg)
-
+[![NQSAP-PCB TTL computer](../../assets/images/build5.gif "NQSAP-PCB")](../../assets/images/build5.jpg)
 The Not Quite Simple As Possible Computer - PCB version
 
 NQSAP-PCB is the second iteration of the
@@ -20,3 +20,4 @@ control lines to load programs and run interactive diagnostics
 subtract, AND, OR, and XOR
 * Four [flag registers](docs/flags) with hardware-based conditional jumps
 * Double-buffered [Instruction Register](docs/ir-rc) to mitigate issues with control EEPROM output glitching
+* [Instruction set](docs/in-summary) and addressing modes similar to the 6502.

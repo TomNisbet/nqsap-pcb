@@ -11,13 +11,16 @@ registers.  Updated versions of the PC/SP board and the Output register were als
 to address minor errors.  A new ALU board was also done to add more status LEDs.
 
 The eleven boards from the five builds can be assembled to form a Turing-complete 8-bit
-CPU with many of the instructions and addressing modes of a 6502 processor.
+CPU with many of the [instructions and addressing modes of a 6502 processor](../in-summary).
 
 ## X and Y Register and Index Adder
 
 [![X and Y registers](../../assets/images/dxy-registers-500.jpg "XY registers and index adder")](../../assets/images/dxy-registers.jpg)
 
-The [XY Registers and Index Adder](../dxy-registers/) boards passed
+The [XY Registers and Index Adder](../dxy-registers/) boards passed all self tests and ran
+test programs with no issues.  The design of these was similar to the original NQSAP
+breadboard build, but the functionality was split between two modules to accomodate the
+LEDs needed to display three registers and the adder output.
 
 ## Program Counter and Stack Pointer
 
@@ -31,7 +34,7 @@ and the new boards worked as expected.
 
 ## Results
 
-[![Fifth set running](../../assets/images/build5.gif "fifth set of boards")](../../assets/images/build5.gif)
+[![Fifth set running](../../assets/images/build5.gif "fifth set of boards")](../../assets/images/build5.jpg)
 
 This shows the NQSAP-PCB with all of the boards from the first five builds. A fourth
 backplane was added to hold the new XY and Index Adder modules.  This now leaves a module
