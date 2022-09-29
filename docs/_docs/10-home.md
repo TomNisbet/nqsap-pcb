@@ -21,3 +21,15 @@ subtract, AND, OR, and XOR
 * Four [flag registers](docs/flags) with hardware-based conditional jumps
 * Double-buffered [Instruction Register](docs/ir-rc) to mitigate issues with control EEPROM output glitching
 * [Instruction set](docs/in-summary) and addressing modes similar to the 6502.
+
+Most of this design was prototyped in original
+[NQSAP breadboard build](https://tomnisbet.github.io/nqsap/). Some of the enhancements
+from that original design are:
+
+* Loader design with shift registers now allows access to all microcode control lines
+* Microcode ROM count reduced from 4 to 3 by combining some signals
+* ALU shift register design replaced with a simple offset register for the right shift
+operation
+* Maximum number of microcode steps increased from 8 to 16
+* RAM can now optionally address four different 256-byte blocks, allowing for separate
+program, data, and stack areas.
