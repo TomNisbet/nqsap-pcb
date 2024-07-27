@@ -13,7 +13,7 @@ instructions available to the user.
 The B register is only used as an operand register for the ALU operations.  It is not
 accessible as a general-purpose register and there are no instructions to directly read or
 write its contents.  The microcode may also use this register as temporarly storage for
-non-ALU instructins.
+non-ALU instructions.
 
 The sHift register (register H), is a read-only register that returns the contents of the
 B register shifted one position to the right.  The LSB of B shifts into the Carry flag.
@@ -21,6 +21,8 @@ The MSB of H is populated by the carry flag for the ROR (rotate right) instructi
 hard-coded to zero for the LSR (logical shift right) instruction.  Note that H is not an
 actual register.  It is simply a alternate way of reading the value of the B register.
 
+The logic that controls the Carry Flag input, whether from the ALU or the B register, is on the [ALU Module](../alu).
+The Carry Flag input for the H register is produced by the [Flags Module](../flags).
 
 [![A-B registers schematic](../../assets/images/ab-registers-schematic.png "A-B registers schematic"){:width="720px"}](../../assets/images/ab-registers-schematic.png)
 
