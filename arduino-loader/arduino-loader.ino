@@ -147,7 +147,7 @@ enum {
 
 
 static const uint8_t pgmChase[] = {
-    // blinky light effect using the Y Register  LEDs as a chaser light.  This illustrates
+    // blinky light effect using the Y Register LEDs as a chaser light.  This illustrates
     // the AX (absolute+X) addressing mode.
     IM_LDA, 0,
 // LOOP
@@ -217,36 +217,29 @@ static const uint8_t pgmJumpTest[] = {
     IP_CLC,
 // 3
     IM_ADC, 1,     // Count by ones until negative
+    IP_OUT,
     AB_JPL, 3,
-// 7
+// 8
     IP_CLC,
     IM_ADC, 3,  // Count by threes until zero
-    AB_JNE, 7,
+    IP_OUT,
+    AB_JNE, 8,
     IP_CLC,
-// 12
+// 14
     IM_ADC, 5,  // Count by fives until carry set
-    AB_JCC, 12,
+    AB_JCC, 14,
+    IP_OUT,
     IM_LDA, 0,
     IP_CLV,
-// 19
+// 22
     IP_CLC,
     IM_ADC, 7,  // Count by sevens until overflow set
-    AB_JVC, 19,
+    IP_OUT,
+    AB_JVC, 22,
     AB_JMP, 0
 };
 
-static const uint8_t pgmStack1[] = {
-    IM_LDX, 0x80,
-    IP_TXS,
-    IM_LDA, 10,    // Test stack - load value to A and push, change A, pop
-    IP_PHA,
-    AA_INA,
-    AA_INA,
-    IP_PLA,
-    AB_JMP, 0x03
-};
-
-static const uint8_t pgmStack2[] = {
+static const uint8_t pgmStack[] = {
     // Count by fives to the output register, but then decrement a few times and display
     // the result before resuming the count.  Demonstrates the JSR/RTS as well as the
     // PHA/PLA stack operations.
@@ -254,10 +247,13 @@ static const uint8_t pgmStack2[] = {
     IP_TXS,
     IM_LDA, 0,
 // LOOP
+    IP_CLC,
     IM_ADC, 5,    // ADD 5 to A
     AB_JSR, 16,   // OUT (A to display)
+    IP_TAY,
     AB_JMP, 5,    // JMP back to LOOP
-    IP_NOP,IP_NOP,IP_NOP,IP_NOP,IP_NOP,
+    IP_NOP,IP_NOP,IP_NOP,
+// 16
     IP_PHA,
     IP_OUT,
     AA_DEA,
@@ -281,13 +277,12 @@ struct program_t {
     size_t          len;
 };
 static const program_t programs[] = {
+    pgmStack,       sizeof(pgmStack),
     pgmSimple,      sizeof(pgmSimple),
     pgmChase,       sizeof(pgmChase),
     pgmShift,       sizeof(pgmShift),
     pgmCount3,      sizeof(pgmCount3),
     pgmJumpTest,    sizeof(pgmJumpTest),
-    pgmStack1,      sizeof(pgmStack1),
-    pgmStack2,      sizeof(pgmStack2),
     pgmPattern,     sizeof(pgmPattern)
 };
 

@@ -2,6 +2,10 @@
 
 static const char * MY_VERSION = "1.0";
 
+// Must define one of these to select the PROM type
+//#define PROM_IS_28C256
+#define PROM_IS_SST39SF
+
 // IO lines for the EEPROM device control
 // Pins D2..D9 are used for the data bus.
 #define WE              A0
@@ -15,7 +19,7 @@ static const char * MY_VERSION = "1.0";
 
 
 void burnMicrocodeRoms();
-void disableSoftwareWriteProtect();
+void initializeProm();
 byte readByte(uint32_t address);
 bool burnByte(byte value, uint32_t address);
 bool burnBlock(byte data[], uint32_t len, uint32_t address);
@@ -71,7 +75,7 @@ void setup() {
     Serial.begin(115200);
     Serial.print("\nBurning NQSAP-PCB microcode version ");
     Serial.println(MY_VERSION);
-    disableSoftwareWriteProtect();
+    initializeProm();
     delay(100);
     burnMicrocodeRoms();
     Serial.println(F("burn complete"));
@@ -920,13 +924,15 @@ void burnMicrocodeRoms() {
 }
 
 
+// 28C256 chip support
+#if defined(PROM_IS_28C256)
 
 const uint32_t mSize = 32 * 1024L;      // Size of the device, in bytes
 const unsigned int mBlockSize = 64;     // Block size for page writes, zero if N/A
 const unsigned int mMaxWriteTime = 10;  // Max time (in ms) to wait for write cycle to complete
 
-// Write the special six-byte code to turn off Software Data Protection.
-void disableSoftwareWriteProtect() {
+void initializeProm() {
+    Serial.println(F("disabling 28C256 Software Data Protection"));
     disableOutput();
     disableWrite();
     enableChip();
@@ -1032,6 +1038,127 @@ bool burnBlock(byte data[], uint32_t len, uint32_t address) {
     return status;
 }
 
+// SST39SF chip support
+#elif defined(PROM_IS_SST39SF)
+
+const uint32_t mSize = 32 * 1024L;      // Size of the device, in bytes
+const unsigned int mBlockSize = 0;      // Block size for page writes, zero if N/A
+const unsigned int mMaxWriteTime = 10;  // Max time (in ms) to wait for write cycle to complete
+
+void initializeProm() {
+    delay(2000);
+    Serial.println(F("Erasing SST39 flash ROM"));
+    delay(200);
+    disableOutput();
+    delayMicroseconds(1);
+    disableWrite();
+    delayMicroseconds(1);
+    setDataBusMode(OUTPUT);
+    delayMicroseconds(1);
+    enableChip();
+    delayMicroseconds(1);
+    setByte(0xaa, 0x5555);
+    delayMicroseconds(1);
+    setByte(0x55, 0x2aaa);
+    delayMicroseconds(1);
+    setByte(0x80, 0x5555);
+    delayMicroseconds(1);
+    setByte(0xaa, 0x5555);
+    delayMicroseconds(1);
+    setByte(0x55, 0x2aaa);
+    delayMicroseconds(1);
+    setByte(0x30, 0x0000);
+    delay(200);
+    disableChip();
+    delayMicroseconds(1);
+    setDataBusMode(INPUT);
+    delayMicroseconds(1);
+}
+
+// Read a byte from a given address
+byte readByte(uint32_t address) {
+    byte data = 0;
+    setAddress(address);
+    setDataBusMode(INPUT);
+    disableOutput();
+    disableWrite();
+    enableChip();
+    enableOutput();
+    data = readDataBus();
+    disableOutput();
+    disableChip();
+    return data;
+}
+
+
+void eraseSector(uint32_t addr) {
+    Serial.print("erasing sector ");
+    Serial.println(addr, HEX);
+    disableOutput();
+    disableWrite();
+    setDataBusMode(OUTPUT);
+    enableChip();
+    setByte(0xaa, 0x5555);
+    setByte(0x55, 0x2aaa);
+    setByte(0x80, 0x5555);
+    setByte(0xaa, 0x5555);
+    setByte(0x55, 0x2aaa);
+    setByte(0x30, addr & 0xfffff000);
+    delay(28);
+    disableChip();
+}
+
+
+
+
+// Burn a byte to the chip and verify that it was written.
+bool burnByte(byte value, uint32_t address) {
+    bool status = false;
+
+    if ((address & 0x0fff) == 0) {
+        eraseSector(address);
+    }
+
+    disableOutput();
+    disableWrite();
+
+    setDataBusMode(OUTPUT);
+    enableChip();
+    setByte(0xaa, 0x5555);
+    setByte(0x55, 0x2aaa);
+    setByte(0xa0, 0x5555);
+
+    setAddress(address);
+    setDataBusMode(OUTPUT);
+    writeDataBus(value);
+
+    delayMicroseconds(1);
+    enableWrite();
+    delayMicroseconds(1);
+    disableWrite();
+
+    status = waitForWriteCycleEnd(value);
+
+    disableChip();
+
+    if (!status) {
+        Serial.print(F("burn address="));
+        Serial.print(address, HEX);
+        Serial.print(F(",  data="));
+        Serial.print(value, HEX);
+        Serial.print(F(",  read="));
+        Serial.println(readByte(address), HEX);
+    }
+    return status;
+}
+
+bool burnBlock(byte data[], uint32_t len, uint32_t address) {
+    return false;
+}
+
+#else
+#error "Must define a PROM type"
+#endif
 
 bool waitForWriteCycleEnd(byte lastValue) {
     // Verify programming complete by reading the last value back until it matches the
