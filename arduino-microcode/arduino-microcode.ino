@@ -1,10 +1,10 @@
 #include "Arduino.h"
 
-static const char * MY_VERSION = "1.0";
+static const char * MY_VERSION = "1.1";
 
 // Must define one of these to select the PROM type
-//#define PROM_IS_28C256
-#define PROM_IS_SST39SF
+#define PROM_IS_28C256
+//#define PROM_IS_SST39SF
 
 // IO lines for the EEPROM device control
 // Pins D2..D9 are used for the data bus.
