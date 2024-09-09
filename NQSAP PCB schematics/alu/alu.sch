@@ -5,8 +5,8 @@ $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "NQSAP-PCB ALU"
-Date "2021-11-20"
-Rev "1.0"
+Date "2022-07-23"
+Rev "1.1"
 Comp "github.com/TomNisbet/nqsap-pcb"
 Comment1 ""
 Comment2 ""
@@ -1978,14 +1978,57 @@ NoConn ~ 1550 6350
 Wire Wire Line
 	10350 3600 10350 3650
 $Comp
-L power:+5V #PWR?
+L power:+5V #PWR010
 U 1 1 61A7EF23
 P 10350 4200
-F 0 "#PWR?" H 10350 4050 50  0001 C CNN
+F 0 "#PWR010" H 10350 4050 50  0001 C CNN
 F 1 "+5V" H 10365 4373 50  0000 C CNN
 F 2 "" H 10350 4200 50  0001 C CNN
 F 3 "" H 10350 4200 50  0001 C CNN
 	1    10350 4200
 	1    0    0    -1  
 $EndComp
+$Comp
+L Device:R_Small_US R9
+U 1 1 62E9BB64
+P 3800 5900
+F 0 "R9" V 3750 6000 50  0000 C CNN
+F 1 "R_GRN" V 3750 5700 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder" H 3800 5900 50  0001 C CNN
+F 3 "~" H 3800 5900 50  0001 C CNN
+	1    3800 5900
+	0    -1   1    0   
+$EndComp
+$Comp
+L Device:LED_Small D9
+U 1 1 62E9C566
+P 4300 5900
+F 0 "D9" H 4400 5950 50  0000 C CNN
+F 1 "READ" H 4300 6050 50  0000 C CNN
+F 2 "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder" V 4300 5900 50  0001 C CNN
+F 3 "~" V 4300 5900 50  0001 C CNN
+	1    4300 5900
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 5900 4200 5900
+Wire Wire Line
+	4400 5900 4500 5900
+Wire Wire Line
+	3600 5900 3700 5900
+$Comp
+L power:+5V #PWR09
+U 1 1 62EF2822
+P 3600 5850
+F 0 "#PWR09" H 3600 5700 50  0001 C CNN
+F 1 "+5V" H 3615 6023 50  0000 C CNN
+F 2 "" H 3600 5850 50  0001 C CNN
+F 3 "" H 3600 5850 50  0001 C CNN
+	1    3600 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3600 5850 3600 5900
+Text GLabel 4500 5900 2    50   Input ~ 0
+~RL
 $EndSCHEMATC
