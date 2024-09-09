@@ -6,7 +6,7 @@ encoding utf-8
 Sheet 1 1
 Title "NQSAP-PCB Program Counter and Stack Pointer"
 Date "2022-01-17"
-Rev "1.`"
+Rev "1.1"
 Comp "github.com/TomNisbet/nqsap-pcb"
 Comment1 ""
 Comment2 ""

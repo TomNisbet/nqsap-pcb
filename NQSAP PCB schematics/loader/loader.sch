@@ -5,8 +5,8 @@ $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 2
 Title "Loader / Debugger and Clock"
-Date "2021-10-09"
-Rev "2.0"
+Date "2022-08-26"
+Rev "2.1"
 Comp "github.com/TomNisbet/nqsap-pcb"
 Comment1 ""
 Comment2 ""

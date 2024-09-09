@@ -2785,4 +2785,108 @@ Text GLabel 7300 4600 2    50   Input ~ 0
 ~JMP
 Text GLabel 8050 4600 2    50   Input ~ 0
 ~JMP
+$Comp
+L Connector:Screw_Terminal_01x02 J29
+U 1 1 631BC50C
+P 9100 5950
+F 0 "J29" V 8972 6030 50  0000 L CNN
+F 1 "POWER IN" V 9200 5750 50  0000 L CNN
+F 2 "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal" H 9100 5950 50  0001 C CNN
+F 3 "~" H 9100 5950 50  0001 C CNN
+	1    9100 5950
+	0    -1   1    0   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 J30
+U 1 1 63249C2B
+P 9100 6400
+F 0 "J30" V 8972 6480 50  0000 L CNN
+F 1 "POWER IN" V 9200 6200 50  0000 L CNN
+F 2 "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal" H 9100 6400 50  0001 C CNN
+F 3 "~" H 9100 6400 50  0001 C CNN
+	1    9100 6400
+	0    -1   1    0   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 J27
+U 1 1 6324A5B5
+P 9200 4950
+F 0 "J27" V 9072 5030 50  0000 L CNN
+F 1 "POWER IN" V 9300 4750 50  0000 L CNN
+F 2 "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal" H 9200 4950 50  0001 C CNN
+F 3 "~" H 9200 4950 50  0001 C CNN
+	1    9200 4950
+	0    1    -1   0   
+$EndComp
+$Comp
+L Connector:Screw_Terminal_01x02 J28
+U 1 1 6324B1AF
+P 9200 5400
+F 0 "J28" V 9072 5480 50  0000 L CNN
+F 1 "POWER IN" V 9300 5200 50  0000 L CNN
+F 2 "TerminalBlock_RND:TerminalBlock_RND_205-00012_1x02_P5.00mm_Horizontal" H 9200 5400 50  0001 C CNN
+F 3 "~" H 9200 5400 50  0001 C CNN
+	1    9200 5400
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	9200 5600 9400 5600
+Wire Wire Line
+	9100 5750 8900 5750
+Wire Wire Line
+	9100 6200 8900 6200
+Wire Wire Line
+	9200 5150 9400 5150
+Wire Wire Line
+	9100 5600 8900 5600
+Wire Wire Line
+	9200 6200 9400 6200
+$Comp
+L power:+5V #PWR0103
+U 1 1 637E84D7
+P 8900 4900
+F 0 "#PWR0103" H 8900 4750 50  0001 C CNN
+F 1 "+5V" H 8915 5073 50  0000 C CNN
+F 2 "" H 8900 4900 50  0001 C CNN
+F 3 "" H 8900 4900 50  0001 C CNN
+	1    8900 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0104
+U 1 1 637E8B6A
+P 9400 6550
+F 0 "#PWR0104" H 9400 6300 50  0001 C CNN
+F 1 "GND" H 9405 6377 50  0000 C CNN
+F 2 "" H 9400 6550 50  0001 C CNN
+F 3 "" H 9400 6550 50  0001 C CNN
+	1    9400 6550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9100 5150 8900 5150
+Connection ~ 9400 6200
+Wire Wire Line
+	9400 6200 9400 6550
+Wire Wire Line
+	9400 5150 9400 5600
+Connection ~ 8900 5600
+Wire Wire Line
+	8900 5600 8900 5750
+Connection ~ 9400 5600
+Wire Wire Line
+	9400 5600 9400 5750
+Wire Wire Line
+	8900 4900 8900 5150
+Connection ~ 8900 5150
+Wire Wire Line
+	8900 5150 8900 5600
+Connection ~ 8900 5750
+Connection ~ 9400 5750
+Wire Wire Line
+	8900 5750 8900 6200
+Wire Wire Line
+	9400 5750 9400 6200
+Wire Wire Line
+	9200 5750 9400 5750
 $EndSCHEMATC

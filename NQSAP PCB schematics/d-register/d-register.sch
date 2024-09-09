@@ -270,12 +270,12 @@ Wire Wire Line
 $Comp
 L Connector_Generic:Conn_01x04 J5
 U 1 1 6167BE3C
-P 9550 4300
-F 0 "J5" H 9400 4650 50  0000 C CNN
-F 1 "Conn_01x04" H 9400 4550 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 9550 4300 50  0001 C CNN
-F 3 "~" H 9550 4300 50  0001 C CNN
-	1    9550 4300
+P 9550 4500
+F 0 "J5" H 9400 4850 50  0000 C CNN
+F 1 "Conn_01x04" H 9400 4750 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical" H 9550 4500 50  0001 C CNN
+F 3 "~" H 9550 4500 50  0001 C CNN
+	1    9550 4500
 	1    0    0    -1  
 $EndComp
 Text GLabel 1050 1200 2    50   BiDi ~ 0
@@ -1146,54 +1146,8 @@ Text Label 6050 1500 2    50   ~ 0
 D6
 Text Label 6050 1400 2    50   ~ 0
 D7
-Entry Wire Line
-	8800 5250 8900 5350
 Wire Wire Line
-	8900 5350 9350 5350
-Entry Wire Line
-	8800 5350 8900 5450
-Wire Wire Line
-	8900 5450 9350 5450
-Entry Wire Line
-	8800 5450 8900 5550
-Wire Wire Line
-	8900 5550 9350 5550
-Entry Wire Line
-	8800 5550 8900 5650
-Wire Wire Line
-	8900 5650 9350 5650
-Entry Wire Line
-	8800 5650 8900 5750
-Wire Wire Line
-	8900 5750 9350 5750
-Entry Wire Line
-	8800 5750 8900 5850
-Wire Wire Line
-	8900 5850 9350 5850
-Entry Wire Line
-	8800 5850 8900 5950
-Wire Wire Line
-	8900 5950 9350 5950
-Entry Wire Line
-	8800 5950 8900 6050
-Wire Wire Line
-	8900 6050 9350 6050
-Text Label 9200 5350 0    50   ~ 0
-XY0
-Text Label 9200 5450 0    50   ~ 0
-XY1
-Text Label 9200 5550 0    50   ~ 0
-XY2
-Text Label 9200 5650 0    50   ~ 0
-XY3
-Text Label 9200 5750 0    50   ~ 0
-XY4
-Text Label 9200 5850 0    50   ~ 0
-XY5
-Text Label 9200 5950 0    50   ~ 0
-XY6
-Text Label 9200 6050 0    50   ~ 0
-XY7
+	5700 4000 5700 4050
 Text GLabel 1050 6850 0    50   Input ~ 0
 WR3
 Text GLabel 1050 6550 0    50   Input ~ 0
@@ -1288,13 +1242,13 @@ Text GLabel 4400 6650 2    50   Output ~ 0
 ~RXB
 Wire Wire Line
 	4400 6650 4300 6650
-Text GLabel 9300 4500 0    50   Input ~ 0
+Text GLabel 9300 4700 0    50   Input ~ 0
 ~WXC
 Text GLabel 4800 2400 0    50   Input ~ 0
 ~RD
-Text GLabel 9300 4300 0    50   Input ~ 0
+Text GLabel 9300 4500 0    50   Input ~ 0
 ~RXC
-Text GLabel 9300 4200 0    50   Input ~ 0
+Text GLabel 9300 4400 0    50   Input ~ 0
 ~RXB
 Wire Wire Line
 	4800 2400 4850 2400
@@ -1304,7 +1258,7 @@ Wire Wire Line
 	2250 6550 2150 6550
 Wire Wire Line
 	2150 6650 2250 6650
-Text GLabel 9300 4400 0    50   Input ~ 0
+Text GLabel 9300 4600 0    50   Input ~ 0
 ~WXB
 NoConn ~ 1050 4700
 NoConn ~ 1850 2800
@@ -1574,7 +1528,6 @@ Wire Wire Line
 Connection ~ 6650 6150
 Wire Wire Line
 	6650 6150 6650 6400
-Connection ~ 8800 3650
 Connection ~ 5100 6300
 Connection ~ 5700 6300
 Wire Wire Line
@@ -1865,22 +1818,6 @@ Entry Wire Line
 Wire Wire Line
 	5200 4050 5200 3750
 Entry Wire Line
-	6100 3650 6000 3750
-Wire Wire Line
-	6000 4050 6000 3750
-Entry Wire Line
-	6000 3650 5900 3750
-Wire Wire Line
-	5900 4050 5900 3750
-Entry Wire Line
-	5900 3650 5800 3750
-Wire Wire Line
-	5800 4050 5800 3750
-Entry Wire Line
-	5800 3650 5700 3750
-Wire Wire Line
-	5700 4050 5700 3750
-Entry Wire Line
 	7600 3650 7500 3750
 Wire Wire Line
 	7500 4050 7500 3750
@@ -1896,22 +1833,6 @@ Entry Wire Line
 	7300 3650 7200 3750
 Wire Wire Line
 	7200 4050 7200 3750
-Entry Wire Line
-	8100 3650 8000 3750
-Wire Wire Line
-	8000 4050 8000 3750
-Entry Wire Line
-	8000 3650 7900 3750
-Wire Wire Line
-	7900 4050 7900 3750
-Entry Wire Line
-	7900 3650 7800 3750
-Wire Wire Line
-	7800 4050 7800 3750
-Entry Wire Line
-	7800 3650 7700 3750
-Wire Wire Line
-	7700 4050 7700 3750
 Text Label 5000 5200 1    50   ~ 0
 AS0
 Text Label 5100 5200 1    50   ~ 0
@@ -1939,13 +1860,13 @@ NoConn ~ 2250 6550
 NoConn ~ 2250 6950
 NoConn ~ 2250 7050
 Wire Wire Line
-	9350 4200 9300 4200
-Wire Wire Line
-	9350 4300 9300 4300
-Wire Wire Line
 	9350 4400 9300 4400
 Wire Wire Line
 	9350 4500 9300 4500
+Wire Wire Line
+	9350 4600 9300 4600
+Wire Wire Line
+	9350 4700 9300 4700
 $Comp
 L power:+5V #PWR0117
 U 1 1 642F4410
@@ -1977,31 +1898,75 @@ Text Label 7400 3950 1    50   ~ 0
 DQ6
 Text Label 7500 3950 1    50   ~ 0
 DQ7
-Text Label 5700 3950 1    50   ~ 0
-XY0
-Text Label 5800 3950 1    50   ~ 0
-XY1
-Text Label 5900 3950 1    50   ~ 0
-XY2
-Text Label 6000 3950 1    50   ~ 0
-XY3
-Text Label 7700 3950 1    50   ~ 0
-XY4
-Text Label 7800 3950 1    50   ~ 0
-XY5
-Text Label 7900 3950 1    50   ~ 0
-XY6
-Text Label 8000 3950 1    50   ~ 0
-XY7
 NoConn ~ 1050 4400
-Wire Bus Line
-	8800 3650 8800 6100
+Text GLabel 5700 4000 1    50   Input ~ 0
+XY0
+Wire Wire Line
+	5800 4000 5800 4050
+Text GLabel 5800 4000 1    50   Input ~ 0
+XY1
+Wire Wire Line
+	5900 4000 5900 4050
+Text GLabel 5900 4000 1    50   Input ~ 0
+XY2
+Wire Wire Line
+	6000 4000 6000 4050
+Text GLabel 6000 4000 1    50   Input ~ 0
+XY3
+Wire Wire Line
+	9300 5750 9350 5750
+Wire Wire Line
+	9300 5850 9350 5850
+Wire Wire Line
+	9300 5950 9350 5950
+Wire Wire Line
+	9300 6050 9350 6050
+Text GLabel 9300 6050 0    50   Output ~ 0
+XY7
+Text GLabel 9300 5950 0    50   Output ~ 0
+XY6
+Text GLabel 9300 5850 0    50   Output ~ 0
+XY5
+Text GLabel 9300 5750 0    50   Output ~ 0
+XY4
+Text GLabel 8000 4000 1    50   Input ~ 0
+XY7
+Text GLabel 7900 4000 1    50   Input ~ 0
+XY6
+Text GLabel 7800 4000 1    50   Input ~ 0
+XY5
+Text GLabel 7700 4000 1    50   Input ~ 0
+XY4
+Wire Wire Line
+	7700 4000 7700 4050
+Wire Wire Line
+	7800 4000 7800 4050
+Wire Wire Line
+	7900 4000 7900 4050
+Wire Wire Line
+	8000 4000 8000 4050
+Wire Wire Line
+	9300 5350 9350 5350
+Wire Wire Line
+	9300 5450 9350 5450
+Wire Wire Line
+	9300 5550 9350 5550
+Wire Wire Line
+	9300 5650 9350 5650
+Text GLabel 9300 5650 0    50   Output ~ 0
+XY3
+Text GLabel 9300 5550 0    50   Output ~ 0
+XY2
+Text GLabel 9300 5450 0    50   Output ~ 0
+XY1
+Text GLabel 9300 5350 0    50   Output ~ 0
+XY0
 Wire Bus Line
 	4300 5350 7300 5350
 Wire Bus Line
 	8800 750  8800 3650
 Wire Bus Line
-	4300 1250 4300 5350
-Wire Bus Line
 	5150 3650 8800 3650
+Wire Bus Line
+	4300 1250 4300 5350
 $EndSCHEMATC
